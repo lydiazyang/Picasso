@@ -10,6 +10,9 @@ as your application grows, you may need to refactor.
 
 See the specification for Picasso on the course web site.
 
+## Team GameChangers
+Aiden, Chaz, Hân, Jenna, Lydia
+
 ## Running Picasso
 
 To run Picasso, run `picasso.Main`
