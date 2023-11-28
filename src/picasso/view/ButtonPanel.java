@@ -29,36 +29,6 @@ public class ButtonPanel extends JPanel {
 		myView = view;
 	}
 	
-	public void addTextField(JTextField functionTextField, String buttonText, final Command<Pixmap> action) {
-		// created new function for this add so that we can get the text from the input box
-		// Handle the submit button event
-		JButton button = new JButton(buttonText);
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String inputFunction = functionTextField.getText();
-				System.out.println(inputFunction);
-				action.setFunction(inputFunction);
-				//confused on where this input that I get should go?
-				action.execute(myView.getPixmap());
-				myView.refresh();
-			}
-		});
-		add(button);
-		// handles the Enter event
-		functionTextField.addActionListener(new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent e) {
-		    	 // Handle the Enter key press here
-                String inputFunction = functionTextField.getText();
-                System.out.println(inputFunction);
-                action.setFunction(inputFunction);
-                action.execute(myView.getPixmap());
-                myView.refresh();
-		    }
-		});
-    }
-	
-	
 
 	/**
 	 * Add the given Command as a button with the given button text. When the button

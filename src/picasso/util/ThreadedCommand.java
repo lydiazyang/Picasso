@@ -64,6 +64,5 @@ public class ThreadedCommand<T> implements Command<T> {
 		}
 	}
 	
-	public void setFunction(String inputFunction) {
-	}
+
 }
