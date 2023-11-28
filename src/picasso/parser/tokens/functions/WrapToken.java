@@ -1,14 +1,13 @@
 package picasso.parser.tokens.functions;
 
-public class WrapToken {
+/**
+ * Represents the wrap function token
+ * 
+ */
+public class WrapToken extends FunctionToken {
 
 	public WrapToken() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		super("Wrap Function Token");
 	}
 
 }

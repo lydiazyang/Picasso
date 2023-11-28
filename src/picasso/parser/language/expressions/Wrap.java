@@ -19,7 +19,7 @@ public class Wrap extends UnaryFunction {
 
 	/**
 	 * 
-	 * @return the color from evaluating the floor of the expression's parameter
+	 * @return the color from evaluating the wrapped value of the expression's parameter
 	 */
 	@Override
 	public RGBColor evaluate(double x, double y) {
