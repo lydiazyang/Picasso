@@ -10,7 +10,5 @@ public interface Command<T> {
 	 * Implementations determine how to update the given target object
 	 */
 	public void execute(T target);
-
-	public void setFunction(String inputFunction);
 	
 }

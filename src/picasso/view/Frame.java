@@ -2,6 +2,9 @@ package picasso.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -30,11 +33,16 @@ public class Frame extends JFrame {
 		// add commands to test here
 		ButtonPanel commands = new ButtonPanel(canvas);
 		functionTextField = new JTextField(20);
+		Evaluator evaluator = new Evaluator(functionTextField);
+		functionTextField.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+            	evaluator.execute(canvas.getPixmap());
+            	canvas.refresh();
+            }});
 		commands.add(new JLabel("Enter Function: "));
         commands.add(functionTextField);
-        commands.addTextField(functionTextField, "Submit", new Input());
+        commands.add("Evaluate", new ThreadedCommand<Pixmap>(canvas, evaluator));
 		commands.add("Open", new Reader());
-		commands.add("Evaluate", new ThreadedCommand<Pixmap>(canvas, new Evaluator()));
 		commands.add("Save", new Writer());
 		
 

@@ -66,6 +66,22 @@ public class EvaluatorTests {
 					myTree.evaluate(testVal, testVal));
 		}
 	}
+	
+	@Test
+	public void testAbsEvaluation() {
+		Abs myTree = new Abs(new X());
+		
+		//straightforward tests
+		
+		//test all integers
+		
+		//test doubles
+		double[] tests = {-.7, -0.00001, 1.3, -4.9999};
+		for (double testVal : tests) {
+			double absOfTestVal = Math.abs(testVal);
+			assertEquals(new RGBColor(absOfTestVal, absOfTestVal, absOfTestVal), myTree.evaluate(testVal, -1));
+		}
+	}
 
 	private void assertEquals(RGBColor rgbColor, RGBColor evaluate) {
 		// TODO Auto-generated method stub
