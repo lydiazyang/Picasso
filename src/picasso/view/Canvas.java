@@ -53,7 +53,7 @@ public class Canvas extends JPanel {
 	public void refresh() {
 		if (!myPixmap.getSize().equals(getSize())) {
 			setSize(myPixmap.getSize());
-			myContainer.setTitle(myPixmap.getName());
+			myContainer.setTitle("Game Changers");
 			myContainer.pack();
 		}
 		repaint();
