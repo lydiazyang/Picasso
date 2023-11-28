@@ -76,5 +76,10 @@ public class EvaluatorTests {
 	public void testAbsEvaluation() {
 		
 	}
+	
+	@Test
+	public void testClampEvaluation() {
+		
+	}
 
 }
