@@ -48,7 +48,7 @@ public class Evaluator implements Command<Pixmap> {
 	 * 
 	 * A place holder for a more interesting way to build the expression.
 	 */
-	private ExpressionTreeNode createExpression() {
+	ExpressionTreeNode createExpression() {
 		// Note, when you're testing, you can use the ExpressionTreeGenerator to
 		// generate expression trees from strings, or you can create expression
 		// objects directly (as in the commented statement below).

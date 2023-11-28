@@ -30,26 +30,20 @@ public class ButtonPanel extends JPanel {
 	 */
 	public ButtonPanel(Canvas view) {
 		myView = view;
-		initialize();
 	}
 	
-	private void initialize() {
-        functionTextField = new JTextField(20);
-        JButton okButton = new JButton("OK");
-
-        okButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String inputFunction = functionTextField.getText();
-                if (inputFunction != null && !inputFunction.isEmpty()) {
-                    // Process the input function as needed
-                    System.out.println("Input Function: " + inputFunction);
-                }
-            }
-        });
-
-        add(new JLabel("Enter Function: "));
-        add(functionTextField);
-        add(okButton);
+	void addTextField(String buttonText, final Command<Pixmap> action) {
+		// created new function for this add so that we can get the text from the input box
+		JButton button = new JButton(buttonText);
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String inputFunction = functionTextField.getText();
+				//confused on where this input that I get should go?
+				action.execute(myView.getPixmap());
+				myView.refresh();
+			}
+		});
+		add(button);
     }
 
 	/**
