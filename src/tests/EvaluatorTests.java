@@ -67,6 +67,14 @@ public class EvaluatorTests {
 		}
 	}
 
-	// TODO: More tests of evaluation
+	private void assertEquals(RGBColor rgbColor, RGBColor evaluate) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Test
+	public void testAbsEvaluation() {
+		
+	}
 
 }
