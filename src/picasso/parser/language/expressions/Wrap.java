@@ -9,7 +9,7 @@ import picasso.parser.language.ExpressionTreeNode;
 public class Wrap extends UnaryFunction {
 
 	/**
-	 * Create a wrap expression that takes as a parameter the given expression
+	 * Creates a wrap expression that takes as a parameter the given expression
 	 * 
 	 * @param param the expression to wrap
 	 */

@@ -1,7 +1,7 @@
 package picasso.parser.tokens.functions;
 
 /**
- * Represents the wrap function token
+ * Wrap function token
  * 
  */
 public class WrapToken extends FunctionToken {
