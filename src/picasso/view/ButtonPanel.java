@@ -1,9 +1,12 @@
 package picasso.view;
 
 import java.awt.event.ActionEvent;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 import picasso.model.Pixmap;
 import picasso.util.Command;
@@ -18,6 +21,7 @@ import picasso.util.NamedCommand;
 @SuppressWarnings("serial")
 public class ButtonPanel extends JPanel {
 	private Canvas myView;
+	private JTextField functionTextField;
 
 	/**
 	 * Create panel that will update the given picasso.view.
@@ -26,7 +30,27 @@ public class ButtonPanel extends JPanel {
 	 */
 	public ButtonPanel(Canvas view) {
 		myView = view;
+		initialize();
 	}
+	
+	private void initialize() {
+        functionTextField = new JTextField(20);
+        JButton okButton = new JButton("OK");
+
+        okButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String inputFunction = functionTextField.getText();
+                if (inputFunction != null && !inputFunction.isEmpty()) {
+                    // Process the input function as needed
+                    System.out.println("Input Function: " + inputFunction);
+                }
+            }
+        });
+
+        add(new JLabel("Enter Function: "));
+        add(functionTextField);
+        add(okButton);
+    }
 
 	/**
 	 * Add the given Command as a button with the given button text. When the button
@@ -55,4 +79,5 @@ public class ButtonPanel extends JPanel {
 	public void add(NamedCommand<Pixmap> action) {
 		add(action.getName(), action);
 	}
+
 }
