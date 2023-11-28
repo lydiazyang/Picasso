@@ -82,15 +82,17 @@ public class EvaluatorTests {
 			assertEquals(new RGBColor(absOfTestVal, absOfTestVal, absOfTestVal), myTree.evaluate(testVal, -1));
 		}
 	}
+	
+	@Test
+	public void testWrapEvaluation() {
+		Wrap myTree = new Wrap(new X());
+
+	}
 
 	private void assertEquals(RGBColor rgbColor, RGBColor evaluate) {
 		// TODO Auto-generated method stub
 		
 	}
 	
-	@Test
-	public void testAbsEvaluation() {
-		
-	}
 
 }
