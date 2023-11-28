@@ -34,8 +34,9 @@ public class ExpressionTreeGenerator {
 	 *         formula
 	 */
 	public ExpressionTreeNode makeExpression(String infix) {
+		System.out.println(infix);
 		Stack<Token> postfix = infixToPostfix(infix);
-
+		System.out.println(postfix);
 		if (postfix.isEmpty()) {
 			return null;
 		}
