@@ -31,4 +31,7 @@ public class NamedCommand<T> implements Command<T> {
 	public void execute(T target) {
 		myCommand.execute(target);
 	}
+	
+	public void setFunction(String inputFunction) {
+	}
 }

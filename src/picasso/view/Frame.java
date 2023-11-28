@@ -32,7 +32,7 @@ public class Frame extends JFrame {
 		functionTextField = new JTextField(20);
 		commands.add(new JLabel("Enter Function: "));
         commands.add(functionTextField);
-        commands.addTextField("Submit", new ThreadedCommand<Pixmap> (canvas, new Input()));
+        commands.addTextField(functionTextField, "Submit", new Input());
 		commands.add("Open", new Reader());
 		commands.add("Evaluate", new ThreadedCommand<Pixmap>(canvas, new Evaluator()));
 		commands.add("Save", new Writer());

@@ -62,4 +62,10 @@ public class Evaluator implements Command<Pixmap> {
 		// return new Multiply( new X(), new Y() );
 	}
 
+	@Override
+	public void setFunction(String inputFunction) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
