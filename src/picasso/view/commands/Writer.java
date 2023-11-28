@@ -21,4 +21,12 @@ public class Writer extends FileCommand<Pixmap> {
 			target.write(fileName);
 		}
 	}
+
+	@Override
+	public void setFunction(String inputFunction) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 }

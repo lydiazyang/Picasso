@@ -28,4 +28,10 @@ public class Reader extends FileCommand<Pixmap> {
 			target.read(fileName);
 		}
 	}
+
+	@Override
+	public void setFunction(String inputFunction) {
+		// TODO Auto-generated method stub
+		
+	}
 }
