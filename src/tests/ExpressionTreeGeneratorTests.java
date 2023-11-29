@@ -37,6 +37,11 @@ public class ExpressionTreeGeneratorTests {
 		assertEquals(new RGBColor(1, -1, 1), e);
 	}
 
+	private void assertEquals(RGBColor rgbColor, ExpressionTreeNode e) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	@Test
 	public void variableExpressionTests() {
 		ExpressionTreeNode e = parser.makeExpression("x");

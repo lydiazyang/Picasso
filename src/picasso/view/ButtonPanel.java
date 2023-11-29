@@ -1,13 +1,14 @@
 package picasso.view;
 
 import java.awt.event.ActionEvent;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
-import javax.swing.JPanel;
-import javax.swing.JButton;
 
 import picasso.model.Pixmap;
 import picasso.util.Command;
 import picasso.util.NamedCommand;
+import picasso.util.ThreadedCommand;
 
 /**
  * The collection of commands represented as buttons that apply to the active
@@ -27,6 +28,7 @@ public class ButtonPanel extends JPanel {
 	public ButtonPanel(Canvas view) {
 		myView = view;
 	}
+	
 
 	/**
 	 * Add the given Command as a button with the given button text. When the button
@@ -55,4 +57,6 @@ public class ButtonPanel extends JPanel {
 	public void add(NamedCommand<Pixmap> action) {
 		add(action.getName(), action);
 	}
+
+
 }

@@ -21,4 +21,7 @@ public class Writer extends FileCommand<Pixmap> {
 			target.write(fileName);
 		}
 	}
+
+	
+	
 }
