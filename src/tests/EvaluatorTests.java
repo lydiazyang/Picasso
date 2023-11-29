@@ -137,6 +137,6 @@ public class EvaluatorTests {
 			throw new AssertionError("RGB values are not equal");
 		}
 	}
-	
 
+	
 }
