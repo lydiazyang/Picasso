@@ -72,14 +72,28 @@ public class EvaluatorTests {
 		Abs myTree = new Abs(new X());
 		
 		//straightforward tests
+		assertEquals(new RGBColor(0, 0, 0), myTree.evaluate(0, -1));
+		assertEquals(new RGBColor(1, 1, 1), myTree.evaluate(1, -1));
+		assertEquals(new RGBColor(1, 1, 1), myTree.evaluate(-1, -1));
+		assertEquals(new RGBColor(0.1, 0.1, 0.1), myTree.evaluate(0.1, -1));
+		assertEquals(new RGBColor(0.1, 0.1, 0.1), myTree.evaluate(-0.1, -1));
+		assertEquals(new RGBColor(.5, .5, .5), myTree.evaluate(0.5, -1));
+		assertEquals(new RGBColor(.5, .5, .5), myTree.evaluate(-0.5, -1));
 		
 		//test all integers
+		for (int i = -1; i <= 1; i++) {
+			i = Math.abs(i);
+			assertEquals(new RGBColor(i, i, i), myTree.evaluate(i, -i));
+			assertEquals(new RGBColor(i, i, i), myTree.evaluate(i, i));
+		}
 		
 		//test doubles
 		double[] tests = {-.7, -0.00001, 1.3, -4.9999};
 		for (double testVal : tests) {
 			double absOfTestVal = Math.abs(testVal);
 			assertEquals(new RGBColor(absOfTestVal, absOfTestVal, absOfTestVal), myTree.evaluate(testVal, -1));
+			assertEquals(new RGBColor(absOfTestVal, absOfTestVal, absOfTestVal), myTree.evaluate(testVal, testVal));
+			assertEquals(new RGBColor(absOfTestVal, absOfTestVal, absOfTestVal), myTree.evaluate(testVal, 1));
 		}
 	}
 	
@@ -119,6 +133,6 @@ public class EvaluatorTests {
 		// TODO Auto-generated method stub
 		
 	}
-	
+
 
 }
