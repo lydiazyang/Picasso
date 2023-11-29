@@ -136,7 +136,6 @@ public class EvaluatorTests {
 		else if (expected.getBlue() != actual.getBlue() || expected.getRed() != actual.getRed() || expected.getGreen() != actual.getGreen()){
 			throw new AssertionError("RGB values are not equal");
 		}
-		
 	}
 	
 
