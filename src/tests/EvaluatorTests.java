@@ -88,9 +88,5 @@ public class EvaluatorTests {
 		
 	}
 	
-	@Test
-	public void testAbsEvaluation() {
-		
-	}
 
 }
