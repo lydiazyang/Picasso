@@ -36,11 +36,11 @@ public class Wrap extends UnaryFunction {
 		double wrappedValue = Math.floor(value);
 		// Wrap negative values
 		while (wrappedValue < -1) {
-			wrappedValue += 2;
+			wrappedValue += 1;
 		}
 		// Wrap positive values
 		while (wrappedValue > 1) {
-			wrappedValue -= 2;
+			wrappedValue -= 1;
 		}
 		return wrappedValue;
 	}
