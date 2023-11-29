@@ -86,6 +86,32 @@ public class EvaluatorTests {
 	@Test
 	public void testWrapEvaluation() {
 		Wrap myTree = new Wrap(new X());
+		
+		// test "normal" cases
+		assertEquals(new RGBColor(0, 0, 0), myTree.evaluate(0, -1));
+		assertEquals(new RGBColor(1, 1, 1), myTree.evaluate(1, -1));
+		assertEquals(new RGBColor(-1, -1, -1), myTree.evaluate(-1, -1));
+		assertEquals(new RGBColor(-.5, -.5, -.5), myTree.evaluate(1.5, -1));
+		assertEquals(new RGBColor(.5, .5, .5), myTree.evaluate(-1.5, -1));
+		
+		// test all ints from -60 to 60
+		
+		// test doubles 
+		double[] tests = {-1.66, -.34, .7888, 5.7222};
+		for (double testVal : tests) {
+			double wrappedTestVal = testVal;
+			if (Math.abs(testVal) > 1) {
+				wrappedTestVal = testVal % 1;
+				// insert code to figure out how many times testVal needs to be "wrapped"
+				// -1.xx -> .xx
+				// 1.xx -> -.xx
+				// -2.xx -> -.xx
+				// 2.xx -> .xx
+			}
+			System.out.println(testVal + ": " + wrappedTestVal);
+			assertEquals(new RGBColor(wrappedTestVal, wrappedTestVal, wrappedTestVal), myTree.evaluate(testVal, -1));
+		}
+		
 
 	}
 
