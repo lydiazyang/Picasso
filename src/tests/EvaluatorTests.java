@@ -129,10 +129,13 @@ public class EvaluatorTests {
 
 	}
 
-	private void assertEquals(RGBColor rgbColor, RGBColor evaluate) {
-		// TODO Auto-generated method stub
-		
+	private void assertEquals(RGBColor expected, RGBColor actual) {
+		if (expected == null || actual == null) {
+			throw new IllegalArgumentException("RGB cannot be null");
+		}
+		else if (expected.getBlue() != actual.getBlue() || expected.getRed() != actual.getRed() || expected.getGreen() != actual.getGreen()){
+			throw new AssertionError("RGB values are not equal");
+		}
 	}
-	
 
 }
