@@ -3,7 +3,7 @@ package picasso.parser;
 import java.util.Stack;
 
 import picasso.parser.language.ExpressionTreeNode;
-import picasso.parser.language.expressions.Wrap;
+import picasso.parser.language.expressions.Abs;
 import picasso.parser.tokens.Token;
 /**
  * Handles parsing the absolute value function.
