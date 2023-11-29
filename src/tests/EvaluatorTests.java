@@ -103,8 +103,8 @@ public class EvaluatorTests {
 			if (Math.abs(testVal) > 1) {
 				wrappedTestVal = testVal % 1;
 				// insert code to figure out how many times testVal needs to be "wrapped"
-				// -1.xx -> .xx
-				// 1.xx -> -.xx
+				// -1.xx -> 1 - .xx
+				// 1.xx -> -(1 - .xx)
 				// -2.xx -> -.xx
 				// 2.xx -> .xx
 			}
