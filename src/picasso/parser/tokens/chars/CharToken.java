@@ -33,10 +33,14 @@ public class CharToken extends Token {
 	 */
 	@Override
 	public boolean equals(Object o) {
-		if( o == this ) {
+		if (o == this) {
 			return true;
 		}
 		if (!(o instanceof CharToken)) {
+			return false;
+		}
+		// Make sure the objects are the same type
+		if (o.getClass() != this.getClass()) {
 			return false;
 		}
 		CharToken other = (CharToken) o;
