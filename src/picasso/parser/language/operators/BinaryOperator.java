@@ -2,20 +2,24 @@ package picasso.parser.language.operators;
 
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.RGBColor;
+import picasso.parser.tokens.Token;
 
 public abstract class BinaryOperator extends ExpressionTreeNode{
 
 	ExpressionTreeNode left;
 	ExpressionTreeNode right;
+	Token token;
 
 	/**
 	 * 
 	 * @param left
 	 * @param right
+	 * @param token
 	 */
-	public BinaryOperator(ExpressionTreeNode left, ExpressionTreeNode right) {
+	public BinaryOperator(ExpressionTreeNode left, ExpressionTreeNode right, Token token) {
 		this.left = left;
 		this.right = right;
+		this.token = token;
 	}
 
 	/**
