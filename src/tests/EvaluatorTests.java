@@ -158,19 +158,19 @@ public class EvaluatorTests {
 		}
 		
 		// test doubles 
-		double[] tests = {-1.66, -.34, .7888, 5.7222};
+		double[] tests = {-1.66, -.34, .7888, 5.7222};		
 		for (double testVal : tests) {
 			double wrappedTestVal = testVal;
 			
 			// check if value is more than min or max of (-)1
 			if (Math.abs(testVal) > max) {
 				double absTestVal = Math.abs(testVal);
-				// make WTV the residual 
+				//make WTV the residual 
 				wrappedTestVal = absTestVal % max;
 				
-				// if odd then should be max - residual, else just residual
+				// if odd then should be -(max - residual), else just residual
 				if (Math.floor(absTestVal)%2 != 0) {
-					wrappedTestVal = max - wrappedTestVal;
+					wrappedTestVal = -(max - wrappedTestVal);
 				}
 				
 				// if less than min then negate
