@@ -15,6 +15,7 @@ import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.*;
 import picasso.parser.tokens.*;
 import picasso.parser.tokens.operations.*;
+import picasso.parser.language.operators.*;
 
 /**
  * Test the parsing from the Stack (not as easy as using a String as input, but
@@ -45,7 +46,7 @@ class SemanticAnalyzerTest {
 
 		ExpressionTreeNode actual = semAnalyzer.generateExpressionTree(tokens);
 
-		assertEquals(new Addition(new X(), new Y()), actual);
+		assertEquals(new Plus(new X(), new Y()), actual);
 	}
 
 }
