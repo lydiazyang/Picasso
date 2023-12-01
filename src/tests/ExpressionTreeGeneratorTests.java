@@ -48,16 +48,20 @@ public class ExpressionTreeGeneratorTests {
 	@Test
 	public void PlusExpressionTests() {
 		ExpressionTreeNode e = parser.makeExpression("x + y");
+		System.out.println(e);
 		assertEquals(new Plus(new X(), new Y()), e);
 
 		// no spaces!
 		e = parser.makeExpression("x+y");
+		System.out.println(e);
 		assertEquals(new Plus(new X(), new Y()), e);
 
 		e = parser.makeExpression("[1,.3,-1] + y");
+		System.out.println(e);
 		assertEquals(new Plus(new RGBColor(1, .3, -1), new Y()), e);
 
 		e = parser.makeExpression("x + y + [ -.51, 0, 1]");
+		System.out.println(e);
 		assertEquals(new Plus(new Plus(new X(), new Y()), new RGBColor(-.51, 0, 1)), e);
 	}
 
