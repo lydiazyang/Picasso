@@ -5,6 +5,7 @@ import java.util.Stack;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.operators.Plus;
 import picasso.parser.tokens.Token;
+import picasso.parser.tokens.operations.PlusToken;
 
 /**
  * Handles parsing the plus or "addition function".
@@ -24,7 +25,7 @@ public class PlusAnalyzer implements SemanticAnalyzerInterface {
 				tokens);
 		ExpressionTreeNode param2 = SemanticAnalyzer.getInstance().generateExpressionTree(
 				tokens);
-		return new Plus(param1, param2);
+		return new Plus(param2, param1, new PlusToken());
 	}
 
 }

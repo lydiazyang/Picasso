@@ -1,4 +1,6 @@
-package picasso.parser.language.operators;
+package picasso.parser.operators;
+
+import java.util.Objects;
 
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.RGBColor;
@@ -6,9 +8,9 @@ import picasso.parser.tokens.Token;
 
 public abstract class BinaryOperator extends ExpressionTreeNode{
 
-	ExpressionTreeNode left;
-	ExpressionTreeNode right;
-	Token token;
+	protected ExpressionTreeNode left;
+	protected ExpressionTreeNode right;
+	protected Token token;
 
 	/**
 	 * 
@@ -30,8 +32,7 @@ public abstract class BinaryOperator extends ExpressionTreeNode{
 	 */
 	@Override
 	public String toString() {
-		String classname = this.getClass().getName();
-		return  "(" + left + classname.substring(classname.lastIndexOf(".") + 1).toString() + right + ")";
+		return  "(" + left + token + right + ")";
 	}
 	
 	@Override
@@ -58,5 +59,16 @@ public abstract class BinaryOperator extends ExpressionTreeNode{
 		}
 		return true;
 	}
+	
+
+    /**
+     * Returns the hash code for this binary operator.
+     *
+     * @return the hash code
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(left, right);
+    }
 
 }
