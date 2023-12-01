@@ -20,14 +20,10 @@ public class PlusAnalyzer implements SemanticAnalyzerInterface {
 		tokens.pop(); // Remove the plus token
 		// the parameters are the next tokens on the stack.
 		// But, they need to be processed
-		// TODO: Need to finish.
-		System.out.println(tokens);
 		ExpressionTreeNode param1 = SemanticAnalyzer.getInstance().generateExpressionTree(
 				tokens);
-		System.out.println(param1);
 		ExpressionTreeNode param2 = SemanticAnalyzer.getInstance().generateExpressionTree(
 				tokens);
-		System.out.println(param2);
 		return new Plus(param1, param2);
 	}
 
