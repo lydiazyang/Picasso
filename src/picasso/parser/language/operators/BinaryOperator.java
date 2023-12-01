@@ -30,8 +30,7 @@ public abstract class BinaryOperator extends ExpressionTreeNode{
 	 */
 	@Override
 	public String toString() {
-		String classname = this.getClass().getName();
-		return  "(" + left + classname.substring(classname.lastIndexOf(".") + 1).toString() + right + ")";
+		return  "(" + left + token + right + ")";
 	}
 	
 	@Override
@@ -53,7 +52,7 @@ public abstract class BinaryOperator extends ExpressionTreeNode{
 		BinaryOperator bo = (BinaryOperator) o;
 
 		// check if their parameters are equal
-		if ((!this.left.equals(bo.left)) && (!this.right.equals(bo.right))) {
+		if (!((this.left.equals(bo.left)) && (this.right.equals(bo.right))) || (!(this.left.equals(bo.right)) && (this.right.equals(bo.left)))) {
 			return false;
 		}
 		return true;
