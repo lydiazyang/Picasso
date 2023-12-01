@@ -27,8 +27,7 @@ public abstract class BinaryOperator extends ExpressionTreeNode{
 	@Override
 	public String toString() {
 		String classname = this.getClass().getName();
-		System.out.println(classname);
-		return classname.substring(classname.lastIndexOf(".") + 1) + "(" + left + right + ")";
+		return  "(" + left + classname.substring(classname.lastIndexOf(".") + 1).toString() + right + ")";
 	}
 	
 	@Override
