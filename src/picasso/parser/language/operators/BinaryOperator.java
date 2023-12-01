@@ -6,8 +6,7 @@ import picasso.parser.tokens.Token;
 /**
  * Represents a function that takes 2 arguments and an operator.
  * 
- * @author Robert C. Duvall
- * @author Sara Sprenkle
+ * @author Jenna Bernstein
  *
  */
 public abstract class BinaryOperator extends ExpressionTreeNode{

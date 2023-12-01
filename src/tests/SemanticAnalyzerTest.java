@@ -49,6 +49,7 @@ class SemanticAnalyzerTest {
 		ExpressionTreeNode actual = semAnalyzer.generateExpressionTree(tokens);
 		Plus plus = new Plus(new X(), new Y(), new PlusToken());
 
+		assertEquals(new Plus(new X(), new Y()), actual);
 		assertEquals(plus, actual);
 	}
 

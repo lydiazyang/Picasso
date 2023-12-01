@@ -13,6 +13,16 @@ import picasso.parser.tokens.Token;
 public class Plus extends BinaryOperator {
 
 	/**
+	 * Creates a wrap expression that takes as a parameter the given expression
+	 * 
+	 * @param param the expressions to add
+	 */
+    public Plus(ExpressionTreeNode left, ExpressionTreeNode right) {
+        super(left, right, new PlusToken());
+    }
+
+
+	/**
 	 * Create a plus expression that takes as a parameter the given expression tree nodes that are added and plus token
 	 * 
 	 * @param ExpressionTreeNode left
