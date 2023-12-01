@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import picasso.parser.ExpressionTreeGenerator;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.*;
-import picasso.parser.operators.Plus;
+import picasso.parser.language.operators.Plus;
 import picasso.parser.tokens.IdentifierToken;
 import picasso.parser.tokens.Token;
 import picasso.parser.tokens.operations.PlusToken;

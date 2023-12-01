@@ -3,7 +3,7 @@ package picasso.parser;
 import java.util.Stack;
 
 import picasso.parser.language.ExpressionTreeNode;
-import picasso.parser.operators.Plus;
+import picasso.parser.language.operators.Plus;
 import picasso.parser.tokens.Token;
 
 /**
