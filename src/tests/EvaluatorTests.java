@@ -147,6 +147,14 @@ public class EvaluatorTests {
 		for (int i = -1; i <= 1; i++) {
 			assertEquals(new RGBColor(Math.sin(i), Math.sin(i), Math.sin(i)), myTree.evaluate(i, i));		
 		}
+		// Expression Input
+		myTree = new Sin(new Plus(new X(), new Y()));
+	    assertEquals(new RGBColor(Math.sin(1 + 2), Math.sin(1 + 2), Math.sin(1 + 2)), myTree.evaluate(1, 2));
+	    // Recursion: sin(sin(x))
+	    myTree = new Sin(new Sin(new X()));
+	    for (double angle = -2 * Math.PI; angle <= 2 * Math.PI; angle += Math.PI / 4) {
+	        assertEquals(new RGBColor(Math.sin(Math.sin(angle)), Math.sin(Math.sin(angle)), Math.sin(Math.sin(angle))),
+	                myTree.evaluate(angle, angle));
 		
 					
 	}
