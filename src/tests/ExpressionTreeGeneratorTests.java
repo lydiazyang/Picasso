@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import picasso.parser.ExpressionTreeGenerator;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.*;
+import picasso.parser.operators.Plus;
 import picasso.parser.tokens.IdentifierToken;
 import picasso.parser.tokens.Token;
 import picasso.parser.tokens.operations.PlusToken;
@@ -49,28 +50,28 @@ public class ExpressionTreeGeneratorTests {
 	}
 
 	@Test
-	public void additionExpressionTests() {
+	public void PlusExpressionTests() {
 		ExpressionTreeNode e = parser.makeExpression("x + y");
-		assertEquals(new Addition(new X(), new Y()), e);
+		assertEquals(new Plus(new X(), new Y()), e);
 
 		// no spaces!
 		e = parser.makeExpression("x+y");
-		assertEquals(new Addition(new X(), new Y()), e);
+		assertEquals(new Plus(new X(), new Y()), e);
 
 		e = parser.makeExpression("[1,.3,-1] + y");
-		assertEquals(new Addition(new RGBColor(1, .3, -1), new Y()), e);
+		assertEquals(new Plus(new RGBColor(1, .3, -1), new Y()), e);
 
 		e = parser.makeExpression("x + y + [ -.51, 0, 1]");
-		assertEquals(new Addition(new Addition(new X(), new Y()), new RGBColor(-.51, 0, 1)), e);
+		assertEquals(new Plus(new Plus(new X(), new Y()), new RGBColor(-.51, 0, 1)), e);
 	}
 
 	@Test
 	public void parenthesesExpressionTests() {
 		ExpressionTreeNode e = parser.makeExpression("( x + y )");
-		assertEquals(new Addition(new X(), new Y()), e);
+		assertEquals(new Plus(new X(), new Y()), e);
 
 		e = parser.makeExpression("( x + (y + [ 1, 1, 1] ) )");
-		assertEquals(new Addition(new X(), new Addition(new Y(), new RGBColor(1, 1, 1))), e);
+		assertEquals(new Plus(new X(), new Plus(new Y(), new RGBColor(1, 1, 1))), e);
 	}
 
 	@Test
@@ -93,7 +94,7 @@ public class ExpressionTreeGeneratorTests {
 		assertEquals(new Floor(new X()), e);
 
 		e = parser.makeExpression("floor( x + y )");
-		assertEquals(new Floor(new Addition(new X(), new Y())), e);
+		assertEquals(new Floor(new Plus(new X(), new Y())), e);
 	}
 
 }
