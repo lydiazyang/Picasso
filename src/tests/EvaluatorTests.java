@@ -128,6 +128,28 @@ public class EvaluatorTests {
 		
 
 	}
+	
+	@Test
+	public void testSinEvaluation() {
+		Sin myTree;
+
+		// Basic input: sin(0) = 0
+		myTree = new Sin(new RBGColor(0,0,0));
+		assertEquals(new RGBColor(0, 0, 0), myTree.evaluate(0,0));
+		// Common input: sin(pi/2) =  1
+		myTree = new Sin(new RBGColor(Math.PI / 2, Math.PI / 2, Math.PI / 2));
+		assertEquals(new RGBColor(1,1,1), myTree.evaluate(Math.PI / 2,0));
+		// Negative input: sin(-pi/2) = -1
+		myTree = new Sin(new RBGColor(-Math.PI / 2, -Math.PI / 2, -Math.PI / 2));
+		assertEquals(new RGBColor(-1,-1,-1), myTree.evaluate(-Math.PI / 2,0));
+		// Variable Input: sin(x)
+		myTree = new Sin(new x());
+		for (int i = -1; i <= 1; i++) {
+			assertEquals(new RGBColor(Math.sin(i), Math.sin(i), Math.sin(i)), myTree.evaluate(i, i));		
+		}
+		
+					
+	}
 
 	private void assertEquals(RGBColor expected, RGBColor actual) {
 		if (expected == null || actual == null) {
