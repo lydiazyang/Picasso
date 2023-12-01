@@ -199,16 +199,16 @@ public class EvaluatorTests {
 		Sin myTree;
 
 		// Basic input: sin(0) = 0
-		myTree = new Sin(new RBGColor(0,0,0));
+		myTree = new Sin(new RGBColor(0,0,0));
 		assertEquals(new RGBColor(0, 0, 0), myTree.evaluate(0,0));
 		// Common input: sin(pi/2) =  1
-		myTree = new Sin(new RBGColor(Math.PI / 2, Math.PI / 2, Math.PI / 2));
+		myTree = new Sin(new RGBColor(Math.PI / 2, Math.PI / 2, Math.PI / 2));
 		assertEquals(new RGBColor(1,1,1), myTree.evaluate(Math.PI / 2,0));
 		// Negative input: sin(-pi/2) = -1
-		myTree = new Sin(new RBGColor(-Math.PI / 2, -Math.PI / 2, -Math.PI / 2));
+		myTree = new Sin(new RGBColor(-Math.PI / 2, -Math.PI / 2, -Math.PI / 2));
 		assertEquals(new RGBColor(-1,-1,-1), myTree.evaluate(-Math.PI / 2,0));
 		// Variable Input: sin(x)
-		myTree = new Sin(new x());
+		myTree = new Sin(new X());
 		for (int i = -1; i <= 1; i++) {
 			assertEquals(new RGBColor(Math.sin(i), Math.sin(i), Math.sin(i)), myTree.evaluate(i, i));		
 		}
@@ -219,8 +219,9 @@ public class EvaluatorTests {
 	    myTree = new Sin(new Sin(new X()));
 	    for (double angle = -2 * Math.PI; angle <= 2 * Math.PI; angle += Math.PI / 4) {
 	        assertEquals(new RGBColor(Math.sin(Math.sin(angle)), Math.sin(Math.sin(angle)), Math.sin(Math.sin(angle))),
-	                myTree.evaluate(angle, angle));
-      }
+	                myTree.evaluate(angle, 0));
+	    }
+
 	}
 
 	private void assertEquals(RGBColor expected, RGBColor actual) {
