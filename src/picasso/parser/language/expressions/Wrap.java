@@ -19,7 +19,7 @@ public class Wrap extends UnaryFunction {
 
 	/**
 	 * Evaluates the expression at the given x, y point by wrapping the value at that 
-	 * point around 0 (If the number exceeds 1 it wraps around 0, not -1 and vice versa)
+	 * point around the range -1, 1
 	 * 
 	 * @return the color from evaluating the wrapped value of the expression's parameter
 	 */
@@ -33,7 +33,7 @@ public class Wrap extends UnaryFunction {
 		return new RGBColor(red, green, blue);
 	}
 	/**
-	 * Puts value through a while loop to subtract/add 1 until the value falls between
+	 * Puts value through a while loop to subtract/add 2 until the value falls between
 	 * the correct maximum and minimum values
 	 * 
 	 * @param value the value to wrap
@@ -41,8 +41,8 @@ public class Wrap extends UnaryFunction {
 	 */
 	private double wrapValue(double value) {
 		// Set maximum and minimum integers
-		int max = 1;
-		int min = -1;		
+		double max = 1;
+		double min = -1;		
 		// Wrapping helper function
 		double wrappedValue = Math.floor(value);
 		// Wrap values lower than minimum
