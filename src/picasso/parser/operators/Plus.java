@@ -12,8 +12,6 @@ public class Plus extends BinaryOperator {
 
     public Plus(ExpressionTreeNode left, ExpressionTreeNode right, Token token) {
         super(left, right, token);
-        System.out.println("left:" + left);
-        System.out.println("right:" + right);
     }
 
     @Override
@@ -39,8 +37,9 @@ public class Plus extends BinaryOperator {
             return false;
         }
         Plus plus = (Plus) o;
-        if (Objects.equals(left, plus.left) && Objects.equals(right, plus.right) || (Objects.equals(left, plus.right) && Objects.equals(right, plus.left));
+        if (Objects.equals(left, plus.left) && Objects.equals(right, plus.right) || (Objects.equals(left, plus.right) && Objects.equals(right, plus.left))){
         	return true;
+        }
         else {
         		return false;
         }
