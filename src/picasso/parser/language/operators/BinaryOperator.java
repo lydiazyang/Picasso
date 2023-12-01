@@ -1,9 +1,15 @@
 package picasso.parser.language.operators;
 
 import picasso.parser.language.ExpressionTreeNode;
-import picasso.parser.language.expressions.RGBColor;
 import picasso.parser.tokens.Token;
 
+/**
+ * Represents a function that takes 2 arguments and an operator.
+ * 
+ * @author Robert C. Duvall
+ * @author Sara Sprenkle
+ *
+ */
 public abstract class BinaryOperator extends ExpressionTreeNode{
 
 	ExpressionTreeNode left;
@@ -33,6 +39,11 @@ public abstract class BinaryOperator extends ExpressionTreeNode{
 		return  "(" + left + token + right + ")";
 	}
 	
+	/**
+	 * Returns true if the binary operator expressions are the same, are both binary operators, have the same class type, and have the same variables and token
+	 * 
+	 * @param Object o
+	 */
 	@Override
 	public boolean equals(Object o) {
 		if (o == this) {
@@ -52,7 +63,7 @@ public abstract class BinaryOperator extends ExpressionTreeNode{
 		BinaryOperator bo = (BinaryOperator) o;
 
 		// check if their parameters are equal
-		if (!((this.left.equals(bo.left)) && (this.right.equals(bo.right))) || (!(this.left.equals(bo.right)) && (this.right.equals(bo.left)))) {
+		if (!((this.left.equals(bo.left)) && (this.right.equals(bo.right))) || (!(this.left.equals(bo.right)) && (this.right.equals(bo.left)))&& (!this.token.equals(bo.token))) {
 			return false;
 		}
 		return true;
