@@ -219,6 +219,7 @@ public class EvaluatorTests {
 			}
 			
 		}
+	}
 		
 	public void testSinEvaluation() {
 		Sin myTree;
