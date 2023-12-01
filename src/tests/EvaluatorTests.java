@@ -260,7 +260,6 @@ public class EvaluatorTests {
 		myTree = new Sin(new X());
 		for (double testVal : tests) {
 			double sinOfTestVal = Math.sin(testVal);
-			System.out.println(sinOfTestVal);
 			assertEquals(new RGBColor(sinOfTestVal, sinOfTestVal, sinOfTestVal), myTree.evaluate(testVal, -1));
 			assertEquals(new RGBColor(sinOfTestVal, sinOfTestVal, sinOfTestVal),
 					myTree.evaluate(testVal, testVal));
