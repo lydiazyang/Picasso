@@ -47,11 +47,11 @@ public class Wrap extends UnaryFunction {
 		double wrappedValue = Math.floor(value);
 		// Wrap values lower than minimum
 		while (wrappedValue < min) {
-			wrappedValue += 1;
+			wrappedValue += 2;
 		}
 		// Wrap values higher than maximum
 		while (wrappedValue > max) {
-			wrappedValue -= 1;
+			wrappedValue -= 2;
 		}
 		return wrappedValue;
 	}
