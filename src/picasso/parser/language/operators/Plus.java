@@ -3,7 +3,6 @@ package picasso.parser.language.operators;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.RGBColor;
 import picasso.parser.tokens.Token;
-import picasso.parser.tokens.operations.PlusToken;
 
 public class Plus extends BinaryOperator {
 
@@ -24,13 +23,4 @@ public class Plus extends BinaryOperator {
         return new RGBColor(red, green, blue);
     }
     
-	/**
-	 * Returns "+", the representation of this variable in Picasso expressions
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "+";
-	}
 }
