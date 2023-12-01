@@ -1,6 +1,10 @@
 package picasso.parser.tokens.functions;
 
-public class AbsToken extends FunctionToken{
+/**
+ * Represents the abs function token
+ * 
+ */ 
+class AbsToken extends FunctionToken{
 
 	public AbsToken() {
 		super("Abs Function Token");
