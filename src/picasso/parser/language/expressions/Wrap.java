@@ -43,8 +43,8 @@ public class Wrap extends UnaryFunction {
 		// Set maximum and minimum integers
 		double max = 1;
 		double min = -1;		
-		// Wrapping helper function
-		double wrappedValue = Math.floor(value);
+		// Instantiate wrapped value
+		double wrappedValue = value;
 		// Wrap values lower than minimum
 		while (wrappedValue < min) {
 			wrappedValue += 2;
