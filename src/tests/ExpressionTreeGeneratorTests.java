@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Stack;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 
 import picasso.parser.ExpressionTreeGenerator;
@@ -36,11 +37,6 @@ public class ExpressionTreeGeneratorTests {
 	public void constantExpressionTests() {
 		ExpressionTreeNode e = parser.makeExpression("[1,-1, 1]");
 		assertEquals(new RGBColor(1, -1, 1), e);
-	}
-
-	private void assertEquals(RGBColor rgbColor, ExpressionTreeNode e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Test

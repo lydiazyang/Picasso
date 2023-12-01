@@ -21,4 +21,14 @@ public class Plus extends BinaryOperator {
 
         return new RGBColor(red, green, blue);
     }
+    
+	/**
+	 * Returns "+", the representation of this variable in Picasso expressions
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "+";
+	}
 }
