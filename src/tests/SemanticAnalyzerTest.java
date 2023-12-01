@@ -40,13 +40,17 @@ class SemanticAnalyzerTest {
 	void testParseAddition() {
 
 		Stack<Token> tokens = new Stack<>();
+		System.out.println(tokens);
 		tokens.push(new IdentifierToken("x"));
 		tokens.push(new IdentifierToken("y"));
 		tokens.push(new PlusToken());
+		System.out.println(tokens);
 
 		ExpressionTreeNode actual = semAnalyzer.generateExpressionTree(tokens);
+		Plus plus = new Plus(new X(), new Y(), new PlusToken());
 
 		assertEquals(new Plus(new X(), new Y()), actual);
+		assertEquals(plus, actual);
 	}
 
 }
