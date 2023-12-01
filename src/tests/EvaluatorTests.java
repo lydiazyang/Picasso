@@ -68,6 +68,31 @@ public class EvaluatorTests {
 	}
 	
 	@Test
+	public void testCeilEvaluation() {
+		Ceil myTree = new Ceil(new X());
+
+		// some straightforward tests
+		assertEquals(new RGBColor(1, 1, 1), myTree.evaluate(.3, 1));
+		assertEquals(new RGBColor(1, 1, 1), myTree.evaluate(.999, -1));
+		assertEquals(new RGBColor(0, 0, 0), myTree.evaluate(-.7, -1));
+
+		// test the ints
+		for (int i = -1; i <= 1; i++) {
+			assertEquals(new RGBColor(i, i, i), myTree.evaluate(i, -i));
+			assertEquals(new RGBColor(i, i, i), myTree.evaluate(i, i));
+		}
+
+		// test doubles 
+		double[] tests = { -.7, -.00001, .000001, .5 };
+
+		for (double testVal1 : tests) {
+			double ceilOfTestVal = Math.ceil(testVal1);
+			assertEquals(new RGBColor(ceilOfTestVal, ceilOfTestVal, ceilOfTestVal), myTree.evaluate(testVal1, -1));
+			assertEquals(new RGBColor(ceilOfTestVal, ceilOfTestVal, ceilOfTestVal), myTree.evaluate(testVal1, testVal1));
+		}
+	}
+	
+	@Test
 	public void testAbsEvaluation() {
 		Abs myTree = new Abs(new X());
 		
