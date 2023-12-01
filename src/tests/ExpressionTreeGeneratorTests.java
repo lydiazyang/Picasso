@@ -49,26 +49,26 @@ public class ExpressionTreeGeneratorTests {
 	@Test
 	public void PlusExpressionTests() {
 		ExpressionTreeNode e = parser.makeExpression("x + y");
-		assertEquals(new Plus(new X(), new Y(), new PlusToken()), e);
+		assertEquals(new Plus(new X(), new Y()), e);
 
 		// no spaces!
 		e = parser.makeExpression("x+y");
-		assertEquals(new Plus(new X(), new Y(), new PlusToken()), e);
+		assertEquals(new Plus(new X(), new Y()), e);
 
 		e = parser.makeExpression("[1,.3,-1] + y");
-		assertEquals(new Plus(new RGBColor(1, .3, -1), new Y(), new PlusToken()), e);
+		assertEquals(new Plus(new RGBColor(1, .3, -1), new Y()), e);
 
 		e = parser.makeExpression("x + y + [ -.51, 0, 1]");
-		assertEquals(new Plus(new Plus(new X(), new Y(), new PlusToken()), new RGBColor(-.51, 0, 1), new PlusToken()), e);
+		assertEquals(new Plus(new Plus(new X(), new Y()), new RGBColor(-.51, 0, 1)), e);
 	}
 
 	@Test
 	public void parenthesesExpressionTests() {
 		ExpressionTreeNode e = parser.makeExpression("( x + y )");
-		assertEquals(new Plus(new X(), new Y(), new PlusToken()), e);
+		assertEquals(new Plus(new X(), new Y()), e);
 
 		e = parser.makeExpression("( x + (y + [ 1, 1, 1] ) )");
-		assertEquals(new Plus(new X(), new Plus(new Y(), new RGBColor(1, 1, 1), new PlusToken()), new PlusToken()), e);
+		assertEquals(new Plus(new X(), new Plus(new Y(), new RGBColor(1, 1, 1))), e);
 	}
 
 	@Test
@@ -91,7 +91,7 @@ public class ExpressionTreeGeneratorTests {
 		assertEquals(new Floor(new X()), e);
 
 		e = parser.makeExpression("floor( x + y )");
-		assertEquals(new Floor(new Plus(new X(), new Y(), new PlusToken())), e);
+		assertEquals(new Floor(new Plus(new X(), new Y())), e);
 	}
 	
 

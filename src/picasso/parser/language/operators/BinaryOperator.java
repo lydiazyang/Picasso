@@ -4,6 +4,12 @@ import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.RGBColor;
 import picasso.parser.tokens.Token;
 
+/**
+ * Represents binary operators in a Picasso expression
+ * 
+ * @author Jenna Bernstein
+ * 
+ */
 public abstract class BinaryOperator extends ExpressionTreeNode{
 
 	ExpressionTreeNode left;
