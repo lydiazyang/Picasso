@@ -75,6 +75,7 @@ public class EvaluatorTests {
 		assertEquals(new RGBColor(1, 1, 1), myTree.evaluate(.3, 1));
 		assertEquals(new RGBColor(1, 1, 1), myTree.evaluate(.999, -1));
 		assertEquals(new RGBColor(0, 0, 0), myTree.evaluate(-.7, -1));
+		assertEquals(new RGBColor(-1, -1, -1), myTree.evaluate(-1.5, -1));
 
 		// test the ints
 		for (int i = -1; i <= 1; i++) {
