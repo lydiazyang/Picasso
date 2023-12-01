@@ -149,7 +149,7 @@ public class EvaluatorTests {
 		}
 		
 		// ... or less than min!
-		for (int i = min-1; i <= -20; i++) {
+		for (int i = min-1; i >= -20; i--) {
 			int wrappedVal = 0;
 			if (i%2 != 0) {
 				wrappedVal = -1;
