@@ -4,9 +4,14 @@ import java.util.Stack;
 
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.Ceil;
-import picasso.parser.language.expressions.Floor;
 import picasso.parser.tokens.Token;
 
+/**
+ * Handles parsing the ceil function.
+ * 
+ * @author Jenna Bernstein
+ * 
+ */
 public class CeilAnalyzer extends UnaryFunctionAnalyzer{
 
 	@Override

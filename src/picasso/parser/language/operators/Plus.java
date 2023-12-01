@@ -4,12 +4,30 @@ import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.RGBColor;
 import picasso.parser.tokens.Token;
 
+/**
+ * Represents the Plus operation in the Picasso language.
+ * 
+ * @author Jenna Bernstein
+ * 
+ */
 public class Plus extends BinaryOperator {
 
+	/**
+	 * Create a plus expression that takes as a parameter the given expression tree nodes that are added and plus token
+	 * 
+	 * @param ExpressionTreeNode left
+	 * @param ExpressionTreeNode right
+	 * @param Token token
+	 */
     public Plus(ExpressionTreeNode left, ExpressionTreeNode right, Token token) {
         super(left, right, token);
     }
 
+    /**
+	 * Evaluates this expression at the given x,y point by evaluating the addition of x and y 
+	 * 
+	 * @return the color from evaluating the addition of x and y
+	 */
 	@Override
     public RGBColor evaluate(double x, double y) {
         RGBColor leftResult = left.evaluate(x, y);
