@@ -6,7 +6,6 @@ import picasso.parser.tokens.operations.MultiplyToken;
 
 public class Multiply extends BinaryOperator{
 
-
 		/**
 		 * Creates a multiply expression that takes as a parameter the given expression
 		 * 
