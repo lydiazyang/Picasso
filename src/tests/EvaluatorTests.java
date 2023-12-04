@@ -221,35 +221,35 @@ public class EvaluatorTests {
 			
 		}
 
-		Clamp myTree = new Clamp(new Y);
+		Clamp myOtherTree = new Clamp(new Y());
 
 		// some straightforward tests
-		assertEquals(new RGBColor(0, 0, 0), myTree.evaluate(-1, 0));
-		assertEquals(new RGBColor(1, 1, 1), myTree.evaluate(-1, 1.5));
-		assertEquals(new RGBColor(-1, -1, -1), myTree.evaluate(-1, -2));
+		assertEquals(new RGBColor(0, 0, 0), myOtherTree.evaluate(-1, 0));
+		assertEquals(new RGBColor(1, 1, 1), myOtherTree.evaluate(-1, 1.5));
+		assertEquals(new RGBColor(-1, -1, -1), myOtherTree.evaluate(-1, -2));
 
 		// test the  negative ints below -1; remember that y's value doesn't matter
 		for (int i = -10; i < 0; i++) {
-			assertEquals(new RGBColor(-1, -1, -1), myTree.evaluate(-i, i));
+			assertEquals(new RGBColor(-1, -1, -1), myOtherTree.evaluate(-i, i));
 		}
 		
 		// test the  positive ints above 1; remember that y's value doesn't matter
 		for (int i = 1; i < 10; i++) {
-			assertEquals(new RGBColor(1, 1, 1), myTree.evaluate(-i, i));
+			assertEquals(new RGBColor(1, 1, 1), myOtherTree.evaluate(-i, i));
 		}
 
-		double[] tests = { -.7, -2.4, 1, 1.5, 0, .2, -.7 };
+		double[] tests2 = { -.7, -2.4, 1, 1.5, 0, .2, -.7 };
 
-		for (double testVal : tests) {
+		for (double testVal : tests2) {
 			if (testVal > 1) {
-				assertEquals(new RGBColor(1, 1, 1), myTree.evaluate(-1, testVal));
+				assertEquals(new RGBColor(1, 1, 1), myOtherTree.evaluate(-1, testVal));
 			}
 			else if (testVal < -1) {
-				assertEquals(new RGBColor(-1, -1, -1), myTree.evaluate(-1, testVal));
+				assertEquals(new RGBColor(-1, -1, -1), myOtherTree.evaluate(-1, testVal));
 			}
 			else {
 				assertEquals(new RGBColor(testVal, testVal, testVal),
-						myTree.evaluate(testVal, testVal));
+						myOtherTree.evaluate(testVal, testVal));
 			}
 			
 		}
