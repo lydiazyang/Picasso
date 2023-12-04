@@ -7,8 +7,8 @@ import picasso.parser.tokens.chars.CharToken;
  * Represents the plus sign token
  * 
  */
-public class PlusToken extends CharToken implements OperationInterface {
-	public PlusToken() {
+public class AdditionToken extends CharToken implements OperationInterface {
+	public AdditionToken() {
 		super(CharConstants.PLUS);
 	}
 }
