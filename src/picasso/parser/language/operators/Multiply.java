@@ -2,7 +2,6 @@ package picasso.parser.language.operators;
 
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.RGBColor;
-import picasso.parser.tokens.Token;
 import picasso.parser.tokens.operations.MultiplyToken;
 
 public class Multiply extends BinaryOperator{

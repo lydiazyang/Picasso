@@ -5,6 +5,7 @@ import java.util.Stack;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.operators.Addition;
 import picasso.parser.tokens.Token;
+import picasso.parser.tokens.operations.AdditionToken;
 
 /**
  * Handles parsing the plus or "addition function".
