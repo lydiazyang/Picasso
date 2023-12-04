@@ -159,6 +159,9 @@ public class ExpressionTreeGenerator {
 				}
 
 			} else {
+				System.out.println(token);
+				System.out.println(token instanceof OperationInterface);
+				System.out.println(token.getClass().getName());
 				System.out.println("ERROR: No match: " + token);
 			}
 			// System.out.println("Postfix: " + postfixResult);
@@ -188,15 +191,11 @@ public class ExpressionTreeGenerator {
 	 * @return
 	 */
 	private int orderOfOperation(Token token) {
-
-		// TODO: Need to finish with other operators.
-
-		// TODO: DISCUSS: Is it better to have a method in the OperatorToken
-		// class that gives the order of operation?
-
 		if (token instanceof AdditionToken)
-			return ADD_OR_SUBTRACT;
-		else
-			return CONSTANT;
+	        return ADD_OR_SUBTRACT;
+	    else if (token instanceof MultiplyToken)
+	        return MULTIPLY_OR_DIVIDE;
+	    else
+	        return CONSTANT;
 	}
 }

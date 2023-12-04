@@ -10,9 +10,13 @@ import picasso.parser.language.CharConstants;
  *
  */
 public class LeftBracketToken extends CharToken {
+	
+	private static final int ORDER = 1;
 
 	public LeftBracketToken() {
 		super(CharConstants.LEFT_BRACKET);
 	}
+	
+	
 
 }

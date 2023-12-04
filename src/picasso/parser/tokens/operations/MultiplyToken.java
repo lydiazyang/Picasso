@@ -9,7 +9,10 @@ import picasso.parser.tokens.chars.CharToken;
  * 
  */
 public class MultiplyToken extends CharToken implements OperationInterface {
+	
 	public MultiplyToken() {
 		super(CharConstants.STAR);
 	}
+	
+
 }

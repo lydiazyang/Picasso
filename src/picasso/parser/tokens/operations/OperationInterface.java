@@ -5,5 +5,6 @@ package picasso.parser.tokens.operations;
  * 
  */
 public interface OperationInterface {
+	
 
 }
