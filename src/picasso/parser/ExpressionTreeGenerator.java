@@ -79,6 +79,7 @@ public class ExpressionTreeGenerator {
 		Stack<Token> postfixResult = new Stack<Token>();
 
 		Iterator<Token> iter = tokens.iterator();
+		
 
 		// TO DISCUSS: Is this the correct way to design this code?
 		// What is the code smell? What is the alternative?
@@ -155,8 +156,6 @@ public class ExpressionTreeGenerator {
 
 			} else {
 				System.out.println("ERROR: No match: " + token);
-				// Throws exception if operands/functions that are not supported
-				throw new ParseException("Extra operands without operators or functions");
 			}
 			//System.out.println("Postfix: " + postfixResult);
 		}

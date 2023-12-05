@@ -71,6 +71,6 @@ public class CharToken extends Token {
 	
 	@Override
 	public int getOrder() {
-		return 0;
+		return Token.CONSTANT;
 	}
 }

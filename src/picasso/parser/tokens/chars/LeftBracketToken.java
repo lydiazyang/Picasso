@@ -17,6 +17,8 @@ public class LeftBracketToken extends CharToken {
 		super(CharConstants.LEFT_BRACKET);
 	}
 	
-	
+	public int getOrder() {
+		return ORDER;
+	}
 
 }

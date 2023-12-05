@@ -13,4 +13,8 @@ public class LeftParenToken extends CharToken {
 	public LeftParenToken() {
 		super(CharConstants.LEFT_PAREN);
 	}
+	
+	public int getOrder() {
+		return ORDER;
+	}
 }
