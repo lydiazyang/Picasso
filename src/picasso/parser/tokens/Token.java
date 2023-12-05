@@ -46,6 +46,8 @@ public abstract class Token {
 	 * @return true iff this Token represents a function
 	 */
 	public abstract boolean isFunction();
+
+	public abstract int getOrder();
 	
 
 }

@@ -61,6 +61,11 @@ public class NumberToken extends Token {
 	public boolean isFunction() {
 		return false;
 	}
+
+	@Override
+	public int getOrder() {
+		return 0;
+	}
 	
 
 }

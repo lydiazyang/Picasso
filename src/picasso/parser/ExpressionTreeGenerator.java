@@ -34,16 +34,8 @@ public class ExpressionTreeGenerator {
 	 *         formula
 	 */
 	public ExpressionTreeNode makeExpression(String infix) {
-		System.out.println(infix);
 		Stack<Token> postfix = infixToPostfix(infix);
-		System.out.println(postfix);
-		if (postfix.isEmpty()) {
-			return null;
-		}
-		// Throws exception if operands/functions that are not supported
-		if (!postfix.isEmpty()) {
-			throw new ParseException("Extra operands without operators or functions");
-		}
+
 
 		// System.out.println("Process postfix expression");
 		SemanticAnalyzer semAnalyzer = SemanticAnalyzer.getInstance();
@@ -93,6 +85,8 @@ public class ExpressionTreeGenerator {
 
 		while (iter.hasNext()) {
 			Token token = iter.next();
+			System.out.println(token);
+			System.out.println(token.getClass());
 			if (token instanceof NumberToken) {
 				postfixResult.push(token);
 			} else if (token instanceof ColorToken) {
@@ -160,12 +154,11 @@ public class ExpressionTreeGenerator {
 				}
 
 			} else {
-				System.out.println(token);
-				System.out.println(token instanceof OperationInterface);
-				System.out.println(token.getClass().getName());
 				System.out.println("ERROR: No match: " + token);
+				// Throws exception if operands/functions that are not supported
+				throw new ParseException("Extra operands without operators or functions");
 			}
-			// System.out.println("Postfix: " + postfixResult);
+			//System.out.println("Postfix: " + postfixResult);
 		}
 
 		while (!operators.isEmpty()) {
@@ -192,11 +185,11 @@ public class ExpressionTreeGenerator {
 	 * @return
 	 */
 	private int orderOfOperation(Token token) {
-		if (token instanceof AdditionToken)
-	        return ADD_OR_SUBTRACT;
-	    else if (token instanceof MultiplyToken)
-	        return MULTIPLY_OR_DIVIDE;
-	    else
+	    if (token instanceof OperationInterface) {
+	        return token.getOrder();
+	    } else {
 	        return CONSTANT;
+	    }
 	}
+
 }

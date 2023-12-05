@@ -13,5 +13,9 @@ public class AdditionToken extends CharToken implements OperationInterface {
 		super(CharConstants.PLUS);
 	}
 	
+	
+	public int getOrder() {
+		return ADDITION_OR_SUBTRACTION;
+	}
 
 }
