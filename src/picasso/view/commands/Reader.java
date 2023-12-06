@@ -53,9 +53,11 @@ public class Reader extends FileCommand<Pixmap> {
         	// evaluate each line
             String line;
             while ((line = br.readLine()) != null) {
-            	frame.setExpressionInTextField(line);
-            	Evaluator evaluator = new Evaluator(functionTextField);
-            	evaluator.execute(target);
+				if (!line.startsWith("//")) {
+					frame.setExpressionInTextField(line);
+            		Evaluator evaluator = new Evaluator(functionTextField);
+            		evaluator.execute(target);
+				}
             }
         } catch (IOException e) {
             e.printStackTrace();
