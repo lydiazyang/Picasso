@@ -18,6 +18,7 @@ import picasso.view.Frame;
  */
 public class Reader extends FileCommand<Pixmap> {
 	private Frame frame;
+	private JTextField functionTextField;
 
 	/**
 	 * Creates a Reader object, which prompts users for image files to open
@@ -26,9 +27,10 @@ public class Reader extends FileCommand<Pixmap> {
 		super(JFileChooser.OPEN_DIALOG);
 	}
 
-	public Reader(Frame frame) {
+	public Reader(Frame frame, JTextField functionTextField) {
 		super(JFileChooser.OPEN_DIALOG);
 		this.frame = frame;
+		this.functionTextField = functionTextField;
 	}
 
 	/**
@@ -38,25 +40,23 @@ public class Reader extends FileCommand<Pixmap> {
 		String fileName = getFileName();
 		if (fileName != null) {
 			if (fileName.endsWith(".exp")){
-				readExpressionFromFile(fileName);
+				readExpressionFromFile(fileName, target);
 			} else {
 				target.read(fileName);
 			}
 		}
 	}
 
-	private void readExpressionFromFile(String filePath) {
+	private void readExpressionFromFile(String filePath, Pixmap target) {
 		
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
         	// evaluate each line
-            StringBuilder expressionBuilder = new StringBuilder();
             String line;
             while ((line = br.readLine()) != null) {
-                expressionBuilder.append(line);
+            	frame.setExpressionInTextField(line);
+            	Evaluator evaluator = new Evaluator(functionTextField);
+            	evaluator.execute(target);
             }
-
-            String expression = expressionBuilder.toString();
-            frame.setExpressionInTextField(expression);
         } catch (IOException e) {
             e.printStackTrace();
         }
