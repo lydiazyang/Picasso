@@ -53,6 +53,7 @@ public abstract class Token {
 	 */
 	public abstract boolean isFunction();
 
+	
 	public abstract int getOrder();
 	
 
