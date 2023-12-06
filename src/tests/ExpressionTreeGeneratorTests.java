@@ -130,4 +130,12 @@ public class ExpressionTreeGeneratorTests {
 		assertEquals(new Wrap(new Addition(new X(), new Y())), e);
 	}
 	
+	@Test
+	public void sinFunctionTests() {
+		ExpressionTreeNode e = parser.makeExpression("sin( x )");
+		assertEquals(new Sin(new X()), e);
+		
+		e = parser.makeExpression("sin( x + y )");
+		assertEquals(new Sin(new Addition(new X(), new Y())), e);
+	}
 }
