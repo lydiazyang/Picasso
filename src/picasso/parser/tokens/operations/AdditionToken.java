@@ -8,7 +8,14 @@ import picasso.parser.tokens.chars.CharToken;
  * 
  */
 public class AdditionToken extends CharToken implements OperationInterface {
+
 	public AdditionToken() {
 		super(CharConstants.PLUS);
 	}
+	
+	
+	public int getOrder() {
+		return ADDITION_OR_SUBTRACTION;
+	}
+
 }

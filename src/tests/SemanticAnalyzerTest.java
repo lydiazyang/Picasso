@@ -47,7 +47,7 @@ class SemanticAnalyzerTest {
 		System.out.println(tokens);
 
 		ExpressionTreeNode actual = semAnalyzer.generateExpressionTree(tokens);
-		Addition plus = new Addition(new X(), new Y(), new AdditionToken());
+		Addition plus = new Addition(new X(), new Y());
 
 		assertEquals(new Addition(new X(), new Y()), actual);
 		assertEquals(plus, actual);
