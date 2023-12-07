@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
+import picasso.parser.language.expressions.RGBColor;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.X;
 import picasso.parser.language.expressions.Y;
@@ -38,6 +39,16 @@ public class IdentifierAnalyzer implements SemanticAnalyzerInterface {
 		// TODO : What should we do if we don't recognize the identifier?
 		// Is that an error? Or, could there a valid reason?
 		return null;
+	}
+	
+	/**
+	 * Store the assignment result in the symbol table
+	 * 
+	 * @param variable the variable name
+	 * @param result the RGBColor result
+	 */
+	public static void storeAssignmnetResult(String variable, RGBColor result) {
+		assignmentSymbolTable.put(variable, result);
 	}
 
 }

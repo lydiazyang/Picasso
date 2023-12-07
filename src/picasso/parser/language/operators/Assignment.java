@@ -47,8 +47,8 @@ public class Assignment extends BinaryOperator {
     public RGBColor evaluate(double x, double y) {
         //Evaluate the right hand side expression and store result in variable assigned to it
 		RGBColor result = this.right.evaluate(x,y);
-		//TODO: Store the result in the assignment symbol table
-		
+		//Store the result in the assignment symbol table
+		IdentifierAnalyzer.storeAssignmentResult(variable, result);
 		//Return the result
 		return result;
 		
