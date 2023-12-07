@@ -1,7 +1,6 @@
 package picasso;
 
 import java.awt.Dimension;
-
 import picasso.view.Frame;
 
 /**

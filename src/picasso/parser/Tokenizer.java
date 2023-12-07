@@ -67,6 +67,7 @@ public class Tokenizer {
 		List<Token> tokens = new ArrayList<Token>();
 
 		Token result = nextToken();
+		System.out.println(result);
 
 		while (true) {
 

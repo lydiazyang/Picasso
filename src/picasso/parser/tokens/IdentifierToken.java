@@ -49,4 +49,10 @@ public class IdentifierToken extends Token {
 		return false;
 	}
 
+	@Override
+	public int getOrder() {
+		return 0;
+	}
+	
+
 }

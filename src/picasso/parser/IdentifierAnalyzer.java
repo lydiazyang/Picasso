@@ -35,10 +35,13 @@ public class IdentifierAnalyzer implements SemanticAnalyzerInterface {
 		if (mapped != null) {
 			return mapped;
 		}
+		else {
+			throw new ParseException("Extra operands without operators or functions");
+		}
 
+		// Throws exception if operands/functions that are not supported
 		// TODO : What should we do if we don't recognize the identifier?
 		// Is that an error? Or, could there a valid reason?
-		return null;
 	}
 	
 	/**

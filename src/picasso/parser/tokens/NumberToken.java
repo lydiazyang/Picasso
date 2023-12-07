@@ -62,4 +62,10 @@ public class NumberToken extends Token {
 		return false;
 	}
 
+	@Override
+	public int getOrder() {
+		return 0;
+	}
+	
+
 }
