@@ -7,9 +7,15 @@ import picasso.parser.language.CharConstants;
  *
  */
 public class RightBracketToken extends CharToken {
+	
+	private static final int ORDER = 1;
 
 	public RightBracketToken() {
 		super(CharConstants.RIGHT_BRACKET);
+	}
+	
+	public int getOrder() {
+		return ORDER;
 	}
 
 }

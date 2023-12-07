@@ -2,8 +2,7 @@ package picasso.parser.language.operators;
 
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.RGBColor;
-import picasso.parser.tokens.Token;
-import picasso.parser.tokens.operations.PlusToken;
+import picasso.parser.tokens.operations.AdditionToken;
 
 /**
  * Represents the Plus operation in the Picasso language.
@@ -11,28 +10,17 @@ import picasso.parser.tokens.operations.PlusToken;
  * @author Jenna Bernstein
  * 
  */
-public class Plus extends BinaryOperator {
+public class Addition extends BinaryOperator {
 
 	/**
 	 * Creates a wrap expression that takes as a parameter the given expression
 	 * 
 	 * @param param the expressions to add
 	 */
-    public Plus(ExpressionTreeNode left, ExpressionTreeNode right) {
-        super(left, right, new PlusToken());
+    public Addition(ExpressionTreeNode left, ExpressionTreeNode right) {
+        super(left, right, new AdditionToken());
     }
 
-
-	/**
-	 * Create a plus expression that takes as a parameter the given expression tree nodes that are added and plus token
-	 * 
-	 * @param ExpressionTreeNode left
-	 * @param ExpressionTreeNode right
-	 * @param Token token
-	 */
-    public Plus(ExpressionTreeNode left, ExpressionTreeNode right, Token token) {
-        super(left, right, token);
-    }
 
     /**
 	 * Evaluates this expression at the given x,y point by evaluating the addition of x and y 

@@ -43,14 +43,31 @@ class SemanticAnalyzerTest {
 		System.out.println(tokens);
 		tokens.push(new IdentifierToken("x"));
 		tokens.push(new IdentifierToken("y"));
-		tokens.push(new PlusToken());
+		tokens.push(new AdditionToken());
 		System.out.println(tokens);
 
 		ExpressionTreeNode actual = semAnalyzer.generateExpressionTree(tokens);
-		Plus plus = new Plus(new X(), new Y(), new PlusToken());
+		Addition plus = new Addition(new X(), new Y());
 
-		assertEquals(new Plus(new X(), new Y()), actual);
+		assertEquals(new Addition(new X(), new Y()), actual);
 		assertEquals(plus, actual);
+	}
+	
+	@Test
+	void testParseMultiplication() {
+
+		Stack<Token> tokens = new Stack<>();
+		System.out.println(tokens);
+		tokens.push(new IdentifierToken("x"));
+		tokens.push(new IdentifierToken("y"));
+		tokens.push(new MultiplyToken());
+		System.out.println(tokens);
+
+		ExpressionTreeNode actual = semAnalyzer.generateExpressionTree(tokens);
+		Multiply times = new Multiply(new X(), new Y());
+
+		assertEquals(new Multiply(new X(), new Y()), actual);
+		assertEquals(times, actual);
 	}
 
 }
