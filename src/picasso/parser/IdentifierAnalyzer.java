@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
+import picasso.parser.language.expressions.RGBColor;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.X;
 import picasso.parser.language.expressions.Y;
@@ -19,7 +20,7 @@ import picasso.parser.tokens.Token;
 public class IdentifierAnalyzer implements SemanticAnalyzerInterface {
 
 	static Map<String, ExpressionTreeNode> idToExpression = new HashMap<String, ExpressionTreeNode>();
-
+	static Map<String, RGBColor> assignmentSymbolTable = new HashMap<>();
 	static {
 		// We always have x and y defined.
 		idToExpression.put("x", new X());
@@ -41,6 +42,16 @@ public class IdentifierAnalyzer implements SemanticAnalyzerInterface {
 		// Throws exception if operands/functions that are not supported
 		// TODO : What should we do if we don't recognize the identifier?
 		// Is that an error? Or, could there a valid reason?
+	}
+	
+	/**
+	 * Store the assignment result in the symbol table
+	 * 
+	 * @param variable the variable name
+	 * @param result the RGBColor result
+	 */
+	public static void storeAssignmnetResult(String variable, RGBColor result) {
+		assignmentSymbolTable.put(variable, result);
 	}
 
 }
