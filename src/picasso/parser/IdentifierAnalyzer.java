@@ -20,7 +20,7 @@ import picasso.parser.tokens.Token;
 public class IdentifierAnalyzer implements SemanticAnalyzerInterface {
 
 	static Map<String, ExpressionTreeNode> idToExpression = new HashMap<String, ExpressionTreeNode>();
-
+	static Map<String, RGBColor> assignmentSymbolTable = new HashMap<>();
 	static {
 		// We always have x and y defined.
 		idToExpression.put("x", new X());
