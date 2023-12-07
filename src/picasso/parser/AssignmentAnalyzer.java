@@ -5,7 +5,7 @@ import java.util.Stack;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.operators.Assignment;
 import picasso.parser.tokens.Token;
-import picasso.parser.tokens.Variable;
+import picasso.parser.language.expressions.Variable;
 import picasso.parser.tokens.operations.AssignmentToken;
 
 /**
@@ -21,11 +21,11 @@ public class AssignmentAnalyzer implements SemanticAnalyzerInterface {
 	@Override
 	public ExpressionTreeNode generateExpressionTree(Stack<Token> tokens) {
 		tokens.pop(); // Remove the assignment token
-		// Get the variable name
-		String variable = ((Variable) tokens.pop()).getValue();
 		// Process the Parameters
 		ExpressionTreeNode rhsExpression = SemanticAnalyzer.getInstance().generateExpressionTree(tokens);
-		return new Assignment(variable, rhsExpression, new AssignmentToken());
+		// Get the variable name
+		Variable variable = new Variable(tokens.pop().toString());
+		return new Assignment(variable, rhsExpression);
 	}
 
 }

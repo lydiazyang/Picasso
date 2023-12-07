@@ -2,8 +2,10 @@ package picasso.parser.language.operators;
 
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.RGBColor;
+import picasso.parser.language.expressions.Variable;
 import picasso.parser.tokens.Token;
 import picasso.parser.tokens.operations.AssignmentToken;
+import picasso.parser.IdentifierAnalyzer;
 
 /**
  * Represents the Assignment operation in the Picasso language.
@@ -13,7 +15,7 @@ import picasso.parser.tokens.operations.AssignmentToken;
  */
 public class Assignment extends BinaryOperator {
 	
-	private String variable;
+	private Variable variable;
 
 	/**
 	 * Creates an assignment expression with the given variable and right hand expression
@@ -21,22 +23,10 @@ public class Assignment extends BinaryOperator {
 	 * @param variable the given variable
 	 * @param rhsExpression the right hand side expression
 	 */
-    public Assignment(String variable, ExpressionTreeNode rhsExpression, Token token) {
-        super(null, rhsExpression, token);
+    public Assignment(Variable variable, ExpressionTreeNode rhsExpression) {
+        super(variable, rhsExpression);
         this.variable = variable;
     }
-
-
-
-    /**
-     * Gets the variable name
-     * @return variable name
-     */
-    
-    public String getVaribale() {
-		return variable;
-	}
-
 
 	/**
 	 * 
@@ -46,11 +36,15 @@ public class Assignment extends BinaryOperator {
 	@Override
     public RGBColor evaluate(double x, double y) {
         //Evaluate the right hand side expression and store result in variable assigned to it
-		RGBColor result = this.right.evaluate(x,y);
+		//RGBColor result = this.right.evaluate(x,y);
 		//Store the result in the assignment symbol table
-		IdentifierAnalyzer.storeAssignmentResult(variable, result);
+		//get just the variable from the name
+		String ass = variable.getName();
+		int col = ass.indexOf(":");
+		String name = ass.substring(col+2,ass.length());
+		IdentifierAnalyzer.storeAssignmentResult(name,this.right);
 		//Return the result
-		return result;
+		return new RGBColor(1, 1, 1);
 		
     }
     
