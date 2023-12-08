@@ -4,21 +4,21 @@
 package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+import javax.swing.JTextField;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Stack;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import picasso.model.Pixmap;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.*;
+import picasso.view.commands.Evaluator;
 import picasso.parser.language.operators.Addition;
 import picasso.parser.tokens.IdentifierToken;
 import picasso.parser.tokens.Token;
 import picasso.parser.tokens.operations.AdditionToken;
+
 
 /**
  * Tests of the evaluation of expression trees
@@ -27,6 +27,9 @@ import picasso.parser.tokens.operations.AdditionToken;
  * 
  */
 public class EvaluatorTests {
+
+	@SuppressWarnings("unused")
+	private static final JTextField JTextField = null;
 
 	/**
 	 * @throws java.lang.Exception
@@ -318,6 +321,22 @@ public class EvaluatorTests {
 			}
 			
 		}
+	}
+	
+	@Test
+	public void testEvaluatorException() {
+		JTextField input = new JTextField();
+		
+	    boolean thrown = true;
+
+	    try {
+			Evaluator evaluator = new Evaluator(input);
+			evaluator.execute(null);
+	    } catch (Exception e) {
+	        thrown = false;
+	    }
+
+	    assertTrue(thrown);
 	}
 		
 	@Test
