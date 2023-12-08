@@ -121,15 +121,15 @@ public class TokenizerTest {
 		String expression = "x*y+y+y*x";
 		List<Token> tokens = tokenizer.parseTokens(expression);
 		System.out.println(tokens);
-		assertEquals(new MultiplyToken(), tokens.get(0));
-		assertEquals(new IdentifierToken("x"), tokens.get(1));
+		assertEquals(new IdentifierToken("x"), tokens.get(0));
+		assertEquals(new MultiplyToken(), tokens.get(1));
 		assertEquals(new IdentifierToken("y"), tokens.get(2));
 		assertEquals(new AdditionToken(), tokens.get(3));
-		assertEquals(new MultiplyToken(), tokens.get(4));
-		assertEquals(new IdentifierToken("y"), tokens.get(5));
-		assertEquals(new IdentifierToken("x"), tokens.get(6));
-		assertEquals(new AdditionToken(), tokens.get(7));
-		assertEquals(new IdentifierToken("y"), tokens.get(8));
+		assertEquals(new IdentifierToken("y"), tokens.get(4));
+		assertEquals(new AdditionToken(), tokens.get(5));
+		assertEquals(new IdentifierToken("y"), tokens.get(6));
+		assertEquals(new MultiplyToken(), tokens.get(7));
+		assertEquals(new IdentifierToken("x"), tokens.get(8));
 		
 	}
 
