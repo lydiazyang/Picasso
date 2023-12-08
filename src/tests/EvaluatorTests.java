@@ -349,6 +349,7 @@ public class EvaluatorTests {
 	    assertTrue(thrown);
 	}
 		
+	
 	@Test
 	public void testSinEvaluation() {
 		Sin myTree;
