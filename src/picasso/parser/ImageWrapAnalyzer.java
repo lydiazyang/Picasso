@@ -19,7 +19,6 @@ public  class ImageWrapAnalyzer  implements SemanticAnalyzerInterface {
 
 	@Override
 	public  ExpressionTreeNode generateExpressionTree(Stack<Token> tokens) {
-		System.out.println("\n\n\n\nThis is the stack: " + tokens + "\n\n\n\n");
 		tokens.pop();  // Remove the image wrap token
 		
 		// get expression to calculate y coords
