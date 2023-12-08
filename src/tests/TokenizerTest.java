@@ -10,9 +10,12 @@ import org.junit.jupiter.api.Test;
 
 import picasso.parser.ParseException;
 import picasso.parser.Tokenizer;
+import picasso.parser.language.operators.Addition;
 import picasso.parser.tokens.*;
 import picasso.parser.tokens.chars.*;
 import picasso.parser.tokens.functions.*;
+import picasso.parser.tokens.operations.AdditionToken;
+import picasso.parser.tokens.operations.MultiplyToken;
 
 /**
  * Tests that the tokenizer tokens as expected. 
@@ -94,15 +97,40 @@ public class TokenizerTest {
 
 	@Test
 	public void testTokenizeCombinedFunctionExpression() {
-		String expression = "perlinColor(floor(x), y)";
+		String expression = "ceil(floor(x) + y)";
 		List<Token> tokens = tokenizer.parseTokens(expression);
-		// TODO: Check the tokens...
+		System.out.println(tokens);
+		assertEquals(new CeilToken(), tokens.get(0));
+		assertEquals(new LeftParenToken(), tokens.get(1));
+		assertEquals(new FloorToken(), tokens.get(2));
+		assertEquals(new LeftParenToken(), tokens.get(3));
+		assertEquals(new IdentifierToken("x"), tokens.get(4));
+		assertEquals(new RightParenToken(), tokens.get(5));
+		assertEquals(new AdditionToken(), tokens.get(6));
+		assertEquals(new IdentifierToken("y"), tokens.get(7));
+		assertEquals(new RightParenToken(), tokens.get(8));
+		
 
 		expression = "sin(perlinColor(x, y))";
 		tokens = tokenizer.parseTokens(expression);
-		// TODO: Check the tokens...
+		System.out.println(tokens);
 	}
 
-	// TODO: Test arithmetic (rather than function-based) expressions ...
+	@Test
+	public void testTokenizeCombinedArithmeticExpression() {
+		String expression = "x*y+y+y*x";
+		List<Token> tokens = tokenizer.parseTokens(expression);
+		System.out.println(tokens);
+		assertEquals(new MultiplyToken(), tokens.get(0));
+		assertEquals(new IdentifierToken("x"), tokens.get(1));
+		assertEquals(new IdentifierToken("y"), tokens.get(2));
+		assertEquals(new AdditionToken(), tokens.get(3));
+		assertEquals(new MultiplyToken(), tokens.get(4));
+		assertEquals(new IdentifierToken("y"), tokens.get(5));
+		assertEquals(new IdentifierToken("x"), tokens.get(6));
+		assertEquals(new AdditionToken(), tokens.get(7));
+		assertEquals(new IdentifierToken("y"), tokens.get(8));
+		
+	}
 
 }
