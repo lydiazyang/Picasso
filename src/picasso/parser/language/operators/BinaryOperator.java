@@ -19,7 +19,6 @@ public abstract class BinaryOperator extends ExpressionTreeNode{
 	 * 
 	 * @param left
 	 * @param right
-	 * @param token
 	 */
 	public BinaryOperator(ExpressionTreeNode left, ExpressionTreeNode right) {
 		this.left = left;
