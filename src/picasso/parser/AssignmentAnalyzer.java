@@ -25,6 +25,7 @@ public class AssignmentAnalyzer implements SemanticAnalyzerInterface {
 		ExpressionTreeNode rhsExpression = SemanticAnalyzer.getInstance().generateExpressionTree(tokens);
 		// Get the variable name
 		Variable variable = new Variable(tokens.pop().toString());
+		
 		return new Assignment(variable, rhsExpression);
 	}
 
