@@ -86,8 +86,6 @@ public class ExpressionTreeGenerator {
 
 		while (iter.hasNext()) {
 			Token token = iter.next();
-			System.out.println(token);
-			System.out.println(token.getClass());
 			if (token instanceof NumberToken) {
 				postfixResult.push(token);
 			} else if (token instanceof ColorToken) {
