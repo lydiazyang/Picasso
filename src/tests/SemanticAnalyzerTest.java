@@ -40,11 +40,9 @@ class SemanticAnalyzerTest {
 	void testParseAddition() {
 
 		Stack<Token> tokens = new Stack<>();
-		System.out.println(tokens);
 		tokens.push(new IdentifierToken("x"));
 		tokens.push(new IdentifierToken("y"));
 		tokens.push(new AdditionToken());
-		System.out.println(tokens);
 
 		ExpressionTreeNode actual = semAnalyzer.generateExpressionTree(tokens);
 		Addition plus = new Addition(new X(), new Y());
@@ -55,13 +53,10 @@ class SemanticAnalyzerTest {
 	
 	@Test
 	void testParseMultiplication() {
-
 		Stack<Token> tokens = new Stack<>();
-		System.out.println(tokens);
 		tokens.push(new IdentifierToken("x"));
 		tokens.push(new IdentifierToken("y"));
 		tokens.push(new MultiplyToken());
-		System.out.println(tokens);
 
 		ExpressionTreeNode actual = semAnalyzer.generateExpressionTree(tokens);
 		Multiply times = new Multiply(new X(), new Y());

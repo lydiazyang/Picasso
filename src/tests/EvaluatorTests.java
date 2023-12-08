@@ -299,6 +299,8 @@ public class EvaluatorTests {
 		}
 
 	}
+	
+
 
 	private void assertEquals(RGBColor expected, RGBColor actual) {
 		if (expected == null || actual == null) {
