@@ -173,7 +173,7 @@ public class ExpressionTreeGenerator {
 			postfixResult.push(operators.pop());
 		}
 
-		System.out.println(postfixResult);
+		//System.out.println(postfixResult);
 		return postfixResult;
 
 	}

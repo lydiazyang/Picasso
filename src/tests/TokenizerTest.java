@@ -111,9 +111,9 @@ public class TokenizerTest {
 		assertEquals(new RightParenToken(), tokens.get(8));
 		
 
-		expression = "sin(perlinColor(x, y))";
-		tokens = tokenizer.parseTokens(expression);
-		System.out.println(tokens);
+		//expression = "sin(perlinColor(x, y))";
+		//tokens = tokenizer.parseTokens(expression);
+		//System.out.println(tokens);
 	}
 
 	@Test

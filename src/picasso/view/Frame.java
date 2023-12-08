@@ -42,7 +42,7 @@ public class Frame extends JFrame {
 		commands.add(new JLabel("Enter Function: "));
         commands.add(functionTextField);
         commands.add("Evaluate", new ThreadedCommand<Pixmap>(canvas, evaluator));
-		commands.add("Open", new Reader());
+		commands.add("Open", new Reader(this, functionTextField));
 		commands.add("Save", new Writer());
 		
 
@@ -51,4 +51,8 @@ public class Frame extends JFrame {
 		getContentPane().add(commands, BorderLayout.NORTH);
 		pack();
 	}
+
+	public void setExpressionInTextField(String expression) {
+        	functionTextField.setText(expression);
+    	}
 }
