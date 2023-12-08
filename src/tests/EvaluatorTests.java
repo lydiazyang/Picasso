@@ -5,11 +5,20 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.util.Stack;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import picasso.model.Pixmap;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.*;
+import picasso.parser.language.operators.Addition;
+import picasso.parser.tokens.IdentifierToken;
+import picasso.parser.tokens.Token;
+import picasso.parser.tokens.operations.AdditionToken;
 
 /**
  * Tests of the evaluation of expression trees
@@ -355,6 +364,47 @@ public class EvaluatorTests {
 		}
 
 	}
+	
+	@Test
+	public void testImageWrapEvaluation() {
+		String filePath = Path.of("").toAbsolutePath().toString() + File.separator + "images" + File.separator + "vortex.jpg";
+		Pixmap image = new Pixmap(filePath);
+		
+		// constant input: (x = 1)
+		ImageWrap myTree = new ImageWrap(image, new Constant(1), new Y());
+		assertEquals(new RGBColor(image.getColor(scale(1), scale(-1))), myTree.evaluate(-1, -1));
+		assertEquals(new RGBColor(image.getColor(scale(1), scale(-1))), myTree.evaluate(-.6, -1));
+		assertEquals(new RGBColor(image.getColor(scale(1), scale(-1))), myTree.evaluate(1, -1));
+		assertEquals(new RGBColor(image.getColor(scale(1), scale(-1))), myTree.evaluate(.6, -1));
+		
+		// constant input: (y = 1)
+		myTree = new ImageWrap(image, new X(), new Constant(1));
+		assertEquals(new RGBColor(image.getColor(scale(-1), scale(1))), myTree.evaluate(-1, -1));
+		assertEquals(new RGBColor(image.getColor(scale(-1), scale(1))), myTree.evaluate(-1, -.6));
+		assertEquals(new RGBColor(image.getColor(scale(-1), scale(1))), myTree.evaluate(-1, 1));
+		assertEquals(new RGBColor(image.getColor(scale(-1), scale(1))), myTree.evaluate(-1, .6));
+		
+		// variable input: (x = x+x)
+		myTree = new ImageWrap(image, new Addition(new X(), new X()), new Y());
+		assertEquals(new RGBColor(image.getColor(scale(0), scale(-1))), myTree.evaluate(-1, -1));
+		assertEquals(new RGBColor(image.getColor(scale(0), scale(-1))),myTree.evaluate(-2, -1));
+		assertEquals(new RGBColor(image.getColor(scale(0), scale(-1))), myTree.evaluate(2, -1));
+		assertEquals(new RGBColor(image.getColor(scale(0), scale(-1))), myTree.evaluate(0, -1));
+		
+		// variable input (y = y+y)
+		myTree = new ImageWrap(image, new X(), new Addition(new Y(), new Y()));
+		assertEquals(new RGBColor(image.getColor(scale(-1), scale(0))), myTree.evaluate(-1, -1));
+		assertEquals(new RGBColor(image.getColor(scale(-1), scale(0))),myTree.evaluate(-1, -2));
+		assertEquals(new RGBColor(image.getColor(scale(-1), scale(0))), myTree.evaluate(-1, 2));
+		assertEquals(new RGBColor(image.getColor(scale(-1), scale(0))), myTree.evaluate(-1, 0));
+		
+		// sin input (x = sin(x))
+		myTree = new ImageWrap(image, new Sin(new X()), new Y());
+		assertEquals(new RGBColor(image.getColor(scale(Math.sin(-1)), scale(-1))), myTree.evaluate(-1, -1));
+		assertEquals(new RGBColor(image.getColor(scale(Math.sin(-.6)), scale(-1))), myTree.evaluate(-.6, -1));
+		assertEquals(new RGBColor(image.getColor(scale(Math.sin(1)), scale(-1))), myTree.evaluate(1, -1));
+		assertEquals(new RGBColor(image.getColor(scale(Math.sin(.6)), scale(-1))), myTree.evaluate(.6, -1));
+	}
 
 	private void assertEquals(RGBColor expected, RGBColor actual) {
 		if (expected == null || actual == null) {
@@ -363,6 +413,12 @@ public class EvaluatorTests {
 		else if (expected.getBlue() != actual.getBlue() || expected.getRed() != actual.getRed() || expected.getGreen() != actual.getGreen()){
 			throw new AssertionError("RGB values are not equal");
 		}
+	}
+	
+	private int scale(double value) {
+		return  (int) (((value + 1)/2)*600);
+		
+
 	}
 
 }
