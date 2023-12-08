@@ -8,3 +8,4 @@ floor(x)
 // These
 //Comments 
 floor(x+y)
+imageWrap("vortex.jpg", x*x, y)
