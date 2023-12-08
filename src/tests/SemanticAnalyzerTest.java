@@ -64,5 +64,20 @@ class SemanticAnalyzerTest {
 		assertEquals(new Multiply(new X(), new Y()), actual);
 		assertEquals(times, actual);
 	}
+	
+    @Test
+    void testParseAssignment() {
+        // Create a test case for Assignment
+        Stack<Token> tokens = new Stack<>();
+        tokens.push(new IdentifierToken("x"));
+        tokens.push(new ColorToken(1, 0, 0)); 
+        tokens.push(new AssignmentToken());
+
+        ExpressionTreeNode actual = semAnalyzer.generateExpressionTree(tokens);
+        Assignment assignment = new Assignment(new Variable("x"), new RGBColor(1, 0, 0));
+
+        assertEquals(new RGBColor(1, 1, 1), actual.evaluate(0, 0)); 
+        assertEquals(assignment, actual);
+    }	
 
 }

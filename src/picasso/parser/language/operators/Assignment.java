@@ -29,7 +29,7 @@ public class Assignment extends BinaryOperator {
 	/**
 	 * 
 	 * 
-	 * @return the color from evaluating the addition of x and y
+	 * @return the color from evaluating variable
 	 */
 	@Override
     public RGBColor evaluate(double x, double y) {
@@ -39,7 +39,7 @@ public class Assignment extends BinaryOperator {
 		String name = assign.substring(col+2,assign.length());
 		IdentifierAnalyzer.storeAssignmentResult(name,this.right);
 		//Return the result
-		return new RGBColor(1, 1, 1);
+		return this.right.evaluate(x, y);
 		
     }
     
