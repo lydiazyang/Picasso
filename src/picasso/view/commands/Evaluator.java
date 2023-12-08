@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JTextField;
+import javax.swing.JOptionPane;
 
 import picasso.model.Pixmap;
 import picasso.parser.ExpressionTreeGenerator;
@@ -29,6 +30,7 @@ public class Evaluator implements Command<Pixmap> {
 	 * Evaluate an expression for each point in the image.
 	 */
 	public void execute(Pixmap target) {
+		try {
 		// create the expression to evaluate just once
 		ExpressionTreeNode expr = createExpression(input.getText());
 		// evaluate it for each pixel
@@ -40,12 +42,17 @@ public class Evaluator implements Command<Pixmap> {
 				Color pixelColor = expr.evaluate(evalX, evalY).toJavaColor();
 				target.setColor(imageX, imageY, pixelColor);
 			}
+		} 
+		}catch (Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "The expression you entered is currently unsupported. Please enter a new expression.", "Functionality not available",0, null);
 		}
 	}
 
 	/**
 	 * Convert from image space to domain space.
 	 */
+
 	protected double imageToDomainScale(int value, int bounds) {
 		double range = DOMAIN_MAX - DOMAIN_MIN;
 		return ((double) value / bounds) * range + DOMAIN_MIN;
