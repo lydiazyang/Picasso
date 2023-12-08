@@ -3,8 +3,6 @@ package picasso.parser.language.operators;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.RGBColor;
 import picasso.parser.language.expressions.Variable;
-import picasso.parser.tokens.Token;
-import picasso.parser.tokens.operations.AssignmentToken;
 import picasso.parser.IdentifierAnalyzer;
 
 /**
