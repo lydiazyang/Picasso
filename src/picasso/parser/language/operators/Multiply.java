@@ -12,7 +12,7 @@ public class Multiply extends BinaryOperator{
 		 * @param param the expressions to multiply
 		 */
 	    public Multiply(ExpressionTreeNode left, ExpressionTreeNode right) {
-	        super(left, right, new MultiplyToken());
+	        super(left, right);
 	    }
 
 
