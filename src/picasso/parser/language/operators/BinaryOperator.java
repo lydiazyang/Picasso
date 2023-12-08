@@ -19,12 +19,10 @@ public abstract class BinaryOperator extends ExpressionTreeNode{
 	 * 
 	 * @param left
 	 * @param right
-	 * @param token
 	 */
-	public BinaryOperator(ExpressionTreeNode left, ExpressionTreeNode right, Token token) {
+	public BinaryOperator(ExpressionTreeNode left, ExpressionTreeNode right) {
 		this.left = left;
 		this.right = right;
-		this.token = token;
 	}
 
 	/**
@@ -52,7 +50,7 @@ public abstract class BinaryOperator extends ExpressionTreeNode{
 		if (!(o instanceof BinaryOperator)) {
 			return false;
 		}
-
+ 
 		// Make sure the objects are the same type
 
 		if (o.getClass() != this.getClass()) {

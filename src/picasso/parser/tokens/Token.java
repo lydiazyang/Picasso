@@ -53,7 +53,11 @@ public abstract class Token {
 	 */
 	public abstract boolean isFunction();
 
-	
+	/**
+	 * Returns the order of operations number for a specific token
+	 * 
+	 * @return order of operations integer for the token
+	 */
 	public abstract int getOrder();
 	
 

@@ -4,15 +4,21 @@
 package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import javax.swing.JTextField;
-
+import java.io.File;
+import java.nio.file.Path;
+import java.util.Stack;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+import picasso.model.Pixmap;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.*;
 import picasso.view.commands.Evaluator;
+import picasso.parser.language.operators.Addition;
+import picasso.parser.tokens.IdentifierToken;
+import picasso.parser.tokens.Token;
+import picasso.parser.tokens.operations.AdditionToken;
+
 
 /**
  * Tests of the evaluation of expression trees
@@ -131,37 +137,39 @@ public class EvaluatorTests {
 	
 	@Test
 	public void testWrapEvaluation() {
-		Wrap myTree = new Wrap(new X());
 		int min = -1;
 		int max = 1;
 		
-		// test "normal" cases
-		assertEquals(new RGBColor(0, 0, 0), myTree.evaluate(0, -1));
-		assertEquals(new RGBColor(1, 1, 1), myTree.evaluate(1, -1));
-		assertEquals(new RGBColor(-1, -1, -1), myTree.evaluate(-1, -1));
-		assertEquals(new RGBColor(-.5, -.5, -.5), myTree.evaluate(1.5, -1));
-		assertEquals(new RGBColor(.5, .5, .5), myTree.evaluate(-1.5, -1));
-		assertEquals(new RGBColor(0, 0, 0), myTree.evaluate(2, -1));
-		assertEquals(new RGBColor(0, 0, 0), myTree.evaluate(-2, -1));
+		// testing only x values
+		Wrap xTree = new Wrap(new X());
 		
-		// test first 20 ints more than max 
-		for (int i = max+1; i <= 20; i++) {
+		// test "normal" cases
+		assertEquals(new RGBColor(0, 0, 0), xTree.evaluate(0, -1));
+		assertEquals(new RGBColor(1, 1, 1), xTree.evaluate(1, -1));
+		assertEquals(new RGBColor(-1, -1, -1), xTree.evaluate(-1, -1));
+		assertEquals(new RGBColor(-.5, -.5, -.5), xTree.evaluate(1.5, -1));
+		assertEquals(new RGBColor(.5, .5, .5), xTree.evaluate(-1.5, -1));
+		assertEquals(new RGBColor(0, 0, 0), xTree.evaluate(2, -1));
+		assertEquals(new RGBColor(0, 0, 0), xTree.evaluate(-2, -1));
+		
+		// test first 10 ints more than max 
+		for (int i = max+1; i <= 10; i++) {
 			int wrappedVal = 0;
 			if (i%2 != 0) {
 				wrappedVal = 1;
 			}
-			assertEquals(new RGBColor(wrappedVal, wrappedVal, wrappedVal), myTree.evaluate(i, -i));
-			assertEquals(new RGBColor(wrappedVal, wrappedVal, wrappedVal), myTree.evaluate(i, i));
+			assertEquals(new RGBColor(wrappedVal, wrappedVal, wrappedVal), xTree.evaluate(i, -i));
+			assertEquals(new RGBColor(wrappedVal, wrappedVal, wrappedVal), xTree.evaluate(i, i));
 		}
 		
 		// ... or less than min!
-		for (int i = min-1; i >= -20; i--) {
+		for (int i = min-1; i >= -10; i--) {
 			int wrappedVal = 0;
 			if (i%2 != 0) {
 				wrappedVal = -1;
 			}
-			assertEquals(new RGBColor(wrappedVal, wrappedVal, wrappedVal), myTree.evaluate(i, -i));
-			assertEquals(new RGBColor(wrappedVal, wrappedVal, wrappedVal), myTree.evaluate(i, i));
+			assertEquals(new RGBColor(wrappedVal, wrappedVal, wrappedVal), xTree.evaluate(i, -i));
+			assertEquals(new RGBColor(wrappedVal, wrappedVal, wrappedVal), xTree.evaluate(i, i));
 		}
 		
 		// test doubles 
@@ -186,10 +194,64 @@ public class EvaluatorTests {
 				}
 				
 			}
-			assertEquals(new RGBColor(wrappedTestVal, wrappedTestVal, wrappedTestVal), myTree.evaluate(testVal, -1));
+			assertEquals(new RGBColor(wrappedTestVal, wrappedTestVal, wrappedTestVal), xTree.evaluate(testVal, -1));
 		}
 		
+		// testing only y values
+		Wrap yTree = new Wrap(new Y());
+		
+		// test "normal" cases
+		assertEquals(new RGBColor(0, 0, 0), yTree.evaluate(-1, 0));
+		assertEquals(new RGBColor(1, 1, 1), yTree.evaluate(-1, 1));
+		assertEquals(new RGBColor(-1, -1, -1), yTree.evaluate(-1, -1));
+		assertEquals(new RGBColor(-.5, -.5, -.5), yTree.evaluate(-1, 1.5));
+		assertEquals(new RGBColor(.5, .5, .5), yTree.evaluate(-1, -1.5));
+		assertEquals(new RGBColor(0, 0, 0), yTree.evaluate(-1, 2));
+		assertEquals(new RGBColor(0, 0, 0), yTree.evaluate(-1, -2));
 
+		// test first 10 ints more than max 
+		for (int i = max+1; i <= 10; i++) {
+			int wrappedVal = 0;
+			if (i%2 != 0) {
+				wrappedVal = 1;
+			}
+			assertEquals(new RGBColor(wrappedVal, wrappedVal, wrappedVal), yTree.evaluate(-i, i));
+			assertEquals(new RGBColor(wrappedVal, wrappedVal, wrappedVal), yTree.evaluate(i, i));
+		}
+		
+		// ... or less than min!
+		for (int i = min-1; i >= -10; i--) {
+			int wrappedVal = 0;
+			if (i%2 != 0) {
+				wrappedVal = -1;
+			}
+			assertEquals(new RGBColor(wrappedVal, wrappedVal, wrappedVal), yTree.evaluate(-i, i));
+			assertEquals(new RGBColor(wrappedVal, wrappedVal, wrappedVal), yTree.evaluate(i, i));
+		}
+		
+		// test doubles 
+		for (double testVal : tests) {
+			double wrappedTestVal = testVal;
+			
+			// check if value is more than min or max of (-)1
+			if (Math.abs(testVal) > max) {
+				double absTestVal = Math.abs(testVal);
+				//make WTV the residual 
+				wrappedTestVal = absTestVal % max;
+				
+				// if odd then should be -(max - residual), else just residual
+				if (Math.floor(absTestVal)%2 != 0) {
+					wrappedTestVal = -(max - wrappedTestVal);
+				}
+				
+				// if less than min then negate
+				if (testVal < min) {
+					wrappedTestVal = -wrappedTestVal;
+				}
+				
+			}
+			assertEquals(new RGBColor(wrappedTestVal, wrappedTestVal, wrappedTestVal), yTree.evaluate(-1, testVal));
+		}
 	}
 	
 	@Test
@@ -299,15 +361,17 @@ public class EvaluatorTests {
 			assertEquals(new RGBColor(Math.sin(i), Math.sin(i), Math.sin(i)), myTree.evaluate(i, i));		
 		}
 		
-		// Expression Input
-		//myTree = new Sin(new Plus(new X(), new Y()));
-	    //assertEquals(new RGBColor(Math.sin(1 + 2), Math.sin(1 + 2), Math.sin(1 + 2)), myTree.evaluate(1, 2));
-	    
-		// Recursion: sin(sin(x))
-	    myTree = new Sin(new Sin(new X()));
+		// Variable Input: sin(y)
+				myTree = new Sin(new Y());
+				for (int i = -1; i <= 1; i++) {
+					assertEquals(new RGBColor(Math.sin(i), Math.sin(i), Math.sin(i)), myTree.evaluate(i, i));		
+				}
+			    
+		// Recursion: sin(sin(y))
+	    myTree = new Sin(new Sin(new Y()));
 	    for (double angle = -2 * Math.PI; angle <= 2 * Math.PI; angle += Math.PI / 4) {
 	        assertEquals(new RGBColor(Math.sin(Math.sin(angle)), Math.sin(Math.sin(angle)), Math.sin(Math.sin(angle))),
-	                myTree.evaluate(angle, 0));
+	                myTree.evaluate(0, angle));
 	    }
 	    
 	    // Double tests
@@ -321,6 +385,47 @@ public class EvaluatorTests {
 		}
 
 	}
+	
+	@Test
+	public void testImageWrapEvaluation() {
+		String filePath = Path.of("").toAbsolutePath().toString() + File.separator + "images" + File.separator + "vortex.jpg";
+		Pixmap image = new Pixmap(filePath);
+		
+		// constant input: (x = 1)
+		ImageWrap myTree = new ImageWrap(image, new Constant(1), new Y());
+		assertEquals(new RGBColor(image.getColor(scale(1), scale(-1))), myTree.evaluate(-1, -1));
+		assertEquals(new RGBColor(image.getColor(scale(1), scale(-1))), myTree.evaluate(-.6, -1));
+		assertEquals(new RGBColor(image.getColor(scale(1), scale(-1))), myTree.evaluate(1, -1));
+		assertEquals(new RGBColor(image.getColor(scale(1), scale(-1))), myTree.evaluate(.6, -1));
+		
+		// constant input: (y = 1)
+		myTree = new ImageWrap(image, new X(), new Constant(1));
+		assertEquals(new RGBColor(image.getColor(scale(-1), scale(1))), myTree.evaluate(-1, -1));
+		assertEquals(new RGBColor(image.getColor(scale(-1), scale(1))), myTree.evaluate(-1, -.6));
+		assertEquals(new RGBColor(image.getColor(scale(-1), scale(1))), myTree.evaluate(-1, 1));
+		assertEquals(new RGBColor(image.getColor(scale(-1), scale(1))), myTree.evaluate(-1, .6));
+		
+		// variable input: (x = x+x)
+		myTree = new ImageWrap(image, new Addition(new X(), new X()), new Y());
+		assertEquals(new RGBColor(image.getColor(scale(0), scale(-1))), myTree.evaluate(-1, -1));
+		assertEquals(new RGBColor(image.getColor(scale(0), scale(-1))),myTree.evaluate(-2, -1));
+		assertEquals(new RGBColor(image.getColor(scale(0), scale(-1))), myTree.evaluate(2, -1));
+		assertEquals(new RGBColor(image.getColor(scale(0), scale(-1))), myTree.evaluate(0, -1));
+		
+		// variable input (y = y+y)
+		myTree = new ImageWrap(image, new X(), new Addition(new Y(), new Y()));
+		assertEquals(new RGBColor(image.getColor(scale(-1), scale(0))), myTree.evaluate(-1, -1));
+		assertEquals(new RGBColor(image.getColor(scale(-1), scale(0))),myTree.evaluate(-1, -2));
+		assertEquals(new RGBColor(image.getColor(scale(-1), scale(0))), myTree.evaluate(-1, 2));
+		assertEquals(new RGBColor(image.getColor(scale(-1), scale(0))), myTree.evaluate(-1, 0));
+		
+		// sin input (x = sin(x))
+		myTree = new ImageWrap(image, new Sin(new X()), new Y());
+		assertEquals(new RGBColor(image.getColor(scale(Math.sin(-1)), scale(-1))), myTree.evaluate(-1, -1));
+		assertEquals(new RGBColor(image.getColor(scale(Math.sin(-.6)), scale(-1))), myTree.evaluate(-.6, -1));
+		assertEquals(new RGBColor(image.getColor(scale(Math.sin(1)), scale(-1))), myTree.evaluate(1, -1));
+		assertEquals(new RGBColor(image.getColor(scale(Math.sin(.6)), scale(-1))), myTree.evaluate(.6, -1));
+	}
 
 	private void assertEquals(RGBColor expected, RGBColor actual) {
 		if (expected == null || actual == null) {
@@ -329,6 +434,12 @@ public class EvaluatorTests {
 		else if (expected.getBlue() != actual.getBlue() || expected.getRed() != actual.getRed() || expected.getGreen() != actual.getGreen()){
 			throw new AssertionError("RGB values are not equal");
 		}
+	}
+	
+	private int scale(double value) {
+		return  (int) (((value + 1)/2)*600);
+		
+
 	}
 
 }

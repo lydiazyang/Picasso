@@ -86,8 +86,6 @@ public class ExpressionTreeGenerator {
 
 		while (iter.hasNext()) {
 			Token token = iter.next();
-			System.out.println(token);
-			System.out.println(token.getClass());
 			if (token instanceof NumberToken) {
 				postfixResult.push(token);
 			} else if (token instanceof ColorToken) {
@@ -110,7 +108,7 @@ public class ExpressionTreeGenerator {
 				 * pop o2 off the stack, onto the output queue;
 				 */
 				while (!operators.isEmpty() && !(operators.peek() instanceof LeftParenToken)
-						&& orderOfOperation(token) <= orderOfOperation(operators.peek())) {
+						&& orderOfOperation(token) >= orderOfOperation(operators.peek())) {
 					postfixResult.push(operators.pop());
 				}
 
@@ -173,7 +171,7 @@ public class ExpressionTreeGenerator {
 			postfixResult.push(operators.pop());
 		}
 
-		// System.out.println(postfixResult);
+		//System.out.println(postfixResult);
 		return postfixResult;
 
 	}

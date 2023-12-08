@@ -18,7 +18,7 @@ public class Addition extends BinaryOperator {
 	 * @param param the expressions to add
 	 */
     public Addition(ExpressionTreeNode left, ExpressionTreeNode right) {
-        super(left, right, new AdditionToken());
+        super(left, right);
     }
 
 
