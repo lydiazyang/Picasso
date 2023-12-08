@@ -11,7 +11,7 @@ package picasso.parser.tokens;
  *
  */
 public abstract class Token {
-	
+	protected static final int EQUALS = -1;
 	protected static final int CONSTANT = 0;
 	protected static final int GROUPING = 1;
 	protected static final int MULTIPLICATION_OR_DIVISION = 2;

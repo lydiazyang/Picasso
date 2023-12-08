@@ -37,7 +37,7 @@ public class Assignment extends BinaryOperator {
 		String assign = variable.getName();
 		int col = assign.indexOf(":");
 		String name = assign.substring(col+2,assign.length());
-		IdentifierAnalyzer.storeAssignmentResult(name,this.right);
+		IdentifierAnalyzer.storeAssignmentResult(variable.getName(),this.right);
 		//Return the result
 		return this.right.evaluate(x, y);
 		

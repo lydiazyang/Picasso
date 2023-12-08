@@ -183,7 +183,9 @@ public class ExpressionTreeGenerator {
 	 */
 	private int orderOfOperation(Token token) {
 	    if (token instanceof OperationInterface) {
-	        return token.getOrder();
+	    	System.out.println(token);
+	    	System.out.println(token.getOrder());
+	    	return token.getOrder();
 	    } else {
 	        return CONSTANT;
 	    }
