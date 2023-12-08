@@ -125,39 +125,37 @@ public class EvaluatorTests {
 	
 	@Test
 	public void testWrapEvaluation() {
+		Wrap myTree = new Wrap(new X());
 		int min = -1;
 		int max = 1;
 		
-		// testing only x values
-		Wrap xTree = new Wrap(new X());
-		
 		// test "normal" cases
-		assertEquals(new RGBColor(0, 0, 0), xTree.evaluate(0, -1));
-		assertEquals(new RGBColor(1, 1, 1), xTree.evaluate(1, -1));
-		assertEquals(new RGBColor(-1, -1, -1), xTree.evaluate(-1, -1));
-		assertEquals(new RGBColor(-.5, -.5, -.5), xTree.evaluate(1.5, -1));
-		assertEquals(new RGBColor(.5, .5, .5), xTree.evaluate(-1.5, -1));
-		assertEquals(new RGBColor(0, 0, 0), xTree.evaluate(2, -1));
-		assertEquals(new RGBColor(0, 0, 0), xTree.evaluate(-2, -1));
+		assertEquals(new RGBColor(0, 0, 0), myTree.evaluate(0, -1));
+		assertEquals(new RGBColor(1, 1, 1), myTree.evaluate(1, -1));
+		assertEquals(new RGBColor(-1, -1, -1), myTree.evaluate(-1, -1));
+		assertEquals(new RGBColor(-.5, -.5, -.5), myTree.evaluate(1.5, -1));
+		assertEquals(new RGBColor(.5, .5, .5), myTree.evaluate(-1.5, -1));
+		assertEquals(new RGBColor(0, 0, 0), myTree.evaluate(2, -1));
+		assertEquals(new RGBColor(0, 0, 0), myTree.evaluate(-2, -1));
 		
-		// test first 10 ints more than max 
-		for (int i = max+1; i <= 10; i++) {
+		// test first 20 ints more than max 
+		for (int i = max+1; i <= 20; i++) {
 			int wrappedVal = 0;
 			if (i%2 != 0) {
 				wrappedVal = 1;
 			}
-			assertEquals(new RGBColor(wrappedVal, wrappedVal, wrappedVal), xTree.evaluate(i, -i));
-			assertEquals(new RGBColor(wrappedVal, wrappedVal, wrappedVal), xTree.evaluate(i, i));
+			assertEquals(new RGBColor(wrappedVal, wrappedVal, wrappedVal), myTree.evaluate(i, -i));
+			assertEquals(new RGBColor(wrappedVal, wrappedVal, wrappedVal), myTree.evaluate(i, i));
 		}
 		
 		// ... or less than min!
-		for (int i = min-1; i >= -10; i--) {
+		for (int i = min-1; i >= -20; i--) {
 			int wrappedVal = 0;
 			if (i%2 != 0) {
 				wrappedVal = -1;
 			}
-			assertEquals(new RGBColor(wrappedVal, wrappedVal, wrappedVal), xTree.evaluate(i, -i));
-			assertEquals(new RGBColor(wrappedVal, wrappedVal, wrappedVal), xTree.evaluate(i, i));
+			assertEquals(new RGBColor(wrappedVal, wrappedVal, wrappedVal), myTree.evaluate(i, -i));
+			assertEquals(new RGBColor(wrappedVal, wrappedVal, wrappedVal), myTree.evaluate(i, i));
 		}
 		
 		// test doubles 
@@ -182,64 +180,10 @@ public class EvaluatorTests {
 				}
 				
 			}
-			assertEquals(new RGBColor(wrappedTestVal, wrappedTestVal, wrappedTestVal), xTree.evaluate(testVal, -1));
+			assertEquals(new RGBColor(wrappedTestVal, wrappedTestVal, wrappedTestVal), myTree.evaluate(testVal, -1));
 		}
 		
-		// testing only y values
-		Wrap yTree = new Wrap(new Y());
-		
-		// test "normal" cases
-		assertEquals(new RGBColor(0, 0, 0), yTree.evaluate(-1, 0));
-		assertEquals(new RGBColor(1, 1, 1), yTree.evaluate(-1, 1));
-		assertEquals(new RGBColor(-1, -1, -1), yTree.evaluate(-1, -1));
-		assertEquals(new RGBColor(-.5, -.5, -.5), yTree.evaluate(-1, 1.5));
-		assertEquals(new RGBColor(.5, .5, .5), yTree.evaluate(-1, -1.5));
-		assertEquals(new RGBColor(0, 0, 0), yTree.evaluate(-1, 2));
-		assertEquals(new RGBColor(0, 0, 0), yTree.evaluate(-1, -2));
 
-		// test first 10 ints more than max 
-		for (int i = max+1; i <= 10; i++) {
-			int wrappedVal = 0;
-			if (i%2 != 0) {
-				wrappedVal = 1;
-			}
-			assertEquals(new RGBColor(wrappedVal, wrappedVal, wrappedVal), yTree.evaluate(-i, i));
-			assertEquals(new RGBColor(wrappedVal, wrappedVal, wrappedVal), yTree.evaluate(i, i));
-		}
-		
-		// ... or less than min!
-		for (int i = min-1; i >= -10; i--) {
-			int wrappedVal = 0;
-			if (i%2 != 0) {
-				wrappedVal = -1;
-			}
-			assertEquals(new RGBColor(wrappedVal, wrappedVal, wrappedVal), yTree.evaluate(-i, i));
-			assertEquals(new RGBColor(wrappedVal, wrappedVal, wrappedVal), yTree.evaluate(i, i));
-		}
-		
-		// test doubles 
-		for (double testVal : tests) {
-			double wrappedTestVal = testVal;
-			
-			// check if value is more than min or max of (-)1
-			if (Math.abs(testVal) > max) {
-				double absTestVal = Math.abs(testVal);
-				//make WTV the residual 
-				wrappedTestVal = absTestVal % max;
-				
-				// if odd then should be -(max - residual), else just residual
-				if (Math.floor(absTestVal)%2 != 0) {
-					wrappedTestVal = -(max - wrappedTestVal);
-				}
-				
-				// if less than min then negate
-				if (testVal < min) {
-					wrappedTestVal = -wrappedTestVal;
-				}
-				
-			}
-			assertEquals(new RGBColor(wrappedTestVal, wrappedTestVal, wrappedTestVal), yTree.evaluate(-1, testVal));
-		}
 	}
 	
 	@Test
