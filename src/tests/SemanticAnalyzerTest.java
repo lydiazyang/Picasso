@@ -76,7 +76,7 @@ class SemanticAnalyzerTest {
         ExpressionTreeNode actual = semAnalyzer.generateExpressionTree(tokens);
         Assignment assignment = new Assignment(new Variable("x"), new RGBColor(1, 0, 0));
 
-        assertEquals(new RGBColor(1, 1, 1), actual.evaluate(0, 0)); 
+        assertEquals(new RGBColor(1, 0, 0), actual.evaluate(0, 0)); 
         assertEquals(assignment, actual);
     }	
 

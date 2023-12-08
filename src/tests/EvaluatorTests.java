@@ -15,6 +15,8 @@ import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.*;
 import picasso.view.commands.Evaluator;
 import picasso.parser.language.operators.Addition;
+import picasso.parser.language.operators.Assignment;
+import picasso.parser.language.operators.Multiply;
 import picasso.parser.tokens.IdentifierToken;
 import picasso.parser.tokens.Token;
 import picasso.parser.tokens.operations.AdditionToken;
@@ -385,6 +387,23 @@ public class EvaluatorTests {
 		}
 
 	}
+	
+    @Test
+    public void testAssignmentEvaluation() {
+    	// Addition Test
+        Variable a = new Variable("a");
+        ExpressionTreeNode e = new Addition(new X(), new Y());
+        // Assign a = x+y
+        Assignment assignment = new Assignment(a, e);
+        assertEquals(new RGBColor(1, 1, 1), assignment.evaluate(.5, .5));
+        
+        // Multiplication Test
+        Variable u = new Variable("u");
+        ExpressionTreeNode g = new Multiply(new X(), new Y());
+        // Assign a = x*y
+        Assignment assign2 = new Assignment(u, g);
+        assertEquals(new RGBColor(.25, .25, .25), assign2.evaluate(.5, .5));
+    }
 	
 	@Test
 	public void testImageWrapEvaluation() {
