@@ -1,0 +1,11 @@
+// Hey
+// You
+// Should
+// Skip
+floor(x)
+// All 
+// Of
+// These
+//Comments 
+floor(x+y)
+imageWrap("vortex.jpg", x*x, y)
