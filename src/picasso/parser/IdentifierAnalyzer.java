@@ -50,6 +50,7 @@ public class IdentifierAnalyzer implements SemanticAnalyzerInterface {
 	 */
 	public static void storeAssignmentResult(String variable, ExpressionTreeNode result) {
 		idToExpression.put(variable, result);
+		System.out.println("Map:"+idToExpression);
 	}
 
 }

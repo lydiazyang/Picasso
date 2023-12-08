@@ -14,9 +14,12 @@ import picasso.parser.ExpressionTreeGenerator;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.*;
 import picasso.parser.language.operators.Addition;
+import picasso.parser.language.operators.Assignment;
+import picasso.parser.tokens.ColorToken;
 import picasso.parser.tokens.IdentifierToken;
 import picasso.parser.tokens.Token;
 import picasso.parser.tokens.operations.AdditionToken;
+import picasso.parser.tokens.operations.AssignmentToken;
 import picasso.parser.tokens.operations.MultiplyToken;
 
 /**
@@ -87,6 +90,20 @@ public class ExpressionTreeGeneratorTests {
 	}
 
 	@Test
+	public void arithmeticStackEqualsTests() {
+		Stack<Token> stack = parser.infixToPostfix("a=x+y");
+
+		Stack<Token> expected = new Stack<>();
+		expected.push(new IdentifierToken("a"));
+		expected.push(new IdentifierToken("x"));
+		expected.push(new IdentifierToken("y"));
+		expected.push(new AdditionToken());
+		expected.push(new AssignmentToken());
+
+		assertEquals(expected, stack);
+	}
+
+	@Test
 	public void floorFunctionTests() {
 		ExpressionTreeNode e = parser.makeExpression("floor( x )");
 		assertEquals(new Floor(new X()), e);
@@ -139,4 +156,21 @@ public class ExpressionTreeGeneratorTests {
 		e = parser.makeExpression("sin( x + y )");
 		assertEquals(new Sin(new Addition(new X(), new Y())), e);
 	}
+    @Test
+    void testParseAssignment() {
+        // Create a test case for Assignment
+        ExpressionTreeNode actual = parser.makeExpression("a=[1, 0, 0]");
+        Assignment assignment = new Assignment(new Variable("a"), new RGBColor(1, 0, 0));
+        assignment.evaluate(0, 0);
+        assertEquals(new RGBColor(1, 0, 0), actual.evaluate(0, 0)); 
+        assertEquals(assignment, actual);
+        
+        actual = parser.makeExpression("a");  
+        assertEquals(actual, new RGBColor(1, 0, 0));
+        // Test addition
+        actual = parser.makeExpression("b=x+y");
+        Assignment assign2 = new Assignment(new Variable("b"), new Addition(new X(), new Y()));
+        assertEquals(actual, assign2);
+    }	
+	
 }
