@@ -15,6 +15,7 @@ import picasso.parser.tokens.*;
 import picasso.parser.tokens.chars.*;
 import picasso.parser.tokens.functions.*;
 import picasso.parser.tokens.operations.AdditionToken;
+import picasso.parser.tokens.operations.AssignmentToken;
 import picasso.parser.tokens.operations.MultiplyToken;
 
 /**
@@ -132,5 +133,16 @@ public class TokenizerTest {
 		assertEquals(new IdentifierToken("x"), tokens.get(8));
 		
 	}
+
+	@Test
+	public void testTokenizeAssignment() {
+	    String expression = "a = [1, 0, 0]";
+	    List<Token> tokens = tokenizer.parseTokens(expression);
+	    assertEquals(new IdentifierToken("a"), tokens.get(0));
+	    assertEquals(new AssignmentToken(), tokens.get(1));
+	    assertEquals(new ColorToken(1, 0, 0), tokens.get(2));
+	    assertEquals(3, tokens.size());
+	}
+
 
 }
