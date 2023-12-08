@@ -3,8 +3,6 @@ package picasso.parser.language.operators;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.RGBColor;
 import picasso.parser.language.expressions.Variable;
-import picasso.parser.tokens.Token;
-import picasso.parser.tokens.operations.AssignmentToken;
 import picasso.parser.IdentifierAnalyzer;
 
 /**
@@ -35,13 +33,10 @@ public class Assignment extends BinaryOperator {
 	 */
 	@Override
     public RGBColor evaluate(double x, double y) {
-        //Evaluate the right hand side expression and store result in variable assigned to it
-		//RGBColor result = this.right.evaluate(x,y);
-		//Store the result in the assignment symbol table
 		//get just the variable from the name
-		String ass = variable.getName();
-		int col = ass.indexOf(":");
-		String name = ass.substring(col+2,ass.length());
+		String assign = variable.getName();
+		int col = assign.indexOf(":");
+		String name = assign.substring(col+2,assign.length());
 		IdentifierAnalyzer.storeAssignmentResult(name,this.right);
 		//Return the result
 		return new RGBColor(1, 1, 1);

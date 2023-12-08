@@ -6,7 +6,6 @@ import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.operators.Assignment;
 import picasso.parser.tokens.Token;
 import picasso.parser.language.expressions.Variable;
-import picasso.parser.tokens.operations.AssignmentToken;
 
 /**
  * Handles parsing the Assignment function
@@ -25,6 +24,7 @@ public class AssignmentAnalyzer implements SemanticAnalyzerInterface {
 		ExpressionTreeNode rhsExpression = SemanticAnalyzer.getInstance().generateExpressionTree(tokens);
 		// Get the variable name
 		Variable variable = new Variable(tokens.pop().toString());
+		
 		return new Assignment(variable, rhsExpression);
 	}
 
