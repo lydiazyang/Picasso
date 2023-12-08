@@ -50,7 +50,7 @@ public abstract class BinaryOperator extends ExpressionTreeNode{
 		if (!(o instanceof BinaryOperator)) {
 			return false;
 		}
-
+ 
 		// Make sure the objects are the same type
 
 		if (o.getClass() != this.getClass()) {
