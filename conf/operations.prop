@@ -1,3 +1,6 @@
 +=Addition
 *=Multiply
+-=Subtraction
+/=Division
 \==Assignment
+%=Mod

@@ -7,14 +7,14 @@ import picasso.parser.tokens.*;
 
 /**
  * Represents the multiplication sign token
- * @author Jenna Bernstein
+ * 
  */
-public class MultiplyToken extends CharToken implements OperationInterface {
+public class ModToken extends CharToken implements OperationInterface {
 	private static int order = Token.MULTIPLICATION_OR_DIVISION;
 	
 	
-	public MultiplyToken() {
-		super(CharConstants.STAR);
+	public ModToken() {
+		super(CharConstants.MOD);
 	}
 
 	

@@ -14,12 +14,10 @@ public class RandomEvaluator implements Command<Pixmap> {
     public static final double DOMAIN_MIN = -1;
     public static final double DOMAIN_MAX = 1;
     private static final String[] VARIABLES = {"x", "y", "Color", "Constant"};
-    private static final String[] BINARYOPERATORS = {"+", "*"};
-    private static final String[] UNARYOPERATORS = {"sin", "sin", "ceil", "floor", "wrap", "abs", "clamp"};
+    private static final String[] BINARYOPERATORS = {"+", "*", "%", "/", "-"};
+    private static final String[] UNARYOPERATORS = {"sin", "cos", "tan", "atan", "exp", "ceil", "floor", "wrap", "abs", "clamp"};
 	private int depth;
 	
-	public RandomEvaluator(){
-	}
     
     @Override
     public void execute(Pixmap target) {
@@ -47,7 +45,7 @@ public class RandomEvaluator implements Command<Pixmap> {
     
     public static String generateRandomExpression(int depth, boolean topLevel) {
         String expression = buildRandomExpression(depth, topLevel);
-        System.out.println(expression); // Print the generated expression before returning
+        System.out.println("Random Expression: " + expression); // Print the generated expression before returning
         return expression;
     }
 
@@ -66,8 +64,8 @@ public class RandomEvaluator implements Command<Pixmap> {
                 String randColor = "[" + red.toString() + "," + green.toString() + "," + blue.toString() + "]";
                 expression.append(randColor);
             } else if ("Constant".equals(randVariable)) {
-            	Double randInt = random.nextDouble() * 2 - 1;
-            	expression.append(randInt.toString());
+                Double randInt = random.nextDouble() * 2 - 1;
+                expression.append(randInt.toString());
             } else {
                 expression.append(randVariable);
             }
@@ -78,18 +76,22 @@ public class RandomEvaluator implements Command<Pixmap> {
             if (topLevel || new Random().nextBoolean()) {
                 operator = UNARYOPERATORS[new Random().nextInt(UNARYOPERATORS.length)];
                 numOperands = 1;
+                expression.append(operator).append("(");
             } else {
                 operator = BINARYOPERATORS[new Random().nextInt(BINARYOPERATORS.length)];
                 numOperands = 2;
+                expression.append("(");
             }
 
-            expression.append(operator).append("(");
-
             for (int i = 0; i < numOperands; i++) {
-                if (i > 0) {
-                    expression.append(",");
-                }
                 expression.append(buildRandomExpression(depth - 1, !topLevel));
+                if (i < numOperands - 1) {
+                	if (numOperands == 2) {
+                		expression.append(operator);
+                	} else {
+                		expression.append(",");
+                	}
+                }
             }
 
             expression.append(")");
@@ -97,6 +99,7 @@ public class RandomEvaluator implements Command<Pixmap> {
 
         return expression.toString();
     }
+
 
 
 

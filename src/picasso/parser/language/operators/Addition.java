@@ -19,8 +19,18 @@ public class Addition extends BinaryOperator {
 	 */
     public Addition(ExpressionTreeNode left, ExpressionTreeNode right) {
         super(left, right);
+        token = new AdditionToken();
     }
 
+	/**
+	 * Returns the string representation of the function in the format "left+right"
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return  (left.toString() + token.toString() + right.toString());
+	}
 
     /**
 	 * Evaluates this expression at the given x,y point by evaluating the addition of x and y 

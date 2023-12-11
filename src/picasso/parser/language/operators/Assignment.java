@@ -3,6 +3,7 @@ package picasso.parser.language.operators;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.RGBColor;
 import picasso.parser.language.expressions.Variable;
+import picasso.parser.tokens.operations.AssignmentToken;
 import picasso.parser.IdentifierAnalyzer;
 
 /**
@@ -24,7 +25,18 @@ public class Assignment extends BinaryOperator {
     public Assignment(Variable variable, ExpressionTreeNode rhsExpression) {
         super(variable, rhsExpression);
         this.variable = variable;
+        token = new AssignmentToken();
     }
+    
+	/**
+	 * Returns the string representation of the function in the format "left=right"
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return  (left.toString() + token.toString() + right.toString());
+	}
 
 	/**
 	 * 
