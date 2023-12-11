@@ -152,7 +152,6 @@ public class ExpressionTreeGenerator {
 				}
 
 			} else {
-				System.out.println(token.getClass());
 				System.out.println("ERROR: No match: " + token);
 			}
 			//System.out.println("Postfix: " + postfixResult);

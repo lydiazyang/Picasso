@@ -10,7 +10,7 @@ import picasso.parser.tokens.Token;
  * 
  * @author Jenna Bernstein
  */
-public class DivisionAnalyzer extends UnaryFunctionAnalyzer {
+public class DivisionAnalyzer implements SemanticAnalyzerInterface {
 
 	@Override
 	public ExpressionTreeNode generateExpressionTree(Stack<Token> tokens) {

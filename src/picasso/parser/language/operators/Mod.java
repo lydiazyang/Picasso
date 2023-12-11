@@ -2,6 +2,7 @@ package picasso.parser.language.operators;
 
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.RGBColor;
+import picasso.parser.tokens.operations.ModToken;
 /**
  * Represents the Mod operation in the Picasso language.
  * 
@@ -17,8 +18,18 @@ public class Mod extends BinaryOperator{
 		 */
 	    public Mod(ExpressionTreeNode left, ExpressionTreeNode right) {
 	        super(left, right);
+	        token = new ModToken();
 	    }
 
+		/**
+		 * Returns the string representation of the function in the format "left%right"
+		 * 
+		 * @see java.lang.Object#toString()
+		 */
+		@Override
+		public String toString() {
+			return  (left.toString() + token.toString() + right.toString());
+		}
 
 	    /**
 		 * Evaluates this expression at the given x,y point by evaluating the mod of x and y 

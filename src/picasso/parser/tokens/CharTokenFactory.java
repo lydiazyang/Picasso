@@ -2,6 +2,7 @@ package picasso.parser.tokens;
 
 import picasso.parser.language.CharConstants;
 import picasso.parser.tokens.chars.*;
+import picasso.parser.tokens.functions.ExpToken;
 import picasso.parser.tokens.operations.*;
 
 /**
@@ -40,7 +41,6 @@ public class CharTokenFactory {
 		tokenList[CharConstants.QUOTE] = new QuoteToken();
 		tokenList[CharConstants.MINUS] = new SubtractionToken();
 		tokenList[CharConstants.SLASH] = new DivisionToken();
-		tokenList[CharConstants.CARET] = new ExponentToken();
 		tokenList[CharConstants.MOD] = new ModToken();
 		
 

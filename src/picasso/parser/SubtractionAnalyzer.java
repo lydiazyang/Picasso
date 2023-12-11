@@ -10,7 +10,7 @@ import picasso.parser.tokens.Token;
  * 
  * @author Jenna Bernstein
  */
-public class SubtractionAnalyzer extends UnaryFunctionAnalyzer {
+public class SubtractionAnalyzer implements SemanticAnalyzerInterface {
 
 	@Override
 	public ExpressionTreeNode generateExpressionTree(Stack<Token> tokens) {

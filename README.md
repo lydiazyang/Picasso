@@ -28,3 +28,9 @@ The `images` directory contains some sample images generated from Picasso.  Some
 ## Code Base History
 
 This code base originated as a project in a course at Duke University.  The professors realized that the code could be designed better and refactored.  This code base has some code leftover from the original version.
+
+## Extensions
+
+Generating Random Expressions
+
+- To generate a random expression utilizing a combination of the functions and operators that have been implemented, simply click the random button in the Graphical User Interface in the top button panel. Continue generating new and fun images by clicking as many times as you want (Some look more fun than others).
