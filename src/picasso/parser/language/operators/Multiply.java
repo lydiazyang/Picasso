@@ -3,7 +3,12 @@ package picasso.parser.language.operators;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.RGBColor;
 import picasso.parser.tokens.operations.MultiplyToken;
-
+/**
+ * Represents the Multiplication operation in the Picasso language.
+ * 
+ * @author Jenna Bernstein
+ * 
+ */
 public class Multiply extends BinaryOperator{
 
 		/**

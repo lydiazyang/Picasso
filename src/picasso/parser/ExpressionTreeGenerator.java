@@ -36,7 +36,6 @@ public class ExpressionTreeGenerator {
 	public ExpressionTreeNode makeExpression(String infix) {
 		Stack<Token> postfix = infixToPostfix(infix);
 
-
 		// System.out.println("Process postfix expression");
 		SemanticAnalyzer semAnalyzer = SemanticAnalyzer.getInstance();
 
@@ -153,6 +152,7 @@ public class ExpressionTreeGenerator {
 				}
 
 			} else {
+				System.out.println(token.getClass());
 				System.out.println("ERROR: No match: " + token);
 			}
 			//System.out.println("Postfix: " + postfixResult);
@@ -171,7 +171,6 @@ public class ExpressionTreeGenerator {
 			postfixResult.push(operators.pop());
 		}
 
-		//System.out.println(postfixResult);
 		return postfixResult;
 
 	}
@@ -183,7 +182,6 @@ public class ExpressionTreeGenerator {
 	 */
 	private int orderOfOperation(Token token) {
 	    if (token instanceof OperationInterface) {
-	    	System.out.println(token);
 	    	System.out.println(token.getOrder());
 	    	return token.getOrder();
 	    } else {

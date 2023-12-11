@@ -15,7 +15,7 @@ public class RandomEvaluator implements Command<Pixmap> {
     public static final double DOMAIN_MAX = 1;
     private static final String[] VARIABLES = {"x", "y", "Color", "Constant"};
     private static final String[] BINARYOPERATORS = {"+", "*"};
-    private static final String[] UNARYOPERATORS = {"sin", "sin", "ceil", "floor", "wrap", "abs", "clamp"};
+    private static final String[] UNARYOPERATORS = {"sin","cos", "ceil", "floor", "wrap", "abs", "clamp"};
 	private int depth;
 	
 	public RandomEvaluator(){
@@ -82,9 +82,8 @@ public class RandomEvaluator implements Command<Pixmap> {
                 operator = BINARYOPERATORS[new Random().nextInt(BINARYOPERATORS.length)];
                 numOperands = 2;
             }
-
             expression.append(operator).append("(");
-
+            
             for (int i = 0; i < numOperands; i++) {
                 if (i > 0) {
                     expression.append(",");
