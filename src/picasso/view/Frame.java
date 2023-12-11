@@ -42,6 +42,7 @@ public class Frame extends JFrame {
 		commands.add(new JLabel("Enter Function: "));
         commands.add(functionTextField);
         commands.add("Evaluate", new ThreadedCommand<Pixmap>(canvas, evaluator));
+        commands.add("Random", new ThreadedCommand<Pixmap>(canvas, new RandomEvaluator()));
 		commands.add("Open", new Reader(this, functionTextField));
 		commands.add("Save", new Writer());
 		
