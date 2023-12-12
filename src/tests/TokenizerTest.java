@@ -143,6 +143,13 @@ public class TokenizerTest {
 	    assertEquals(new ColorToken(1, 0, 0), tokens.get(2));
 	    assertEquals(3, tokens.size());
 	}
+	
+	@Test
+	public void testTokenizeImage() {
+	    String expression = "\"vortex.jpg\"";
+	    List<Token> tokens = tokenizer.parseTokens(expression);
+	    assertEquals(new ImageToken("vortex.jpg"), tokens.get(0));
+	}
 
 
 }
