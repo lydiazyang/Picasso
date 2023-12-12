@@ -75,7 +75,14 @@ public class ImageToken extends Token {
 		return super.toString() + ": " + fileName + "," + filePath;
 	}
 
-
+	/**
+	 * 
+	 * @return true if file is found in the images folder
+	 */
+	public static boolean isValidFile(String fileName) {
+		String tempPath = Path.of("").toAbsolutePath().toString() + File.separator + "images" + File.separator + fileName;
+		return new File(tempPath).canRead();
+	}
 
 	@Override
 	public boolean isConstant() {
