@@ -1,10 +1,5 @@
 package picasso.parser.language.expressions;
 
-import java.awt.Dimension;
-import java.io.File;
-
-import javax.imageio.ImageIO;
-
 import picasso.model.Pixmap;
 import picasso.parser.language.ExpressionTreeNode;
 
