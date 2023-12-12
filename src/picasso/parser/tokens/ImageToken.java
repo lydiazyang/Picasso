@@ -25,7 +25,7 @@ public class ImageToken extends Token {
 	 */
 	public ImageToken(String fileName) {
 		super("Image Token");
-		filePath = Path.of("").toAbsolutePath().toString() + File.separator + "images" + File.separator + fileName;
+		this.filePath = Path.of("").toAbsolutePath().toString() + File.separator + "images" + File.separator + fileName;
 		boolean error = false;
 		String errorMsg = "";
 		if (!new File(filePath).canRead()) {
@@ -68,11 +68,11 @@ public class ImageToken extends Token {
 			return false;
 		}
 		ImageToken other = (ImageToken) o;
-		return fileName == other.fileName && filePath == other.filePath;
+		return this.fileName.equals(other.fileName) && this.filePath.equals(other.filePath);
 	}
 
 	public String toString() {
-		return super.toString() + ": " + fileName + "," + filePath;
+		return super.toString() + ": " + fileName;
 	}
 
 	/**
