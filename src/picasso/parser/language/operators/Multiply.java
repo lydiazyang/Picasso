@@ -3,7 +3,12 @@ package picasso.parser.language.operators;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.RGBColor;
 import picasso.parser.tokens.operations.MultiplyToken;
-
+/**
+ * Represents the Multiplication operation in the Picasso language.
+ * 
+ * @author Jenna Bernstein
+ * 
+ */
 public class Multiply extends BinaryOperator{
 
 		/**
@@ -13,8 +18,18 @@ public class Multiply extends BinaryOperator{
 		 */
 	    public Multiply(ExpressionTreeNode left, ExpressionTreeNode right) {
 	        super(left, right);
+	        token = new MultiplyToken();
 	    }
 
+		/**
+		 * Returns the string representation of the function in the format "left*right"
+		 * 
+		 * @see java.lang.Object#toString()
+		 */
+		@Override
+		public String toString() {
+			return  (left.toString() + token.toString() + right.toString());
+		}
 
 	    /**
 		 * Evaluates this expression at the given x,y point by evaluating the multiplication of x and y 

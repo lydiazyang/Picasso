@@ -48,13 +48,12 @@ public class Reader extends FileCommand<Pixmap> {
 	}
 
 	private void readExpressionFromFile(String filePath, Pixmap target) {
-		
+		Evaluator evaluator = new Evaluator(functionTextField);
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
         	// evaluate each line
             String line;
             while ((line = br.readLine()) != null) {
 				frame.setExpressionInTextField(line);
-				Evaluator evaluator = new Evaluator(functionTextField);
 				evaluator.execute(target);
             }
         } catch (IOException e) {
