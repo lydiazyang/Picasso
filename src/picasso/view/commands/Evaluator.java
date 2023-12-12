@@ -33,18 +33,19 @@ public class Evaluator implements Command<Pixmap> {
 		try {
 		// create the expression to evaluate just once
 			// evaluate it for each pixel
-			ExpressionTreeNode expr = createExpression(input.getText());
-			Dimension size = target.getSize();
-			for (int imageY = 0; imageY < size.height; imageY++) {
-				double evalY = imageToDomainScale(imageY, size.height);
-				for (int imageX = 0; imageX < size.width; imageX++) {
-					double evalX = imageToDomainScale(imageX, size.width);
-					Color pixelColor = expr.evaluate(evalX, evalY).toJavaColor();
-					target.setColor(imageX, imageY, pixelColor);
-			//	}
-			}
-		} 
-		}catch (Exception e) {
+			if (!input.getText().startsWith("//"))  {
+				ExpressionTreeNode expr = createExpression(input.getText());
+				Dimension size = target.getSize();
+				for (int imageY = 0; imageY < size.height; imageY++) {
+					double evalY = imageToDomainScale(imageY, size.height);
+					for (int imageX = 0; imageX < size.width; imageX++) {
+						double evalX = imageToDomainScale(imageX, size.width);
+						Color pixelColor = expr.evaluate(evalX, evalY).toJavaColor();
+						target.setColor(imageX, imageY, pixelColor);
+						}
+				}
+			} 
+		} catch (Exception e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "The expression you entered is currently unsupported. Please enter a new expression.", "Parse Exception Error",0, null);
 		}
