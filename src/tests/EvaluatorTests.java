@@ -83,6 +83,7 @@ public class EvaluatorTests {
 	
 	@Test
 	public void testCeilEvaluation() {
+		//Testing x
 		Ceil myTree = new Ceil(new X());
 
 		// some straightforward tests
@@ -90,7 +91,16 @@ public class EvaluatorTests {
 		assertEquals(new RGBColor(1, 1, 1), myTree.evaluate(.999, -1));
 		assertEquals(new RGBColor(0, 0, 0), myTree.evaluate(-.7, -1));
 		assertEquals(new RGBColor(-1, -1, -1), myTree.evaluate(-1.5, -1));
-
+		
+		//Testing y
+		Ceil yTree = new Ceil(new Y());
+		
+		// some straightforward tests
+		assertEquals(new RGBColor(1, 1, 1), yTree.evaluate(1, .3));
+		assertEquals(new RGBColor(1, 1, 1), yTree.evaluate(-1, .999));
+		assertEquals(new RGBColor(0, 0, 0), yTree.evaluate(-1, -.7));
+		assertEquals(new RGBColor(-1, -1, -1), yTree.evaluate(-1, -1.5));
+		
 		// test the ints
 		for (int i = -1; i <= 1; i++) {
 			assertEquals(new RGBColor(i, i, i), myTree.evaluate(i, -i));
@@ -341,6 +351,7 @@ public class EvaluatorTests {
 	    assertTrue(thrown);
 	}
 		
+	
 	@Test
 	public void testSinEvaluation() {
 		Sin myTree;
@@ -446,6 +457,47 @@ public class EvaluatorTests {
 		assertEquals(new RGBColor(image.getColor(scale(Math.sin(.6)), scale(-1))), myTree.evaluate(.6, -1));
 	}
 
+	@Test
+	public void testImageClipEvaluation() {
+		String filePath = Path.of("").toAbsolutePath().toString() + File.separator + "images" + File.separator + "vortex.jpg";
+		Pixmap image = new Pixmap(filePath);
+		
+		// constant input: (x = 1)
+		ImageClip myTree = new ImageClip(image, new Constant(1), new Y());
+		assertEquals(new RGBColor(image.getColor(scale(1), scale(-1))), myTree.evaluate(-1, -1));
+		assertEquals(new RGBColor(image.getColor(scale(1), scale(-1))), myTree.evaluate(-.6, -1));
+		assertEquals(new RGBColor(image.getColor(scale(1), scale(-1))), myTree.evaluate(1, -1));
+		assertEquals(new RGBColor(image.getColor(scale(1), scale(-1))), myTree.evaluate(.6, -1));
+		
+		// constant input: (y = 1)
+		myTree = new ImageClip(image, new X(), new Constant(1));
+		assertEquals(new RGBColor(image.getColor(scale(-1), scale(1))), myTree.evaluate(-1, -1));
+		assertEquals(new RGBColor(image.getColor(scale(-1), scale(1))), myTree.evaluate(-1, -.6));
+		assertEquals(new RGBColor(image.getColor(scale(-1), scale(1))), myTree.evaluate(-1, 1));
+		assertEquals(new RGBColor(image.getColor(scale(-1), scale(1))), myTree.evaluate(-1, .6));
+		
+		// variable input: (x = x+x)
+		myTree = new ImageClip(image, new Addition(new X(), new X()), new Y());
+		assertEquals(new RGBColor(image.getColor(scale(-1), scale(-1))), myTree.evaluate(-1, -1));
+		assertEquals(new RGBColor(image.getColor(scale(-1), scale(-1))),myTree.evaluate(-2, -1));
+		assertEquals(new RGBColor(image.getColor(scale(1), scale(-1))), myTree.evaluate(2, -1));
+		assertEquals(new RGBColor(image.getColor(scale(0), scale(-1))), myTree.evaluate(0, -1));
+		
+		// variable input (y = y+y)
+		myTree = new ImageClip(image, new X(), new Addition(new Y(), new Y()));
+		assertEquals(new RGBColor(image.getColor(scale(-1), scale(-1))), myTree.evaluate(-1, -1));
+		assertEquals(new RGBColor(image.getColor(scale(-1), scale(-1))),myTree.evaluate(-1, -2));
+		assertEquals(new RGBColor(image.getColor(scale(-1), scale(1))), myTree.evaluate(-1, 2));
+		assertEquals(new RGBColor(image.getColor(scale(-1), scale(0))), myTree.evaluate(-1, 0));
+		
+		// sin input (x = sin(x))
+		myTree = new ImageClip(image, new Sin(new X()), new Y());
+		assertEquals(new RGBColor(image.getColor(scale(Math.sin(-1)), scale(-1))), myTree.evaluate(-1, -1));
+		assertEquals(new RGBColor(image.getColor(scale(Math.sin(-.6)), scale(-1))), myTree.evaluate(-.6, -1));
+		assertEquals(new RGBColor(image.getColor(scale(Math.sin(1)), scale(-1))), myTree.evaluate(1, -1));
+		assertEquals(new RGBColor(image.getColor(scale(Math.sin(.6)), scale(-1))), myTree.evaluate(.6, -1));
+	}
+	
 	private void assertEquals(RGBColor expected, RGBColor actual) {
 		if (expected == null || actual == null) {
 			throw new IllegalArgumentException("RGB cannot be null");
