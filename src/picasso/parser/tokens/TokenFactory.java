@@ -131,22 +131,11 @@ public class TokenFactory {
 	 * @return
 	 */
 	private static ImageToken parseImageToken(StreamTokenizer tokenizer) {
-		Token i = parse(tokenizer);
-		if (!(i instanceof IdentifierToken)) {
-			throw new ParseException("Error parsing image, expected string");
-		}
-
-		Token secondQuote = parse(tokenizer);
-		if (!(secondQuote instanceof QuoteToken)) {
-			throw new ParseException("Error parsing image, expected \" got " + secondQuote);
-		}
-		
-		ImageToken image = (ImageToken) i;
-
+		String fileName = tokenizer.sval;
 		boolean error = false;
 		String errorMsg = "";
 
-		if (!ImageToken.isValidFile(image.getFileName())) {
+		if (!ImageToken.isValidFile(fileName)) {
 			error = true;
 			errorMsg += "File cannot be found.  ";
 		}
@@ -155,7 +144,7 @@ public class TokenFactory {
 			throw new ParseException(errorMsg);
 		}
 
-		return new ImageToken(image.getFileName());
+		return new ImageToken(fileName);
 	}
 
 	/**
