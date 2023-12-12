@@ -33,7 +33,7 @@ public class Evaluator implements Command<Pixmap> {
 		try {
 		// create the expression to evaluate just once
 			// evaluate it for each pixel
-			if (!input.getText().startsWith("//")) {
+			if (!input.getText().startsWith("//"))  {
 				ExpressionTreeNode expr = createExpression(input.getText());
 				Dimension size = target.getSize();
 				for (int imageY = 0; imageY < size.height; imageY++) {
