@@ -7,7 +7,7 @@ import java.io.File;
 import java.nio.file.Path;
 
 /**
- * Represents an image file (using strings and Pixmap).
+ * Represents an image file (using strings).
  * An ImageToken is immutable: once created it doesn't change.
  * 
  * @author Han Huynh
