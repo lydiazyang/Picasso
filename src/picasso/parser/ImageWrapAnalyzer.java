@@ -1,13 +1,11 @@
 package picasso.parser;
 
-import java.io.File;
-import java.nio.file.Path;
 import java.util.Stack;
 import picasso.model.Pixmap;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.ImageWrap;
 import picasso.parser.tokens.Token;
-import picasso.parser.tokens.IdentifierToken;
+import picasso.parser.tokens.ImageToken;
 
 /**
  * Handles parsing the image wrap function.
@@ -30,11 +28,10 @@ public  class ImageWrapAnalyzer  implements SemanticAnalyzerInterface {
 				tokens);
 		
 		// pop off fileName token
-		IdentifierToken file = (IdentifierToken) tokens.pop();
+		ImageToken file = (ImageToken) tokens.pop();
 		
 		// get fileName and use to create Pixmap object
-		String filePath = Path.of("").toAbsolutePath().toString() + File.separator + "images" + File.separator + file.getName();
-		Pixmap image = new Pixmap(filePath);
+		Pixmap image = new Pixmap(file.getFilePath());
 		
 		return new ImageWrap(image, xParam, yParam);
 	}
