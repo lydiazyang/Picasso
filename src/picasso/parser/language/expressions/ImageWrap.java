@@ -16,7 +16,8 @@ import picasso.parser.language.ExpressionTreeNode;
  */
 public class ImageWrap extends MultiArgumentFunction {
 	Pixmap image;
-	double dimensionHeight = 600;
+	double dimensionHeight;
+	double dimensionWidth;
 	int domainMin = -1;
 	int domainMax = 1;
 
@@ -28,6 +29,8 @@ public class ImageWrap extends MultiArgumentFunction {
 	public ImageWrap(Pixmap image, ExpressionTreeNode xParam, ExpressionTreeNode yParam) {
 		super(xParam, yParam);
 		this.image = image;
+		dimensionHeight = image.getSize().getHeight();
+		dimensionWidth = image.getSize().getWidth();
 	}
 
 	/**
@@ -47,7 +50,7 @@ public class ImageWrap extends MultiArgumentFunction {
 		double  yCoordWrap = wrap(yResult.getBlue());
 		
 		// convert coordinates from domain to image scale
-		int xCoord = domainToImageScale(xCoordWrap, dimensionHeight);
+		int xCoord = domainToImageScale(xCoordWrap, dimensionWidth);
 		int yCoord = domainToImageScale(yCoordWrap, dimensionHeight);
 		
 		// get color from coordinates in image
