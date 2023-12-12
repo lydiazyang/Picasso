@@ -40,26 +40,26 @@ public class ImageClip extends MultiArgumentFunction {
 		RGBColor xResult  = xParam.evaluate(x, y);
 		RGBColor yResult  = yParam.evaluate(x, y);
 		
-		// get x and y coords after evaluating expressions AND wrap them
-		double xCoordWrap  = clamp(xResult.getBlue());
-		double  yCoordWrap = clamp(yResult.getBlue());
+		// get x and y coords after evaluating expressions AND clamp them
+		double xCoordClamp = clamp(xResult.getBlue(), -1, 1);
+		double  yCoordClamp = clamp(yResult.getBlue(), -1, 1);
 		
 		// convert coordinates from domain to image scale
-		int xCoord = domainToImageScale(xCoordWrap, dimensionWidth);
-		int yCoord = domainToImageScale(yCoordWrap, dimensionHeight);
+		int xCoord = (int) clamp(domainToImageScale(xCoordClamp, dimensionWidth), 0, dimensionWidth-1);
+		int yCoord = (int) clamp(domainToImageScale(yCoordClamp, dimensionHeight), 0, dimensionHeight-1);
 		
-		// get color from coordinates in image
 		return new RGBColor(image.getColor(xCoord, yCoord));
 	}
 	
 	/**
 	 * Helper function to clamp given double value to be within [-1, 1].
 	 * 
-	 * @return the clamped value of the given double
+	 * @return the clamped value of the given double, min, and max
 	 */
-	private double clamp(double value) {
-		return Math.max(domainMin, Math.min(domainMax, value));
+	private double clamp(double value, double min, double max) {
+		return Math.max(min, Math.min(max, value));
 	}
+	
 	
 	/**
 	 * Helper function to convert given values (in domain space, [-1, 1]) to image space 
