@@ -39,7 +39,7 @@ public abstract class MultiArgumentFunction extends ExpressionTreeNode {
 			return true;
 		}
 
-		if (!(o instanceof UnaryFunction)) {
+		if (!(o instanceof MultiArgumentFunction)) {
 			return false;
 		}
 
