@@ -85,6 +85,8 @@ public class ExpressionTreeGenerator {
 				postfixResult.push(token);
 			} else if (token instanceof ColorToken) {
 				postfixResult.push(token);
+			}else if (token instanceof ImageToken) {	
+				postfixResult.push(token);
 			} else if (token instanceof IdentifierToken) {
 				postfixResult.push(token);
 			} else if (token instanceof FunctionToken) {

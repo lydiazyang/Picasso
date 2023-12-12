@@ -45,14 +45,16 @@ public class TokenFactory {
 			case '[':
 				// parse a color token if it starts with a [
 				return parseColorToken(tokenizer);
+				
+			case '\"':
+				// parse a image token if it starts with a "
+				return parseImageToken(tokenizer);
 			default:
 				Token ct = CharTokenFactory.getToken(result);
 
 				return ct;
 			}
-			
-			// TODO: Handle quoted strings
-			// Others?
+		
 
 		} catch (IOException io) {
 			throw new ParseException("io problem " + io);
@@ -119,6 +121,29 @@ public class TokenFactory {
 		}
 
 		return new ColorToken(red.value(), green.value(), blue.value());
+	}
+	
+	/**
+	 * Parse an ImageToken
+	 * 
+	 * @param tokenizer
+	 * @return
+	 */
+	private static ImageToken parseImageToken(StreamTokenizer tokenizer) {
+		String fileName = tokenizer.sval;
+		boolean error = false;
+		String errorMsg = "";
+
+		if (!ImageToken.isValidFile(fileName)) {
+			error = true;
+			errorMsg += "File cannot be found.  ";
+		}
+			
+		if (error) {
+			throw new ParseException(errorMsg);
+		}
+
+		return new ImageToken(fileName);
 	}
 
 	/**
