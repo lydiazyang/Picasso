@@ -27,7 +27,7 @@ public  class ImageWrapAnalyzer  implements SemanticAnalyzerInterface {
 		ExpressionTreeNode xParam = SemanticAnalyzer.getInstance().generateExpressionTree(
 				tokens);
 		
-		// pop off fileName token
+		// pop off filename
 		ImageToken file = (ImageToken) tokens.pop();
 		
 		// get fileName and use to create Pixmap object
