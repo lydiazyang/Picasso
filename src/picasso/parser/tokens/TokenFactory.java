@@ -11,6 +11,7 @@ import picasso.parser.ParseException;
 import picasso.parser.language.BuiltinFunctionsReader;
 import picasso.parser.tokens.chars.CommaToken;
 import picasso.parser.tokens.chars.LeftBracketToken;
+import picasso.parser.tokens.chars.QuoteToken;
 import picasso.parser.tokens.chars.RightBracketToken;
 
 /**
@@ -45,14 +46,16 @@ public class TokenFactory {
 			case '[':
 				// parse a color token if it starts with a [
 				return parseColorToken(tokenizer);
+				
+			case '\"':
+				// parse a image token if it starts with a "
+				return parseImageToken(tokenizer);
 			default:
 				Token ct = CharTokenFactory.getToken(result);
 
 				return ct;
 			}
-			
-			// TODO: Handle quoted strings
-			// Others?
+		
 
 		} catch (IOException io) {
 			throw new ParseException("io problem " + io);
@@ -119,6 +122,40 @@ public class TokenFactory {
 		}
 
 		return new ColorToken(red.value(), green.value(), blue.value());
+	}
+	
+	/**
+	 * Parse an ImageToken
+	 * 
+	 * @param tokenizer
+	 * @return
+	 */
+	private static ImageToken parseImageToken(StreamTokenizer tokenizer) {
+		Token i = parse(tokenizer);
+		if (!(i instanceof IdentifierToken)) {
+			throw new ParseException("Error parsing image, expected string");
+		}
+
+		Token secondQuote = parse(tokenizer);
+		if (!(secondQuote instanceof QuoteToken)) {
+			throw new ParseException("Error parsing image, expected \" got " + secondQuote);
+		}
+		
+		ImageToken image = (ImageToken) i;
+
+		boolean error = false;
+		String errorMsg = "";
+
+		if (!ImageToken.isValidFile(image.getFileName())) {
+			error = true;
+			errorMsg += "File cannot be found.  ";
+		}
+			
+		if (error) {
+			throw new ParseException(errorMsg);
+		}
+
+		return new ImageToken(image.getFileName());
 	}
 
 	/**
