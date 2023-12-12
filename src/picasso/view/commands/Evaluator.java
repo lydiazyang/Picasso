@@ -32,9 +32,8 @@ public class Evaluator implements Command<Pixmap> {
 	public void execute(Pixmap target) {
 		try {
 		// create the expression to evaluate just once
-		if (!input.getText().startsWith("//")) {
-			ExpressionTreeNode expr = createExpression( (input.getText()).replaceAll("\"", "") );
 			// evaluate it for each pixel
+			ExpressionTreeNode expr = createExpression(input.getText());
 			Dimension size = target.getSize();
 			for (int imageY = 0; imageY < size.height; imageY++) {
 				double evalY = imageToDomainScale(imageY, size.height);
@@ -42,7 +41,7 @@ public class Evaluator implements Command<Pixmap> {
 					double evalX = imageToDomainScale(imageX, size.width);
 					Color pixelColor = expr.evaluate(evalX, evalY).toJavaColor();
 					target.setColor(imageX, imageY, pixelColor);
-				}
+			//	}
 			}
 		} 
 		}catch (Exception e) {
