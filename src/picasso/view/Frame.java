@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -46,10 +47,16 @@ public class Frame extends JFrame {
 		commands.add("Open", new Reader(this, functionTextField));
 		commands.add("Save", new Writer());
 		
+		ButtonPanel zoom = new ButtonPanel(canvas);
+		// both stubs
+		zoom.add("Zoom in",new Writer());
+		zoom.add("Zoom out",new Writer());
+		
 
 		// add our container to Frame and show it
 		getContentPane().add(canvas, BorderLayout.CENTER);
 		getContentPane().add(commands, BorderLayout.NORTH);
+		getContentPane().add(zoom, BorderLayout.SOUTH);
 		pack();
 	}
 
