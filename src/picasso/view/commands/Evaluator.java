@@ -34,6 +34,8 @@ public class Evaluator implements Command<Pixmap> {
 	 * Evaluate an expression for each point in the image.
 	 */
 	public void execute(Pixmap target) {
+		this.scaledMin = -1;
+		this.scaledMax = 1;
 		try {
 		// create the expression to evaluate just once
 			// evaluate it for each pixel
