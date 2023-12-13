@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.util.Random;
 
+import javax.swing.JTextField;
 
 import picasso.model.Pixmap;
 import picasso.parser.ExpressionTreeGenerator;
@@ -17,15 +18,19 @@ public class RandomEvaluator implements Command<Pixmap> {
     private static final String[] BINARYOPERATORS = {"+", "*", "%", "/", "-"};
     private static final String[] UNARYOPERATORS = {"sin", "cos", "tan", "atan", "exp", "ceil", "floor", "wrap", "abs", "clamp"};
 	private int depth;
+	private JTextField functionTextField;
 	
-    
+	public RandomEvaluator(JTextField functionTextField) {
+		this.functionTextField = functionTextField;
+	}
+	
     @Override
     public void execute(Pixmap target) {
             // Generate a new random function each time execute is called
     		Random randomNum = new Random();
     		this.depth = randomNum.nextInt(20);
             String randomFunction = generateRandomExpression(depth, true);
-            
+            functionTextField.setText(randomFunction);
             if (!randomFunction.startsWith("//")) {
                 ExpressionTreeNode expr = createExpression(randomFunction.replaceAll("\"", ""));
                 

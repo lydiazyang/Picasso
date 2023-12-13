@@ -37,6 +37,7 @@ public class Frame extends JFrame {
 		ButtonPanel commands = new ButtonPanel(canvas);
 		functionTextField = new JTextField(20);
 		Evaluator evaluator = new Evaluator(functionTextField);
+		RandomEvaluator rEvaluator = new RandomEvaluator(functionTextField);
 		hDropdown = new JComboBox<String>();
 		History history = new History(hDropdown, evaluator);
 		evaluator.addPropertyChangeListener(evt-> history.execute(canvas.getPixmap()));
@@ -48,7 +49,7 @@ public class Frame extends JFrame {
 		commands.add(new JLabel("Enter Function: "));
         commands.add(functionTextField);
         commands.add("Evaluate", new ThreadedCommand<Pixmap>(canvas, evaluator));
-        commands.add("Random", new ThreadedCommand<Pixmap>(canvas, new RandomEvaluator()));
+        commands.add("Random", new ThreadedCommand<Pixmap>(canvas, rEvaluator));
 		commands.add("Open", new Reader(this, functionTextField));
 		commands.add("Save", new Writer());
 		commands.add("History", new Command<Pixmap>() {
