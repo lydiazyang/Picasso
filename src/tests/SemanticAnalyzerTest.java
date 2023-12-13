@@ -5,15 +5,20 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.File;
+import java.nio.file.Path;
 import java.util.Stack;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import picasso.model.Pixmap;
 import picasso.parser.SemanticAnalyzer;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.*;
 import picasso.parser.tokens.*;
+import picasso.parser.tokens.functions.ImageClipToken;
+import picasso.parser.tokens.functions.ImageWrapToken;
 import picasso.parser.tokens.operations.*;
 import picasso.parser.language.operators.*;
 
@@ -79,5 +84,43 @@ class SemanticAnalyzerTest {
         assertEquals(new RGBColor(1, 0, 0), actual.evaluate(0, 0)); 
         assertEquals(assignment, actual);
     }	
+    
+    @Test
+    void testParseImageWrap() {
+        // Create a test case for Image Wrap
+        Stack<Token> tokens = new Stack<>();
+        tokens.push(new ImageToken("vortex.jpg"));
+        tokens.push(new IdentifierToken("x"));
+        tokens.push(new IdentifierToken("x"));
+        tokens.push(new AdditionToken());
+        tokens.push(new IdentifierToken("y"));
+        tokens.push(new ImageWrapToken());
+ 
+        ExpressionTreeNode actual = semAnalyzer.generateExpressionTree(tokens);
+        Pixmap image = new Pixmap(Path.of("").toAbsolutePath().toString() + File.separator + "images" + File.separator + "vortex.jpg");
+        ImageWrap iw = new ImageWrap(image, new Addition(new X(), new X()), new Y());
+
+        assertEquals(iw.evaluate(0, 0), actual.evaluate(0, 0)); 
+        assertEquals(iw, actual);
+    }	
+    
+    @Test
+    void testParseImageClip() {
+        // Create a test case for Image Clip
+        Stack<Token> tokens = new Stack<>();
+        tokens.push(new ImageToken("vortex.jpg"));
+        tokens.push(new IdentifierToken("x"));
+        tokens.push(new IdentifierToken("x"));
+        tokens.push(new AdditionToken());
+        tokens.push(new IdentifierToken("y"));
+        tokens.push(new ImageClipToken());
+ 
+        ExpressionTreeNode actual = semAnalyzer.generateExpressionTree(tokens);
+        Pixmap image = new Pixmap(Path.of("").toAbsolutePath().toString() + File.separator + "images" + File.separator + "vortex.jpg");
+        ImageClip ic = new ImageClip(image, new Addition(new X(), new X()), new Y());
+
+        assertEquals(ic.evaluate(0, 0), actual.evaluate(0, 0)); 
+        assertEquals(ic, actual);
+    }
 
 }
