@@ -23,6 +23,17 @@ public class StringEvaluator implements Command<Pixmap> {
 
     @Override
     public void execute(Pixmap target) {
-        
+        String inputString = input.getText();
+        String generatedExpression = generateBasicExpression(inputString);
     }
+
+    /**
+    * Generates a basic expression from the input string.
+    *
+    * @param input The input string.
+    * @return The basic generated expression.
+    */
+    private String generateBasicExpression(String input) {
+        return "x + y"; // Placeholder 
+}
 }
