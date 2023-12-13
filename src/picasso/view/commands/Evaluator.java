@@ -6,6 +6,11 @@ import java.awt.Dimension;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
 import picasso.model.Pixmap;
 import picasso.parser.ExpressionTreeGenerator;
 import picasso.parser.language.ExpressionTreeNode;
@@ -17,13 +22,20 @@ import picasso.util.Command;
  * @author Robert C Duvall
  * @author Sara Sprenkle
  */
+@SuppressWarnings("deprecation")
 public class Evaluator implements Command<Pixmap> {
 	public static final double DOMAIN_MIN = -1;
 	public static final double DOMAIN_MAX = 1;
 	private JTextField input;
+	// Stores the current expression being evaluated
+	private List<String> expressionList;
+	private PropertyChangeSupport propertyChangeSupport;
 	
 	public Evaluator(JTextField input) {
 		this.input = input;
+		this.expressionList = new ArrayList<>();
+		this.propertyChangeSupport = new PropertyChangeSupport(this);
+		expressionList.add(input.getText());
 	}
 
 	/**
@@ -44,9 +56,12 @@ public class Evaluator implements Command<Pixmap> {
 						target.setColor(imageX, imageY, pixelColor);
 						}
 				}
-			} 
-		} catch (Exception e) {
-			e.printStackTrace();
+			}
+			expressionList.add(input.getText());
+			propertyChangeSupport.firePropertyChange("expressionList", null, expressionList);
+		} 
+		}catch (Exception e) {
+      e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "The expression you entered is currently unsupported. Please enter a new expression.", "Parse Exception Error",0, null);
 		}
 	}
@@ -75,6 +90,26 @@ public class Evaluator implements Command<Pixmap> {
 		return expTreeGen.makeExpression(function);
 		// return new Multiply( new X(), new Y() );
 	}
+	
+	public List<String> getExpressionList() {
+		return expressionList;
+	}
+	
+	// Methods for managing observers
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.removePropertyChangeListener(listener);
+    }
+    
+    public void setInputText(String text) {
+    	input.setText(text);
+    	execute(new Pixmap());
+    	propertyChangeSupport.firePropertyChange("inputText", null, input.getText());
+    }
 
 
 }
