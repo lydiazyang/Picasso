@@ -98,6 +98,17 @@ public class StringEvaluator implements Command<Pixmap> {
     }
 
     /**
+     * Determines if a character should be treated as an operator if it is a vowel.
+     *
+     * @param c The character to check.
+     * @return True if the character is an operator, false otherwise.
+     */
+    private boolean isOperatorChar(char c) {
+        return "aeiou".indexOf(Character.toLowerCase(c)) >= 0;
+    }
+
+
+    /**
     * Builds an operand based on a character.
     *
     * @param c The character.
@@ -107,7 +118,7 @@ public class StringEvaluator implements Command<Pixmap> {
         if (Character.isDigit(c)) {
             return String.valueOf(c);
         } else {
-            if (random.nextDouble() < 0.3) { // 30% chance to generate a color
+            if (random.nextDouble() < 0.5) { 
                 return buildRandomColor();
             } else {
                 return VARIABLES[random.nextInt(VARIABLES.length)];
