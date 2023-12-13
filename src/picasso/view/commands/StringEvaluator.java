@@ -40,7 +40,7 @@ public class StringEvaluator implements Command<Pixmap> {
         String inputString = input.getText();
         String generatedExpression = generateExpressionFromString(inputString);
         ExpressionTreeNode expr = createExpression(generatedExpression); // don't need to do this
-        evaluator.execute(target, string_expression); // would be nice to do that
+//        evaluator.execute(target, string_expression); // would be nice to do that
         	// Would be good if this calls evaluator to execute on target 
 //        Dimension size = target.getSize();
 //        for (int imageY = 0; imageY < size.height; imageY++) {
@@ -51,7 +51,7 @@ public class StringEvaluator implements Command<Pixmap> {
 //                target.setColor(imageX, imageY, pixelColor);
 //            }
         }
-    }
+//    }
 
 
     /**
