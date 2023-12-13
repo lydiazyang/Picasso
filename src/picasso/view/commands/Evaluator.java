@@ -60,7 +60,7 @@ public class Evaluator implements Command<Pixmap> {
 			expressionList.add(input.getText());
 			propertyChangeSupport.firePropertyChange("expressionList", null, expressionList); 
 		} catch (Exception e) {
-      e.printStackTrace();
+			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "The expression you entered is currently unsupported. Please enter a new expression.", "Parse Exception Error",0, null);}
 		}
 
