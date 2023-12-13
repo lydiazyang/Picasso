@@ -20,6 +20,7 @@ import picasso.util.Command;
 public class StringEvaluator implements Command<Pixmap> {
     private JTextField input;
     private static final String[] VARIABLES = {"x", "y"};
+    private static final Random random = new Random();
 
     /**
      * Constructor for the StringEvaluator class
@@ -57,42 +58,42 @@ public class StringEvaluator implements Command<Pixmap> {
      * @return The generated expression.
      */
     private String generateExpressionFromString(String input) {
-        Stack<String> operators = new Stack<>();
-        Stack<String> operands = new Stack<>();
-        Random random = new Random();
+    Stack<String> operators = new Stack<>();
+    Stack<String> operands = new Stack<>();
 
-
-        for (char c : input.toCharArray()) {
-            if (isOperatorChar(c)) {
-                operators.push(buildOperator(c));
-            } else {
-                operands.push(buildOperand(c, random));
-            }
-
-
-            if (operands.size() >= 2 && !operators.isEmpty()) {
-                String combinedExpr = combineExpression(operators, operands);
-                operands.push(combinedExpr);
-            }
+    for (char c : input.toCharArray()) {
+        if (isOperatorChar(c)) {
+            operators.push(buildOperator(c));
+        } else {
+            operands.push(buildOperand(c, random));
         }
 
-
-        while (!operators.isEmpty() && operands.size() >= 2) {
+        if (operands.size() > 1 && !operators.isEmpty()) {
             String combinedExpr = combineExpression(operators, operands);
             operands.push(combinedExpr);
         }
-
-
-        while (operands.size() > 1) {
-            String operand2 = operands.pop();
-            String operand1 = operands.pop();
-            String combinedExpr = "(" + operand1 + " + " + operand2 + ")";
-            operands.push(combinedExpr);
-        }
-
-
-        return operands.isEmpty() ? "0" : operands.pop();
     }
+
+    // Handle remaining operators and operands
+    while (!operators.isEmpty() && operands.size() > 1) {
+        String combinedExpr = combineExpression(operators, operands);
+        operands.push(combinedExpr);
+    }
+
+    // Add additional operators if needed
+    while (operands.size() > 1) {
+        operators.push("+"); // Default operator
+        String combinedExpr = combineExpression(operators, operands);
+        operands.push(combinedExpr);
+    }
+
+
+        if (operands.isEmpty()) {
+            return "0";
+        } else {
+            return operands.pop();
+        }    
+       }
 
 
     /**
@@ -139,7 +140,7 @@ public class StringEvaluator implements Command<Pixmap> {
         if (Character.isDigit(c)) {
             return String.valueOf(c);
         } else {
-            if (random.nextDouble() < 0.3) { // 30% chance to generate a color
+            if (random.nextDouble() < 0.6) { // 60% chance to generate a color
                 return buildRandomColor();
             } else {
                 return VARIABLES[random.nextInt(VARIABLES.length)];
@@ -154,7 +155,6 @@ public class StringEvaluator implements Command<Pixmap> {
      * @return The color expression as a string.
      */
     private String buildRandomColor() {
-        Random random = new Random();
         double red = random.nextDouble() * 2 - 1;
         double green = random.nextDouble() * 2 - 1;
         double blue = random.nextDouble() * 2 - 1;
@@ -163,7 +163,7 @@ public class StringEvaluator implements Command<Pixmap> {
 
 
     /**
-     * Combines operands and operators into a sub-expression.
+     * Combines operands and operators into a valid subexpression.
      *
      * @param operators The stack of operators.
      * @param operands  The stack of operands.
