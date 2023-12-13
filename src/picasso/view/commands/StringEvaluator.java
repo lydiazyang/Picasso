@@ -14,7 +14,7 @@ import picasso.util.Command;
 // Randomly generate from each character in string
 // Map it into each pixel
 
-public class RandomEvaluator implements Command<Pixmap> {
+public class StringEvaluator implements Command<Pixmap> {
     public static final double DOMAIN_MIN = -1;
     public static final double DOMAIN_MAX = 1;
     private static final String[] VARIABLES = {"x", "y", "Color", "Constant"};
