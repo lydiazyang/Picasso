@@ -19,6 +19,7 @@ import picasso.util.Command;
  */
 public class StringEvaluator implements Command<Pixmap> {
     private JTextField input;
+    private static final String[] VARIABLES = {"x", "y"};
 
     /**
      * Constructor for the StringEvaluator class
@@ -28,6 +29,7 @@ public class StringEvaluator implements Command<Pixmap> {
     public StringEvaluator(JTextField input) {
         this.input = input;
     }
+
 
     @Override
     public void execute(Pixmap target) {
@@ -45,15 +47,15 @@ public class StringEvaluator implements Command<Pixmap> {
                 target.setColor(imageX, imageY, pixelColor);
             }
         }
-
     }
 
+
     /**
-    * Generates a basic expression from the input string.
-    *
-    * @param input The input string.
-    * @return The basic generated expression.
-    */
+     * Generates an expression from the input string.
+     *
+     * @param input The input string.
+     * @return The generated expression.
+     */
     private String generateExpressionFromString(String input) {
         Stack<String> operators = new Stack<>();
         Stack<String> operands = new Stack<>();
@@ -89,16 +91,12 @@ public class StringEvaluator implements Command<Pixmap> {
         }
 
 
-        if (operands.isEmpty()) {
-            return "0";
-        } else {
-            return operands.pop();
-        }
-
+        return operands.isEmpty() ? "0" : operands.pop();
     }
 
+
     /**
-     * Determines if a character should be treated as an operator if it is a vowel.
+     * Determines if a character should be treated as an operator.
      *
      * @param c The character to check.
      * @return True if the character is an operator, false otherwise.
@@ -109,30 +107,13 @@ public class StringEvaluator implements Command<Pixmap> {
 
 
     /**
-    * Builds an operand based on a character.
-    *
-    * @param c The character.
-    * @return The operand as a string.
-    */
-    private String buildOperand(char c) {
-        if (Character.isDigit(c)) {
-            return String.valueOf(c);
-        } else {
-            if (random.nextDouble() < 0.5) { 
-                return buildRandomColor();
-            } else {
-                return VARIABLES[random.nextInt(VARIABLES.length)];
-            }
-        }
-    }
-
-    /**
-    * Builds an operator based on a character.
-    *
-    * @param c The character.
-    * @return The operator as a string.
-    */
+     * Builds an operator based on a character.
+     *
+     * @param c The character.
+     * @return The operator as a string.
+     */
     private String buildOperator(char c) {
+        char lowerCaseChar = Character.toLowerCase(c);
         if (lowerCaseChar == 'a') {
             return "+";
         } else if (lowerCaseChar == 'e') {
@@ -145,6 +126,27 @@ public class StringEvaluator implements Command<Pixmap> {
             return "+"; // Default case
         }
     }
+
+
+    /**
+     * Builds an operand based on a character. It can be either a variable or a color.
+     *
+     * @param c      The character.
+     * @param random The Random object used to generate random values.
+     * @return The operand as a string.
+     */
+    private String buildOperand(char c, Random random) {
+        if (Character.isDigit(c)) {
+            return String.valueOf(c);
+        } else {
+            if (random.nextDouble() < 0.3) { // 30% chance to generate a color
+                return buildRandomColor();
+            } else {
+                return VARIABLES[random.nextInt(VARIABLES.length)];
+            }
+        }
+    }
+
 
     /**
      * Generates a random RGB color expression.
@@ -159,4 +161,40 @@ public class StringEvaluator implements Command<Pixmap> {
         return "[" + red + "," + green + "," + blue + "]";
     }
 
+
+    /**
+     * Combines operands and operators into a sub-expression.
+     *
+     * @param operators The stack of operators.
+     * @param operands  The stack of operands.
+     * @return The combined expression as a string.
+     */
+    private String combineExpression(Stack<String> operators, Stack<String> operands) {
+        String operator = operators.pop();
+        String operand2 = operands.pop();
+        String operand1 = operands.pop();
+        return "(" + operand1 + " " + operator + " " + operand2 + ")";
+    }
+
+    protected double imageToDomainScale(int value, int bounds) {
+        final double DOMAIN_MIN = -1;
+        final double DOMAIN_MAX = 1;
+        double range = DOMAIN_MAX - DOMAIN_MIN;
+        return ((double) value / bounds) * range + DOMAIN_MIN;
+    }
+
+
+    /**
+     * Creates an expression tree from a string function.
+     *
+     * @param function The function as a string.
+     * @return The ExpressionTreeNode representing the function.
+     */
+    ExpressionTreeNode createExpression(String function) {
+        ExpressionTreeGenerator expTreeGen = new ExpressionTreeGenerator();
+        return expTreeGen.makeExpression(function);
+    }
 }
+
+
+
