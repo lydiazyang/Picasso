@@ -58,34 +58,34 @@ public class StringEvaluator implements Command<Pixmap> {
      * @return The generated expression.
      */
     private String generateExpressionFromString(String input) {
-    Stack<String> operators = new Stack<>();
-    Stack<String> operands = new Stack<>();
+        Stack<String> operators = new Stack<>();
+        Stack<String> operands = new Stack<>();
 
-    for (char c : input.toCharArray()) {
-        if (isOperatorChar(c)) {
-            operators.push(buildOperator(c));
-        } else {
-            operands.push(buildOperand(c, random));
+        for (char c : input.toCharArray()) {
+            if (isOperatorChar(c)) {
+                operators.push(buildOperator(c));
+            } else {
+                operands.push(buildOperand(c, random));
+            }
+
+            if (operands.size() > 1 && !operators.isEmpty()) {
+                String combinedExpr = combineExpression(operators, operands);
+                operands.push(combinedExpr);
+            }
         }
 
-        if (operands.size() > 1 && !operators.isEmpty()) {
+        // Handle remaining operators and operands
+        while (!operators.isEmpty() && operands.size() > 1) {
             String combinedExpr = combineExpression(operators, operands);
             operands.push(combinedExpr);
         }
-    }
 
-    // Handle remaining operators and operands
-    while (!operators.isEmpty() && operands.size() > 1) {
-        String combinedExpr = combineExpression(operators, operands);
-        operands.push(combinedExpr);
-    }
-
-    // Add additional operators if needed
-    while (operands.size() > 1) {
-        operators.push("+"); // Default operator
-        String combinedExpr = combineExpression(operators, operands);
-        operands.push(combinedExpr);
-    }
+        // Add additional operators if needed
+        while (operands.size() > 1) {
+            operators.push("+"); // Default operator
+            String combinedExpr = combineExpression(operators, operands);
+            operands.push(combinedExpr);
+        }
 
 
         if (operands.isEmpty()) {
