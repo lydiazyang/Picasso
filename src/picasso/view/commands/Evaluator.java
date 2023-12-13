@@ -25,7 +25,7 @@ public class Evaluator implements Command<Pixmap> {
 	public Evaluator(JTextField input) {
 		this.input = input;
 	}
-
+	// method that takes pixmap and expressiontreenode
 	/**
 	 * Evaluate an expression for each point in the image.
 	 */
@@ -49,6 +49,8 @@ public class Evaluator implements Command<Pixmap> {
 			JOptionPane.showMessageDialog(null, "The expression you entered is currently unsupported. Please enter a new expression.", "Parse Exception Error",0, null);
 		}
 	}
+	
+	// overload execute (bc of duplicate code) (look at randomevaluator too)
 
 	/**
 	 * Convert from image space to domain space.

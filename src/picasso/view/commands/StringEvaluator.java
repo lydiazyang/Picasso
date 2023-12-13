@@ -11,7 +11,10 @@ import picasso.parser.ExpressionTreeGenerator;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.util.Command;
 
-
+// Not randomly
+// use ascii values to figure out assignments
+// incorporate unary functions as well
+// Don't need to bring color in because perlin can help with colors
 /**
  * Evaluate a string expression for each pixel in a image.
  * 
@@ -36,17 +39,17 @@ public class StringEvaluator implements Command<Pixmap> {
     public void execute(Pixmap target) {
         String inputString = input.getText();
         String generatedExpression = generateExpressionFromString(inputString);
-        ExpressionTreeNode expr = createExpression(generatedExpression);
-
-
-        Dimension size = target.getSize();
-        for (int imageY = 0; imageY < size.height; imageY++) {
-            double evalY = imageToDomainScale(imageY, size.height);
-            for (int imageX = 0; imageX < size.width; imageX++) {
-                double evalX = imageToDomainScale(imageX, size.width);
-                Color pixelColor = expr.evaluate(evalX, evalY).toJavaColor();
-                target.setColor(imageX, imageY, pixelColor);
-            }
+        ExpressionTreeNode expr = createExpression(generatedExpression); // don't need to do this
+        evaluator.execute(target, string_expression); // would be nice to do that
+        	// Would be good if this calls evaluator to execute on target 
+//        Dimension size = target.getSize();
+//        for (int imageY = 0; imageY < size.height; imageY++) {
+//            double evalY = imageToDomainScale(imageY, size.height);
+//            for (int imageX = 0; imageX < size.width; imageX++) {
+//                double evalX = imageToDomainScale(imageX, size.width);
+//                Color pixelColor = expr.evaluate(evalX, evalY).toJavaColor();
+//                target.setColor(imageX, imageY, pixelColor);
+//            }
         }
     }
 
@@ -193,7 +196,7 @@ public class StringEvaluator implements Command<Pixmap> {
     ExpressionTreeNode createExpression(String function) {
         ExpressionTreeGenerator expTreeGen = new ExpressionTreeGenerator();
         return expTreeGen.makeExpression(function);
-    }
+    } // this will be handled in the evaluator
 }
 
 
