@@ -43,7 +43,7 @@ public class Frame extends JFrame {
         commands.add(functionTextField);
         commands.add("Evaluate", new ThreadedCommand<Pixmap>(canvas, evaluator));
         commands.add("Random", new ThreadedCommand<Pixmap>(canvas, new RandomEvaluator()));
-        commands.add("Generate from String", new ThreadedCommand<Pixmap>(canvas, new StringEvaluator()));
+        commands.add("Generate from String", new ThreadedCommand<Pixmap>(canvas, new StringEvaluator(functionTextField)));
 		commands.add("Open", new Reader(this, functionTextField));
 		commands.add("Save", new Writer());
 		
