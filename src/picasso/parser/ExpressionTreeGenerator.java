@@ -82,7 +82,6 @@ public class ExpressionTreeGenerator {
 
 		while (iter.hasNext()) {
 			Token token = iter.next();
-			System.out.println(token.getClass());
 			if (token instanceof NumberToken) {
 				postfixResult.push(token);
 			} else if (token instanceof ColorToken) {
@@ -106,9 +105,7 @@ public class ExpressionTreeGenerator {
 				 * 
 				 * pop o2 off the stack, onto the output queue;
 				 */
-				System.out.println(prevToken);
-				System.out.println(token);
-				if ((prevToken == null) || !(prevToken instanceof IdentifierToken) || !(token instanceof OperationInterface)) {
+				if ((prevToken == null) || (prevToken instanceof CommaToken) || (token instanceof  LeftParenToken)) {
 					throw new ParseException("Invalid format for binary operator: " + token);
 			    }
 				else {
