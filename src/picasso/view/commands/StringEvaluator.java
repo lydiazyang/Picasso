@@ -34,6 +34,21 @@ public class StringEvaluator implements Command<Pixmap> {
     * @return The basic generated expression.
     */
     private String generateBasicExpression(String input) {
-        return "x + y"; // Placeholder 
+        StringBuilder expression = new StringBuilder();
+        for (char c : input.toCharArray()) {
+            expression.append(buildOperand(c));
+        }
+        return expression.toString();  
+    }
+
+    /**
+    * Builds an operand based on a character.
+    *
+    * @param c The character.
+    * @return The operand as a string.
+    */
+    private String buildOperand(char c) {
+        // Basic operand generation logic, to be enhanced
+        return "x"; // Placeholder implementation
 }
 }
