@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import picasso.model.Pixmap;
@@ -49,17 +48,16 @@ public class Frame extends JFrame {
 		commands.add("Save", new Writer());
 		
 		ButtonPanel zoom = new ButtonPanel(canvas);
-		// both stubs
-		zoom.add("Zoom in",new Writer());
-		zoom.add("Zoom out",new Writer());
+		ZoomIn zoomIn = new ZoomIn(evaluator);
+		ZoomOut zoomOut = new ZoomOut(evaluator);
 		
-		JScrollPane panelPane = new JScrollPane(canvas);
+		zoom.add("Zoom in", new ThreadedCommand<Pixmap>(canvas, zoomIn));
+		zoom.add("Zoom out", new ThreadedCommand<Pixmap>(canvas, zoomOut));
 
 		// add our container to Frame and show it
 		getContentPane().add(canvas, BorderLayout.CENTER);
 		getContentPane().add(commands, BorderLayout.NORTH);
 		getContentPane().add(zoom, BorderLayout.SOUTH);
-		getContentPane().add(panelPane, BorderLayout.EAST);
 		pack();
 	}
 
