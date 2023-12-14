@@ -26,6 +26,8 @@ import picasso.util.Command;
 public class Evaluator implements Command<Pixmap> {
 	public static final double DOMAIN_MIN = -1;
 	public static final double DOMAIN_MAX = 1;
+	public double scaledMin;
+	public double scaledMax;
 	private JTextField input;
 	// Stores the current expression being evaluated
 	private List<String> expressionList;
@@ -33,6 +35,8 @@ public class Evaluator implements Command<Pixmap> {
 	
 	public Evaluator(JTextField input) {
 		this.input = input;
+		this.scaledMin = -1;
+		this.scaledMax = 1;
 		this.expressionList = new ArrayList<>();
 		this.propertyChangeSupport = new PropertyChangeSupport(this);
 		expressionList.add(input.getText());
@@ -59,6 +63,8 @@ public class Evaluator implements Command<Pixmap> {
 	 * Evaluate an expression for each point in the image.
 	 */
 	public void execute(Pixmap target) {
+		this.scaledMin = -1;
+		this.scaledMax = 1;
 		try {
 		// create the expression to evaluate just once
 			// evaluate it for each pixel
@@ -84,14 +90,52 @@ public class Evaluator implements Command<Pixmap> {
 	
 	// overload execute (bc of duplicate code) (look at randomevaluator too)
 
+	
+	/**
+	 * Decrease domain min and max to zoom in
+	 */
+	public void scaleDown() {
+		this.scaledMin /= 1.1;
+		this.scaledMax /= 1.1;
+	}
+	
+	/**
+	 * Increase domain min and max to zoom in
+	 */
+	public void scaleUp() {
+		this.scaledMin = Math.max(DOMAIN_MIN, Math.min(DOMAIN_MAX, scaledMin *=1.1));
+		this.scaledMax = Math.max(DOMAIN_MIN, Math.min(DOMAIN_MAX, scaledMax *=1.1));
+	}
+	
+	/**
+	 * Return scaled min
+	 */
+	public double getScaledMin() {
+		return this.scaledMin;
+	}
+	
+	/**
+	 * Return scaled max
+	 */
+	public double getScaledMax() {
+		return this.scaledMax;
+	}
+	
+	/**
+	 * Return string version of input
+	 */
+	public String getInput() {
+		return this.input.getText();
+	}
+	
 	/**
 	 * Convert from image space to domain space.
 	 */
-
 	protected double imageToDomainScale(int value, int bounds) {
 		double range = DOMAIN_MAX - DOMAIN_MIN;
 		return ((double) value / bounds) * range + DOMAIN_MIN;
 	}
+	
 
 	/**
 	 * 
