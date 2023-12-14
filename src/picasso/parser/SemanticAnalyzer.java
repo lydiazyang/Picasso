@@ -122,23 +122,25 @@ public class SemanticAnalyzer implements SemanticAnalyzerInterface {
 	 * Map each operation token to its semantic analyzer
 	 */
 	private void createOperationMappings() {
-	    Properties opProps = new Properties();
-	    try {
-	        opProps.load(new FileReader(OPS_FILE));
-	    } catch (FileNotFoundException e1) {
-	        e1.printStackTrace();
-	        JOptionPane.showMessageDialog(null, "The file '" + OPS_FILE + "' is not found.", "File Not Found", JOptionPane.ERROR_MESSAGE, null);
-	    } catch (IOException e1) {
-	        e1.printStackTrace();
-	        JOptionPane.showMessageDialog(null, "An error occurred while reading the file '" + OPS_FILE + "'.", "IO Exception", JOptionPane.ERROR_MESSAGE, null);
-	    }
 
-	    for (Object op : opProps.keySet()) {
-	        String opName = (String) opProps.get(op);
-	        String tokenName = OPERATIONS_TOKENS_PACKAGE + opName + "Token";
-	        String parserName = PARSER_PACKAGE + opName + "Analyzer";
-	        addSemanticAnalyzerMapping(tokenName, parserName);
-	    }
+		Properties opProps = new Properties();
+		try {
+			opProps.load(new FileReader(OPS_FILE));
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+			throw new ParseException("The operation mapping file was not found: " + OPS_FILE);
+		} catch (IOException e1) {
+		    e1.printStackTrace();
+		    throw new ParseException("An error occurred while reading the operation mapping file: " + e1.getMessage());
+		}
+		
+		for (Object op : opProps.keySet()) {
+			String opName = (String) opProps.get(op);
+			String tokenName = OPERATIONS_TOKENS_PACKAGE + opName + "Token";
+			String parserName = PARSER_PACKAGE + opName + "Analyzer";
+			addSemanticAnalyzerMapping(tokenName, parserName);
+		}
+
 	}
 
 
@@ -151,7 +153,6 @@ public class SemanticAnalyzer implements SemanticAnalyzerInterface {
 	public ExpressionTreeNode generateExpressionTree(Stack<Token> tokens) {
 
 		if (tokens.isEmpty()) {
-			// XXX: Is this the only reason that the token stack is empty?
 			throw new ParseException("Expected another argument.");
 		}
 
