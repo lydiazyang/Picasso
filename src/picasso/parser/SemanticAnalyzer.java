@@ -3,6 +3,7 @@ package picasso.parser;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
@@ -10,6 +11,7 @@ import picasso.parser.language.BuiltinFunctionsReader;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.tokens.Token;
 import picasso.parser.tokens.TokenFactory;
+import picasso.parser.tokens.operations.NegateToken;
 
 /**
  * SemanticAnalyzer calls appropriate SemanticAnalyzer for the given token
@@ -43,31 +45,29 @@ public class SemanticAnalyzer implements SemanticAnalyzerInterface {
 	 * 
 	 */
 	private SemanticAnalyzer() {
-		tokenToSemAnalyzer = new HashMap<Class<?>, SemanticAnalyzerInterface>();
-		createFunctionParserMappings();
-		createOperationMappings();
+	    tokenToSemAnalyzer = new HashMap<>();
+	    createFunctionParserMappings();
+	    createOperationMappings();
 
-		// TODO: Probably should put this information into a file
-		// that can be read in. Separates business rules/syntax from the code.
-		// OR, is there a better alternative?
+	    // get semantic analyzer mapping from a file
+	    Properties mappings = new Properties();
+	    try (InputStream input = getClass().getResourceAsStream("semantic_mappings.properties")) {
+	        if (input != null) {
+	            mappings.load(input);
+	        } else {
+	            throw new FileNotFoundException("Properties file not found");
+	        }
+	    } catch (IOException e) {
+	        e.printStackTrace(); 
+	    }
 
-		// add for constants
-		String tokenName = TOKENS_PACKAGE_NAME + "NumberToken";
-		String parserName = PARSER_PACKAGE + "ConstantAnalyzer";
-		addSemanticAnalyzerMapping(tokenName, parserName);
-
-		// IdentifierToken --> IdentifierAnalyzer
-		tokenName = TOKENS_PACKAGE_NAME + "IdentifierToken";
-		parserName = PARSER_PACKAGE + "IdentifierAnalyzer";
-		addSemanticAnalyzerMapping(tokenName, parserName);
-
-		// Color mapping
-		tokenName = TOKENS_PACKAGE_NAME + "ColorToken";
-		parserName = PARSER_PACKAGE + "ColorAnalyzer";
-		addSemanticAnalyzerMapping(tokenName, parserName);
-
-		// TODO: Are there any others that should be added?
-		// Is there a better way to create this mapping?
+	    // Loop through properties and add mappings
+	    for (String token : mappings.stringPropertyNames()) {
+	        String analyzer = mappings.getProperty(token);
+	        String tokenName = TOKENS_PACKAGE_NAME + token;
+	        String parserName = PARSER_PACKAGE + analyzer;
+	        addSemanticAnalyzerMapping(tokenName, parserName);
+	    }
 	}
 
 	/**
