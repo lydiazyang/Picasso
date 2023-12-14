@@ -10,10 +10,6 @@ import picasso.parser.ExpressionTreeGenerator;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.util.Command;
 
-// Not randomly
-// use ascii values to figure out assignments
-// incorporate unary functions as well
-// Don't need to bring color in because perlin can help with colors
 /**
  * Evaluate a string expression for each pixel in a image.
  * 
@@ -21,6 +17,7 @@ import picasso.util.Command;
  */
 public class StringEvaluator implements Command<Pixmap> {
     private JTextField input;
+    private Evaluator evaluator;
     private static final String[] VARIABLES = {"x", "y"};
     private static final String[] UNARY_FUNCTIONS = {"sin", "cos", "tan", "atan", "exp", "ceil", "floor", "wrap", "abs", "clamp"};
 
@@ -29,8 +26,9 @@ public class StringEvaluator implements Command<Pixmap> {
      *
      * @param input  JTextField from which the input string is obtained.
      */
-    public StringEvaluator(JTextField input) {
+    public StringEvaluator(JTextField input, Evaluator evaluator) {
         this.input = input;
+        this.evaluator = evaluator; 
     }
 
 
@@ -38,17 +36,8 @@ public class StringEvaluator implements Command<Pixmap> {
     public void execute(Pixmap target) {
         String inputString = input.getText();
         String generatedExpression = generateExpressionFromString(inputString);
-        ExpressionTreeNode expr = createExpression(generatedExpression);
-
-        Dimension size = target.getSize();
-        for (int imageY = 0; imageY < size.height; imageY++) {
-            double evalY = imageToDomainScale(imageY, size.height);
-            for (int imageX = 0; imageX < size.width; imageX++) {
-                double evalX = imageToDomainScale(imageX, size.width);
-                Color pixelColor = expr.evaluate(evalX, evalY).toJavaColor();
-                target.setColor(imageX, imageY, pixelColor);
-            }
-        }
+        evaluator.setInputText(generatedExpression);
+        evaluator.execute(target);
     }
 
 
@@ -165,17 +154,6 @@ public class StringEvaluator implements Command<Pixmap> {
         return ((double) value / bounds) * range + DOMAIN_MIN;
     }
 
-
-    /**
-     * Creates an expression tree from a string function.
-     *
-     * @param function The function as a string.
-     * @return The ExpressionTreeNode representing the function.
-     */
-    ExpressionTreeNode createExpression(String function) {
-        ExpressionTreeGenerator expTreeGen = new ExpressionTreeGenerator();
-        return expTreeGen.makeExpression(function);
-    } // this will be handled in the evaluator
 }
 
 
