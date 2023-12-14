@@ -1,10 +1,7 @@
 package picasso.view.commands;
 
-
 import java.awt.Color;
 import java.awt.Dimension;
-import java.util.Random;
-import java.util.Stack;
 import javax.swing.JTextField;
 import picasso.model.Pixmap;
 import picasso.parser.ExpressionTreeGenerator;
@@ -23,7 +20,7 @@ import picasso.util.Command;
 public class StringEvaluator implements Command<Pixmap> {
     private JTextField input;
     private static final String[] VARIABLES = {"x", "y"};
-    private static final Random random = new Random();
+    private static final String[] UNARYOPERATORS = {"sin", "cos", "tan", "atan", "exp", "ceil", "floor", "wrap", "abs", "clamp"};
 
     /**
      * Constructor for the StringEvaluator class
@@ -39,19 +36,18 @@ public class StringEvaluator implements Command<Pixmap> {
     public void execute(Pixmap target) {
         String inputString = input.getText();
         String generatedExpression = generateExpressionFromString(inputString);
-        ExpressionTreeNode expr = createExpression(generatedExpression); // don't need to do this
-//        evaluator.execute(target, string_expression); // would be nice to do that
-        	// Would be good if this calls evaluator to execute on target 
-//        Dimension size = target.getSize();
-//        for (int imageY = 0; imageY < size.height; imageY++) {
-//            double evalY = imageToDomainScale(imageY, size.height);
-//            for (int imageX = 0; imageX < size.width; imageX++) {
-//                double evalX = imageToDomainScale(imageX, size.width);
-//                Color pixelColor = expr.evaluate(evalX, evalY).toJavaColor();
-//                target.setColor(imageX, imageY, pixelColor);
-//            }
+        ExpressionTreeNode expr = createExpression(generatedExpression);
+
+        Dimension size = target.getSize();
+        for (int imageY = 0; imageY < size.height; imageY++) {
+            double evalY = imageToDomainScale(imageY, size.height);
+            for (int imageX = 0; imageX < size.width; imageX++) {
+                double evalX = imageToDomainScale(imageX, size.width);
+                Color pixelColor = expr.evaluate(evalX, evalY).toJavaColor();
+                target.setColor(imageX, imageY, pixelColor);
+            }
         }
-//    }
+    }
 
 
     /**
@@ -61,42 +57,41 @@ public class StringEvaluator implements Command<Pixmap> {
      * @return The generated expression.
      */
     private String generateExpressionFromString(String input) {
-        Stack<String> operators = new Stack<>();
-        Stack<String> operands = new Stack<>();
+            Stack<String> operators = new Stack<>();
+            Stack<String> operands = new Stack<>();
 
-        for (char c : input.toCharArray()) {
-            if (isOperatorChar(c)) {
-                operators.push(buildOperator(c));
-            } else {
-                operands.push(buildOperand(c, random));
+            for (char c : input.toCharArray()) {
+                if (Character.isUpperCase(c)) {
+                    operands.push(buildUnaryFunction(c));
+                } else if (isOperatorChar(c)) {
+                    operators.push(buildOperator(c));
+                } else {
+                    operands.push(buildVariable(c));
+                }
+
+                if (operands.size() > 1 && !operators.isEmpty()) {
+                    String combinedExpr = combineExpression(operators, operands);
+                    operands.push(combinedExpr);
+                }
             }
 
-            if (operands.size() > 1 && !operators.isEmpty()) {
+            while (!operators.isEmpty() && operands.size() > 1) {
                 String combinedExpr = combineExpression(operators, operands);
                 operands.push(combinedExpr);
             }
+
+            while (operands.size() > 1) {
+                operators.push("+"); // Default operator to combine remaining operands
+                String combinedExpr = combineExpression(operators, operands);
+                operands.push(combinedExpr);
+            }
+
+            if (operands.isEmpty()) {
+                return "0";
+            } else {
+                return operands.pop();
+            }    
         }
-
-        // Handle remaining operators and operands
-        while (!operators.isEmpty() && operands.size() > 1) {
-            String combinedExpr = combineExpression(operators, operands);
-            operands.push(combinedExpr);
-        }
-
-        // Add additional operators if needed
-        while (operands.size() > 1) {
-            operators.push("+"); // Default operator
-            String combinedExpr = combineExpression(operators, operands);
-            operands.push(combinedExpr);
-        }
-
-
-        if (operands.isEmpty()) {
-            return "0";
-        } else {
-            return operands.pop();
-        }    
-       }
 
 
     /**
@@ -131,37 +126,14 @@ public class StringEvaluator implements Command<Pixmap> {
         }
     }
 
-
-    /**
-     * Builds an operand based on a character. It can be either a variable or a color.
-     *
-     * @param c      The character.
-     * @param random The Random object used to generate random values.
-     * @return The operand as a string.
-     */
-    private String buildOperand(char c, Random random) {
-        if (Character.isDigit(c)) {
-            return String.valueOf(c);
-        } else {
-            if (random.nextDouble() < 0.6) { // 60% chance to generate a color
-                return buildRandomColor();
-            } else {
-                return VARIABLES[random.nextInt(VARIABLES.length)];
-            }
-        }
+    private String buildUnaryFunction(char c) {
+        int index = (c - 'A') % UNARY_FUNCTIONS.length;
+        return UNARY_FUNCTIONS[index] + "(x)";
     }
 
-
-    /**
-     * Generates a random RGB color expression.
-     *
-     * @return The color expression as a string.
-     */
-    private String buildRandomColor() {
-        double red = random.nextDouble() * 2 - 1;
-        double green = random.nextDouble() * 2 - 1;
-        double blue = random.nextDouble() * 2 - 1;
-        return "[" + red + "," + green + "," + blue + "]";
+    private String buildVariable(char c) {
+        int index = (c - 'a') % VARIABLES.length;
+        return VARIABLES[index];
     }
 
 
