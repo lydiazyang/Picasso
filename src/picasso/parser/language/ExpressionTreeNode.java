@@ -27,5 +27,7 @@ public abstract class ExpressionTreeNode implements EvaluatableExpression {
 
 	// TODO: Not being utilized yet. Why would it be useful?
 	// keep a mapping of the element to its value.
+	// ANSWER: This could be useful for the Assignment operator, but we chose to have a left and right parameter within the
+			// BinaryOperator class rather than mapping an ExpressionTreeNode to an Object here
 	static protected Map<ExpressionTreeNode, Object> gelementsToValue = new TreeMap<ExpressionTreeNode, Object>();
 }

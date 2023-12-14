@@ -184,7 +184,7 @@ public class Evaluator implements Command<Pixmap> {
     
     public void setInputText(String text) {
     	input.setText(text);
-    	execute(new Pixmap());
+    	//whereexecute(new Pixmap());
     	propertyChangeSupport.firePropertyChange("inputText", null, input.getText());
     }
 

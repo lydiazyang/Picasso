@@ -140,7 +140,9 @@ public class SemanticAnalyzer implements SemanticAnalyzerInterface {
 			String parserName = PARSER_PACKAGE + opName + "Analyzer";
 			addSemanticAnalyzerMapping(tokenName, parserName);
 		}
+
 	}
+
 
 	/**
 	 * From a stack of tokens in postfix order, creates an expression tree
