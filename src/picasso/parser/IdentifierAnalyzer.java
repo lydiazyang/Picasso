@@ -34,12 +34,12 @@ public class IdentifierAnalyzer implements SemanticAnalyzerInterface {
 			return mapped;
 		}
 		else {
-			throw new ParseException("Extra operands without operators or functions");
+			throw new ParseException("Extra operands without operators or functions. ");
 		}
 
 		// Throws exception if operands/functions that are not supported
-		// TODO : What should we do if we don't recognize the identifier?
 		// Is that an error? Or, could there a valid reason?
+		// There could be a valid reason where the evaluate button or enter are clicked to run a string rather than the generate from a string button.
 	}
 	
 	/**
