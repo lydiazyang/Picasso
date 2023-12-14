@@ -34,3 +34,7 @@ This code base originated as a project in a course at Duke University.  The prof
 Generating Random Expressions
 
 - To generate a random expression utilizing a combination of the functions and operators that have been implemented, simply click the random button in the Graphical User Interface in the top button panel. Continue generating new and fun images by clicking as many times as you want (Some look more fun than others).
+
+Expression History
+
+- History keeps track of previously evaluated expressions in a dropdown from the "History" tab, and allows the user to select an expression from this dropdown to evaluate again. It does so by utilizing the history view command and pulling from the expression list that is saved as the evaluator runs
