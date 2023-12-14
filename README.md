@@ -37,7 +37,7 @@ Generating Random Expressions
 
 Generating Expressions from a String
 
-- To generate an expression from a String, input any string input you would like in the texfield. Then, click the button labeled "Generate From String." The program will accept the input as a seed to generate an expression that will be evaulated into an image. The same input will always yield the same image. (Be creative with your string expressions by using varied cases or different symbols to have more fun!)
+- To generate an expression from a String, input any string input you would like in the texfield. Then, click the button labeled "Generate From String." The program will accept the input as a seed to generate an expression that will be evaulated into an image. The same input will always yield the same image. (Be creative with your string expressions by using varied cases or different symbols to have more fun!) (My favorite is: Hello Dr. Sprenkle! How are you??)
 
 Expression History
 
