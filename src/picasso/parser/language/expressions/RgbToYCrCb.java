@@ -8,7 +8,7 @@ import picasso.parser.language.ExpressionTreeNode;
  */
 public class RgbToYCrCb extends UnaryFunction {
 	/**
-	 * Create an yCrCbToRGB expression that takes as a parameter the given expression
+	 * Create an RGBtoYCrCb expression that takes as a parameter the given expression
 	 * 
 	 * @param param the expression to abs
 	 */

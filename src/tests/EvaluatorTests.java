@@ -797,6 +797,52 @@ public class EvaluatorTests {
 	    }
 
 	}
+
+	@Test 
+	public void testRgbToYCrCb() {
+		RgbToYCrCb myTree;
+		
+		// test with variable x 
+		myTree = new RgbToYCrCb(new X());
+		for (int i = -1; i <= 1; i++) {
+			RGBColor c = new X().evaluate (i, i);
+			double red = c.getRed() * 0.2989 + c.getGreen() * 0.5866 + c.getBlue() * 0.1145;
+        	double green = c.getRed() * -0.1687 + c.getGreen() * -0.3312 + c.getBlue() * 0.5;
+       	 	double blue = c.getRed() * 0.5000 + c.getGreen() * -0.4183 + c.getBlue() * -0.0816;
+			assertEquals(new RGBColor(red, green, blue), myTree.evaluate(i, i));
+		}
+		
+		// test with variable y
+		myTree = new RgbToYCrCb(new Y());
+		for (int i = -1; i <= 1; i++) {
+			RGBColor c = new Y().evaluate (i, i);
+			double red = c.getRed() * 0.2989 + c.getGreen() * 0.5866 + c.getBlue() * 0.1145;
+        	double green = c.getRed() * -0.1687 + c.getGreen() * -0.3312 + c.getBlue() * 0.5;
+       	 	double blue = c.getRed() * 0.5000 + c.getGreen() * -0.4183 + c.getBlue() * -0.0816;
+			assertEquals(new RGBColor(red, green, blue), myTree.evaluate(i, i));
+		}
+		
+		// test with Doubles X
+		double[] tests = { -0.7, -0.00001, 0.000001, 0.5 };
+	    for (double testVal : tests) {
+	        RGBColor c = new X().evaluate(testVal, testVal);
+	        double red = c.getRed() * 0.2989 + c.getGreen() * 0.5866 + c.getBlue() * 0.1145;
+        	double green = c.getRed() * -0.1687 + c.getGreen() * -0.3312 + c.getBlue() * 0.5;
+       	 	double blue = c.getRed() * 0.5000 + c.getGreen() * -0.4183 + c.getBlue() * -0.0816;
+			assertEquals(new RGBColor(red, green, blue), myTree.evaluate(testVal, testVal));
+	    }
+
+		// test with Doubles Y
+		double[] ytests = { -0.7, -0.00001, 0.000001, 0.5 };
+	    for (double testVal : tests) {
+	        RGBColor c = new Y().evaluate(testVal, testVal);
+	        double red = c.getRed() * 0.2989 + c.getGreen() * 0.5866 + c.getBlue() * 0.1145;
+        	double green = c.getRed() * -0.1687 + c.getGreen() * -0.3312 + c.getBlue() * 0.5;
+       	 	double blue = c.getRed() * 0.5000 + c.getGreen() * -0.4183 + c.getBlue() * -0.0816;
+			assertEquals(new RGBColor(red, green, blue), myTree.evaluate(testVal, testVal));
+	    }
+		
+	}
 	
 	private void assertEquals(RGBColor expected, RGBColor actual) {
 		double delta = 0.000001;
