@@ -47,11 +47,13 @@ public class Frame extends JFrame {
             	evaluator.execute(canvas.getPixmap());
             	canvas.refresh();
             }});
+		
+		StringEvaluator sEvaluator = new StringEvaluator(functionTextField, evaluator);
 		commands.add(new JLabel("Enter Function: "));
     commands.add(functionTextField);
     commands.add("Evaluate", new ThreadedCommand<Pixmap>(canvas, evaluator));
     commands.add("Random", new ThreadedCommand<Pixmap>(canvas, rEvaluator));
-    commands.add("Generate from String", new ThreadedCommand<Pixmap>(canvas, new StringEvaluator(functionTextField, evaluator)));
+    commands.add("Generate from String", new ThreadedCommand<Pixmap>(canvas,  sEvaluator));
 		commands.add("Open", new Reader(this, functionTextField));
 		commands.add("Save", new Writer());
 		commands.add("History", new Command<Pixmap>() {
@@ -62,8 +64,8 @@ public class Frame extends JFrame {
 		});
 		
 		ButtonPanel zoom = new ButtonPanel(canvas);
-		ZoomIn zoomIn = new ZoomIn(evaluator);
-		ZoomOut zoomOut = new ZoomOut(evaluator);
+		ZoomIn zoomIn = new ZoomIn(evaluator, sEvaluator);
+		ZoomOut zoomOut = new ZoomOut(evaluator, sEvaluator);
 		
 		zoom.add("Zoom in", new ThreadedCommand<Pixmap>(canvas, zoomIn));
 		zoom.add("Zoom out", new ThreadedCommand<Pixmap>(canvas, zoomOut));
