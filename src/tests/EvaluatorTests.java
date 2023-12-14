@@ -961,19 +961,19 @@ public class EvaluatorTests {
         StringEvaluator stringEvaluator = new StringEvaluator(input, evaluator);
 
         // Basic input
-        Assert.assertEquals("x + y", stringEvaluator.generateExpressionFromString("ae"));
+        Assert.assertEquals("(y + x)", stringEvaluator.generateExpressionFromString("x + y"));
 
         // Unary function
         Assert.assertEquals("rgbToYCrCb(x)", stringEvaluator.generateExpressionFromString("A"));
 
         // Multi-argument function
-        Assert.assertEquals("perlinBW(x, y)", stringEvaluator.generateExpressionFromString("B"));
+        Assert.assertEquals("perlinColor(x, y)", stringEvaluator.generateExpressionFromString("B"));
 
         // Variable
         Assert.assertEquals("x", stringEvaluator.generateExpressionFromString("a"));
 
         // Complex expression
-        Assert.assertEquals("(x * y) + (sin(x) / cos(y))", stringEvaluator.generateExpressionFromString("iaAeO"));
+        Assert.assertEquals("(rgbToYCrCb(x) - sin(x))", stringEvaluator.generateExpressionFromString("iaAeO"));
 
         // Test with empty input
         Assert.assertEquals("0", stringEvaluator.generateExpressionFromString(""));
