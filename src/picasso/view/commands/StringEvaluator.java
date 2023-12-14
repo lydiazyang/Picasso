@@ -19,7 +19,7 @@ public class StringEvaluator implements Command<Pixmap> {
     private JTextField input;
     private Evaluator evaluator;
     private static final String[] VARIABLES = {"x", "y"};
-    private static final String[] UNARY_FUNCTIONS = {"sin", "cos", "tan", "atan", "exp", "ceil", "floor", "wrap", "abs", "clamp"};
+    private static final String[] UNARY_FUNCTIONS = {"rgbToYCrCb", "yCrCbToRGB","sin", "cos", "tan", "atan", "exp", "ceil", "floor", "wrap", "abs", "clamp"};
 
     /**
      * Constructor for the StringEvaluator class
