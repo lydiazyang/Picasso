@@ -33,6 +33,7 @@ public class Evaluator implements Command<Pixmap> {
 	// Stores the current expression being evaluated
 	private List<String> expressionList;
 	private PropertyChangeSupport propertyChangeSupport;
+	public Boolean isString = false;
 	
 	public Evaluator(JTextField input) {
 		this.input = input;
@@ -44,6 +45,10 @@ public class Evaluator implements Command<Pixmap> {
 	}
 	
 	public void execute(Pixmap target, String expression) {
+		this.isString = true;
+		System.out.print(this.isString());
+		this.scaledMin = -1;
+		this.scaledMax = 1;
         try {
             ExpressionTreeNode expr = createExpression(expression);
             Dimension size = target.getSize();
@@ -64,6 +69,7 @@ public class Evaluator implements Command<Pixmap> {
 	 * Evaluate an expression for each point in the image.
 	 */
 	public void execute(Pixmap target) {
+		this.isString = false;
 		this.scaledMin = -1;
 		this.scaledMax = 1;
 		try {
@@ -129,6 +135,13 @@ public class Evaluator implements Command<Pixmap> {
 	 */
 	public String getInput() {
 		return this.input.getText();
+	}
+	
+	/**
+	 * Return if input is string generated expression
+	 */
+	public Boolean isString() {
+		return this.isString;
 	}
 	
 	/**
