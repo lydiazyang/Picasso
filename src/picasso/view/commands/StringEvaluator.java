@@ -55,7 +55,7 @@ public class StringEvaluator implements Command<Pixmap> {
      * @param input The input string.
      * @return The generated expression.
      */
-    private String generateExpressionFromString(String input) {
+    public String generateExpressionFromString(String input) {
             Stack<String> operators = new Stack<>();
             Stack<String> operands = new Stack<>();
 
