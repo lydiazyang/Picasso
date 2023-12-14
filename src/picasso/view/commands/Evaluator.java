@@ -81,14 +81,14 @@ public class Evaluator implements Command<Pixmap> {
 						}
 				}
 			}
-		} 
-		}catch (ParseException e) {
+	
+		} catch (ParseException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, e.getMessage(),"Error",0, null);
 
 			expressionList.add(input.getText());
 			propertyChangeSupport.firePropertyChange("expressionList", null, expressionList);
-		}catch (Exception e) {
+		} catch (Exception e) {
       e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "The expression you entered is currently unsupported. Please enter a new expression.", "Parse Exception Error",0, null);
 
