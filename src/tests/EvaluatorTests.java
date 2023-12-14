@@ -641,38 +641,38 @@ public class EvaluatorTests {
 		
 		// constant input: (x = 1)
 		ImageClip myTree = new ImageClip(image, new Constant(1), new Y());
-		assertEquals(new RGBColor(image.getColor(scale(1), scale(-1))), myTree.evaluate(-1, -1));
-		assertEquals(new RGBColor(image.getColor(scale(1), scale(-1))), myTree.evaluate(-.6, -1));
-		assertEquals(new RGBColor(image.getColor(scale(1), scale(-1))), myTree.evaluate(1, -1));
-		assertEquals(new RGBColor(image.getColor(scale(1), scale(-1))), myTree.evaluate(.6, -1));
+		assertEquals(new RGBColor(image.getColor(wrapScale(1), wrapScale(-1))), myTree.evaluate(-1, -1));
+		assertEquals(new RGBColor(image.getColor(wrapScale(1), wrapScale(-1))), myTree.evaluate(-.6, -1));
+		assertEquals(new RGBColor(image.getColor(wrapScale(1), wrapScale(-1))), myTree.evaluate(1, -1));
+		assertEquals(new RGBColor(image.getColor(wrapScale(1), wrapScale(-1))), myTree.evaluate(.6, -1));
 		
 		// constant input: (y = 1)
 		myTree = new ImageClip(image, new X(), new Constant(1));
-		assertEquals(new RGBColor(image.getColor(scale(-1), scale(1))), myTree.evaluate(-1, -1));
-		assertEquals(new RGBColor(image.getColor(scale(-1), scale(1))), myTree.evaluate(-1, -.6));
-		assertEquals(new RGBColor(image.getColor(scale(-1), scale(1))), myTree.evaluate(-1, 1));
-		assertEquals(new RGBColor(image.getColor(scale(-1), scale(1))), myTree.evaluate(-1, .6));
+		assertEquals(new RGBColor(image.getColor(wrapScale(-1), wrapScale(1))), myTree.evaluate(-1, -1));
+		assertEquals(new RGBColor(image.getColor(wrapScale(-1), wrapScale(1))), myTree.evaluate(-1, -.6));
+		assertEquals(new RGBColor(image.getColor(wrapScale(-1), wrapScale(1))), myTree.evaluate(-1, 1));
+		assertEquals(new RGBColor(image.getColor(wrapScale(-1), wrapScale(1))), myTree.evaluate(-1, .6));
 		
 		// variable input: (x = x+x)
 		myTree = new ImageClip(image, new Addition(new X(), new X()), new Y());
-		assertEquals(new RGBColor(image.getColor(scale(-1), scale(-1))), myTree.evaluate(-1, -1));
-		assertEquals(new RGBColor(image.getColor(scale(-1), scale(-1))),myTree.evaluate(-2, -1));
-		assertEquals(new RGBColor(image.getColor(scale(1), scale(-1))), myTree.evaluate(2, -1));
-		assertEquals(new RGBColor(image.getColor(scale(0), scale(-1))), myTree.evaluate(0, -1));
+		assertEquals(new RGBColor(image.getColor(wrapScale(-1), wrapScale(-1))), myTree.evaluate(-1, -1));
+		assertEquals(new RGBColor(image.getColor(wrapScale(-1), wrapScale(-1))),myTree.evaluate(-2, -1));
+		assertEquals(new RGBColor(image.getColor(wrapScale(1), wrapScale(-1))), myTree.evaluate(2, -1));
+		assertEquals(new RGBColor(image.getColor(wrapScale(0), wrapScale(-1))), myTree.evaluate(0, -1));
 		
 		// variable input (y = y+y)
 		myTree = new ImageClip(image, new X(), new Addition(new Y(), new Y()));
-		assertEquals(new RGBColor(image.getColor(scale(-1), scale(-1))), myTree.evaluate(-1, -1));
-		assertEquals(new RGBColor(image.getColor(scale(-1), scale(-1))),myTree.evaluate(-1, -2));
-		assertEquals(new RGBColor(image.getColor(scale(-1), scale(1))), myTree.evaluate(-1, 2));
-		assertEquals(new RGBColor(image.getColor(scale(-1), scale(0))), myTree.evaluate(-1, 0));
+		assertEquals(new RGBColor(image.getColor(wrapScale(-1), wrapScale(-1))), myTree.evaluate(-1, -1));
+		assertEquals(new RGBColor(image.getColor(wrapScale(-1), wrapScale(-1))),myTree.evaluate(-1, -2));
+		assertEquals(new RGBColor(image.getColor(wrapScale(-1), wrapScale(1))), myTree.evaluate(-1, 2));
+		assertEquals(new RGBColor(image.getColor(wrapScale(-1), wrapScale(0))), myTree.evaluate(-1, 0));
 		
 		// sin input (x = sin(x))
 		myTree = new ImageClip(image, new Sin(new X()), new Y());
-		assertEquals(new RGBColor(image.getColor(scale(Math.sin(-1)), scale(-1))), myTree.evaluate(-1, -1));
-		assertEquals(new RGBColor(image.getColor(scale(Math.sin(-.6)), scale(-1))), myTree.evaluate(-.6, -1));
-		assertEquals(new RGBColor(image.getColor(scale(Math.sin(1)), scale(-1))), myTree.evaluate(1, -1));
-		assertEquals(new RGBColor(image.getColor(scale(Math.sin(.6)), scale(-1))), myTree.evaluate(.6, -1));
+		assertEquals(new RGBColor(image.getColor(wrapScale(Math.sin(-1)), wrapScale(-1))), myTree.evaluate(-1, -1));
+		assertEquals(new RGBColor(image.getColor(wrapScale(Math.sin(-.6)), wrapScale(-1))), myTree.evaluate(-.6, -1));
+		assertEquals(new RGBColor(image.getColor(wrapScale(Math.sin(1)), wrapScale(-1))), myTree.evaluate(1, -1));
+		assertEquals(new RGBColor(image.getColor(wrapScale(Math.sin(.6)), wrapScale(-1))), myTree.evaluate(.6, -1));
 	}
 	
 	@Test
@@ -903,9 +903,11 @@ public class EvaluatorTests {
 	}
 	
 	private int scale(double value) {
-		return  (int) (((value + 1)/2)*600);
-		
-
+		return  (int) (((value + 1)/2)*800);
+	}
+	
+	private int wrapScale(double value) {
+		return (int) Math.max(0, Math.min(799,scale(value)));
 	}
 
 }

@@ -37,8 +37,11 @@ Generating Random Expressions
 
 Generating Expressions from a String
 
-- To generate an expression from a String, input any string input you would like in the texfield. Then, click the button labeled "Generate From String." The program will accept the input as a seed to generate an expression that will be evaulated into an image. The same input will always yield the same image. (Be creative with your string expressions by using varied cases or different symbols to have more fun!) (My favorite is: Hello Dr. Sprenkle! How are you??)
+- To generate an expression from a String, input any string input you would like in the textfield. Then, click the button labeled "Generate From String." The program will accept the input as a seed to generate an expression that will be evaluated into an image. The same input will always yield the same image. (Be creative with your string expressions by using varied cases or different symbols to have more fun!) (My favorite is: Hello Dr. Sprenkle! How are you??)
 
 Expression History
 
 - History keeps track of previously evaluated expressions in a dropdown from the "History" tab, and allows the user to select an expression from this dropdown to evaluate again. It does so by utilizing the history view command and pulling from the expression list that is saved as the evaluator runs
+
+Zoom
+- To zoom into the middle of the displayed image, press the "Zoom in" button. To zoom back outwards, press the "Zoom out" button. The farthest you can zoom out is what is initially first displayed when the expression is evaluated.
