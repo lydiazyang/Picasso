@@ -46,7 +46,6 @@ public class Evaluator implements Command<Pixmap> {
 	
 	public void execute(Pixmap target, String expression) {
 		this.isString = true;
-		System.out.print(this.isString());
 		this.scaledMin = -1;
 		this.scaledMax = 1;
         try {
