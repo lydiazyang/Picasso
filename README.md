@@ -35,6 +35,10 @@ Generating Random Expressions
 
 - To generate a random expression utilizing a combination of the functions and operators that have been implemented, simply click the random button in the Graphical User Interface in the top button panel. Continue generating new and fun images by clicking as many times as you want (Some look more fun than others).
 
+Generating Expressions from a String
+
+- To generate an expression from a String, input any string input you would like in the texfield. Then, click the button labeled "Generate From String." The program will accept the input as a seed to generate an expression that will be evaulated into an image. The same input will always yield the same image. (Be creative with your string expressions by using varied cases or different symbols to have more fun!)
+
 Expression History
 
 - History keeps track of previously evaluated expressions in a dropdown from the "History" tab, and allows the user to select an expression from this dropdown to evaluate again. It does so by utilizing the history view command and pulling from the expression list that is saved as the evaluator runs
