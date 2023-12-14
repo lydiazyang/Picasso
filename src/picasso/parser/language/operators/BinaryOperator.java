@@ -4,7 +4,7 @@ import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.tokens.Token;
 
 /**
- * Represents a function that takes 2 arguments and an operator.
+ * Represents a function that takes 2 arguments.
  * 
  * @author Jenna Bernstein
  *

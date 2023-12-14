@@ -15,8 +15,8 @@ public class RandomEvaluator implements Command<Pixmap> {
     public static final double DOMAIN_MIN = -1;
     public static final double DOMAIN_MAX = 1;
     private static final String[] VARIABLES = {"x", "y", "Color", "Constant"};
-    private static final String[] BINARYOPERATORS = {"+", "*", "%", "/", "-"};
-    private static final String[] UNARYOPERATORS = {"sin", "cos", "tan", "atan", "exp", "ceil", "floor", "wrap", "abs", "clamp"};
+    private static final String[] BINARYOPERATORS = {"+", "*", "%", "/", "-", "^"};
+    private static final String[] UNARYOPERATORS = {"sin", "log", "cos", "tan", "atan", "exp", "ceil", "floor", "wrap", "abs", "clamp"};
 	private int depth;
 	private JTextField functionTextField;
 	
