@@ -42,7 +42,7 @@ public class Exponentiate extends BinaryOperator{
 	        RGBColor leftResult = left.evaluate(x, y);
 	        RGBColor rightResult = right.evaluate(x, y);
 
-	        // Perform multiplication operation
+	        // Perform exponent operation
 	        double red = Math.pow(leftResult.getRed(), rightResult.getRed());
 	        double green = Math.pow(leftResult.getGreen(), rightResult.getGreen());
 	        double blue = Math.pow(leftResult.getBlue(), rightResult.getBlue());

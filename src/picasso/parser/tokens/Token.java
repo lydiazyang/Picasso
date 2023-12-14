@@ -11,12 +11,12 @@ package picasso.parser.tokens;
  *
  */
 public abstract class Token {
-	protected static final int EQUALS = 5;
 	protected static final int CONSTANT = 0;
 	protected static final int GROUPING = 1;
-	protected static final int MULTIPLICATION_OR_DIVISION = 2;
-	protected static final int ADDITION_OR_SUBTRACTION = 3;
-	protected static final int EXPONENT = 4;
+	protected static final int EXPONENT = 2;
+	protected static final int MULTIPLICATION_OR_DIVISION = 3;
+	protected static final int ADDITION_OR_SUBTRACTION = 4;
+	protected static final int EQUALS = 5;
 	
 
 	private String description;
