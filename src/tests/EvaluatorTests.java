@@ -21,6 +21,7 @@ import picasso.view.commands.Evaluator;
 import picasso.parser.language.operators.Addition;
 import picasso.parser.language.operators.Assignment;
 import picasso.parser.language.operators.Multiply;
+import picasso.parser.language.operators.Negate;
 import picasso.parser.tokens.IdentifierToken;
 import picasso.parser.tokens.Token;
 import picasso.parser.tokens.operations.AdditionToken;
@@ -370,6 +371,68 @@ public class EvaluatorTests {
 			
 		}
 	}
+	
+	@Test
+	public void testNegateEvaluation() {
+	    Negate myTree = new Negate(new X());
+
+	    // some straightforward tests
+	    assertEquals(new RGBColor(0, 0, 0), myTree.evaluate(0, 0));
+	    assertEquals(new RGBColor(-1, -1, -1), myTree.evaluate(1, -1));
+	    assertEquals(new RGBColor(1, 1, 1), myTree.evaluate(-1, 1));
+
+	    // test various double values
+	    double[] tests = { -0.7, -.2, 1, 0, 0.2, -0.7 };
+
+	    for (double testVal : tests) {
+	        assertEquals(new RGBColor(-testVal, -testVal, -testVal), myTree.evaluate(testVal, testVal));
+	    }
+
+	    Negate myOtherTree = new Negate(new Y());
+
+	    // some straightforward tests
+	    assertEquals(new RGBColor(0, 0, 0), myOtherTree.evaluate(-1, 0));
+	    assertEquals(new RGBColor(-1, -1, -1), myOtherTree.evaluate(-1, 1));
+	    assertEquals(new RGBColor(1, 1, 1), myOtherTree.evaluate(1, -1));
+
+	    // test various double values
+	    double[] tests2 = { -0.7, -.2, 1, 0, 0.2, -0.7 };
+
+	    for (double testVal : tests2) {
+	        assertEquals(new RGBColor(-testVal, -testVal, -testVal), myOtherTree.evaluate(-1, testVal));
+	    }
+	}
+	
+	@Test
+	public void testLogEvaluation() {
+	    Log myTree = new Log(new X());
+
+	    // some straightforward tests
+	    assertEquals(new RGBColor(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY), myTree.evaluate(0, 0));
+	    assertEquals(new RGBColor(Double.NaN, Double.NaN, Double.NaN), myTree.evaluate(-1, 2));
+
+	    // test various double values
+	    double[] tests = { 0.5, 2, 1, 1.5, 3, 0.2, 0.7 };
+
+	    for (double testVal : tests) {
+	        assertEquals(new RGBColor(Math.log(testVal), Math.log(testVal), Math.log(testVal)), myTree.evaluate(testVal, testVal));
+	    }
+
+	    Log myOtherTree = new Log(new Y());
+
+	    // some straightforward tests
+	    assertEquals(new RGBColor(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY), myOtherTree.evaluate(0, 0));
+	    assertEquals(new RGBColor(Double.NaN, Double.NaN, Double.NaN), myOtherTree.evaluate(2, -1));
+
+	    // test various double values
+	    double[] tests2 = { 0.5, 2, 1, 1.5, 3, 0.2, 0.7 };
+
+	    for (double testVal : tests2) {
+	        assertEquals(new RGBColor(Math.log(testVal), Math.log(testVal), Math.log(testVal)), myOtherTree.evaluate(testVal, testVal));
+	    }
+	}
+
+
 	
 	@Test
 	public void testEvaluatorException() {

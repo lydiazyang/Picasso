@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
+import javax.swing.JOptionPane;
+
 import picasso.parser.language.BuiltinFunctionsReader;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.tokens.Token;
@@ -120,25 +122,25 @@ public class SemanticAnalyzer implements SemanticAnalyzerInterface {
 	 * Map each operation token to its semantic analyzer
 	 */
 	private void createOperationMappings() {
+	    Properties opProps = new Properties();
+	    try {
+	        opProps.load(new FileReader(OPS_FILE));
+	    } catch (FileNotFoundException e1) {
+	        e1.printStackTrace();
+	        JOptionPane.showMessageDialog(null, "The file '" + OPS_FILE + "' is not found.", "File Not Found", JOptionPane.ERROR_MESSAGE, null);
+	    } catch (IOException e1) {
+	        e1.printStackTrace();
+	        JOptionPane.showMessageDialog(null, "An error occurred while reading the file '" + OPS_FILE + "'.", "IO Exception", JOptionPane.ERROR_MESSAGE, null);
+	    }
 
-		// TODO: The following exceptions should probably be propagated up to
-		// the user.
-		Properties opProps = new Properties();
-		try {
-			opProps.load(new FileReader(OPS_FILE));
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-
-		for (Object op : opProps.keySet()) {
-			String opName = (String) opProps.get(op);
-			String tokenName = OPERATIONS_TOKENS_PACKAGE + opName + "Token";
-			String parserName = PARSER_PACKAGE + opName + "Analyzer";
-			addSemanticAnalyzerMapping(tokenName, parserName);
-		}
+	    for (Object op : opProps.keySet()) {
+	        String opName = (String) opProps.get(op);
+	        String tokenName = OPERATIONS_TOKENS_PACKAGE + opName + "Token";
+	        String parserName = PARSER_PACKAGE + opName + "Analyzer";
+	        addSemanticAnalyzerMapping(tokenName, parserName);
+	    }
 	}
+
 
 	/**
 	 * From a stack of tokens in postfix order, creates an expression tree
