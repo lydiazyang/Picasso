@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import picasso.model.Pixmap;
 import picasso.parser.ExpressionTreeGenerator;
+import picasso.parser.ParseException;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.util.Command;
 
@@ -44,9 +45,9 @@ public class Evaluator implements Command<Pixmap> {
 			//	}
 			}
 		} 
-		}catch (Exception e) {
+		}catch (ParseException e) {
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "The expression you entered is currently unsupported. Please enter a new expression.", "Parse Exception Error",0, null);
+			JOptionPane.showMessageDialog(null, e.getMessage(),"Error",0, null);
 		}
 	}
 
