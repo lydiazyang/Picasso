@@ -57,6 +57,7 @@ public class Reader extends FileCommand<Pixmap> {
 				evaluator.execute(target);
             }
         } catch (IOException e) {
+        	// get popup method that says what the problem is
             e.printStackTrace();
         }
     }

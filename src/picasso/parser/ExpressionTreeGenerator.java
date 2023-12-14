@@ -74,6 +74,7 @@ public class ExpressionTreeGenerator {
 		Stack<Token> postfixResult = new Stack<Token>();
 
 		Iterator<Token> iter = tokens.iterator();
+		Token prevToken = null;
 		
 
 		// TO DISCUSS: Is this the correct way to design this code?
@@ -104,11 +105,17 @@ public class ExpressionTreeGenerator {
 				 * 
 				 * pop o2 off the stack, onto the output queue;
 				 */
+				if ((prevToken == null) || (prevToken instanceof CommaToken) || (token instanceof  LeftParenToken)) {
+					throw new ParseException("Invalid format for binary operator: " + token);
+			    }
+				else {
 				while (!operators.isEmpty() && !(operators.peek() instanceof LeftParenToken)
 						&& orderOfOperation(token) >= orderOfOperation(operators.peek())) {
+					System.out.println(prevToken);
+					System.out.println(token);
 					postfixResult.push(operators.pop());
 				}
-
+				}
 				operators.push(token);
 
 			} else if (token instanceof CommaToken) {
@@ -153,6 +160,7 @@ public class ExpressionTreeGenerator {
 				System.out.println("ERROR: No match: " + token);
 			}
 			//System.out.println("Postfix: " + postfixResult);
+			prevToken = token;
 		}
 
 		while (!operators.isEmpty()) {

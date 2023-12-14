@@ -204,6 +204,11 @@ public class Pixmap {
 		myFileName = DEFAULT_NAME;
 		myImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		mySize = new Dimension(width, height);
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < width; j++) {
+				setColor(i, j, color);
+			}
+		}
 	}
 
 	private BufferedImage copyImage(Dimension from, Dimension to, BufferedImage original) {

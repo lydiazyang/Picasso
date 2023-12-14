@@ -31,7 +31,7 @@ public class AssignmentAnalyzer implements SemanticAnalyzerInterface {
 			Variable variable = new Variable(token.getName());
 			return new Assignment(variable, rhsExpression);
 		}		
-		return null;		
+		return null;	// Throw an error here if not an identifier token
 	}
 
 }
