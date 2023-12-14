@@ -8,11 +8,11 @@ import picasso.parser.language.expressions.YCrCbToRGB;
 import picasso.parser.tokens.Token;
 
 /**
- * Handles parsing the RGB to YCrCb function.
+ * Handles parsing the YCrCb To RGB function.
  * 
  * @author Lydia Yang
  */
-public class RgbToYCrCbAnalyzer extends UnaryFunctionAnalyzer {
+public class YCrCbToRGBAnalyzer extends UnaryFunctionAnalyzer {
 
 	@Override
 	public ExpressionTreeNode generateExpressionTree(Stack<Token> tokens) {
@@ -21,7 +21,7 @@ public class RgbToYCrCbAnalyzer extends UnaryFunctionAnalyzer {
 		// But, it needs to be processed
 		ExpressionTreeNode paramETN = SemanticAnalyzer.getInstance().generateExpressionTree(tokens);
 
-		return new RgbToYCrCb(paramETN);
+		return new YCrCbToRGB(paramETN);
 	}
 
 }
