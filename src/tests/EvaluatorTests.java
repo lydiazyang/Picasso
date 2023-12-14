@@ -734,6 +734,70 @@ public class EvaluatorTests {
 
 	}
 	
+	@Test
+	public void testPerlinColorEvaluation() {
+		PerlinColor myTree;
+
+		// Basic input: perlinColor(x, y)
+		 myTree = new PerlinColor(new X(), new Y());
+		for (int i = -1; i <= 1; i++) {
+			RGBColor left = new X().evaluate(i, i);
+			RGBColor right = new Y().evaluate(i, i);
+			double red = ImprovedNoise.noise(left.getRed() + 0.3, right.getRed() + 0.3, 0);
+			double blue = ImprovedNoise.noise(left.getBlue() + 0.1, right.getBlue() + 0.1, 0);
+			double green = ImprovedNoise.noise(left.getGreen() - 0.8, right.getGreen() - 0.8, 0);
+			assertEquals(new RGBColor(red, green, blue), myTree.evaluate(i, i));
+		}
+
+		
+		// Common input: perlinColor(x+x, y)
+		myTree = new PerlinColor(new Addition(new X(), new X()), new Y());
+	    for (int i = -1; i <= 1; i++) {
+	        RGBColor left = new Addition(new X(), new X()).evaluate(i, i);
+	        RGBColor right = new Y().evaluate(i, i);
+	        double red = ImprovedNoise.noise(left.getRed() + 0.3, right.getRed() + 0.3, 0);
+			double blue = ImprovedNoise.noise(left.getBlue() + 0.1, right.getBlue() + 0.1, 0);
+			double green = ImprovedNoise.noise(left.getGreen() - 0.8, right.getGreen() - 0.8, 0);
+			assertEquals(new RGBColor(red, green, blue), myTree.evaluate(i, i));
+	    }
+		
+		// Common input: perlinColor(x*x, y)
+	    myTree = new PerlinColor(new Multiply(new X(), new X()), new Y());
+	    for (int i = -1; i <= 1; i++) {
+	        RGBColor left = new Multiply(new X(), new X()).evaluate(i, i);
+	        RGBColor right = new Y().evaluate(i, i);
+	        double red = ImprovedNoise.noise(left.getRed() + 0.3, right.getRed() + 0.3, 0);
+			double blue = ImprovedNoise.noise(left.getBlue() + 0.1, right.getBlue() + 0.1, 0);
+			double green = ImprovedNoise.noise(left.getGreen() - 0.8, right.getGreen() - 0.8, 0);
+			assertEquals(new RGBColor(red, green, blue), myTree.evaluate(i, i));
+	    }
+		
+
+		// Recursion: perlinColor(sin(x), cos(y))
+	    myTree = new PerlinColor(new Sin(new X()), new Cos(new Y()));
+	    for (double angle = -2 * Math.PI; angle <= 2 * Math.PI; angle += Math.PI / 4) {
+	        RGBColor left = new Sin(new X()).evaluate(angle, angle);
+        	RGBColor right = new Cos(new Y()).evaluate(angle, angle);
+	        double red = ImprovedNoise.noise(left.getRed() + 0.3, right.getRed() + 0.3, 0);
+			double blue = ImprovedNoise.noise(left.getBlue() + 0.1, right.getBlue() + 0.1, 0);
+			double green = ImprovedNoise.noise(left.getGreen() - 0.8, right.getGreen() - 0.8, 0);
+			assertEquals(new RGBColor(red, green, blue), myTree.evaluate(angle, angle));
+	    }
+
+		// Double tests
+	    myTree = new PerlinColor(new X(), new Y());
+	    double[] tests = { -0.7, -0.00001, 0.000001, 0.5 };
+	    for (double testVal : tests) {
+	        RGBColor left = new X().evaluate(testVal, testVal);
+	        RGBColor right = new Y().evaluate(testVal, testVal);
+	        double red = ImprovedNoise.noise(left.getRed() + 0.3, right.getRed() + 0.3, 0);
+			double blue = ImprovedNoise.noise(left.getBlue() + 0.1, right.getBlue() + 0.1, 0);
+			double green = ImprovedNoise.noise(left.getGreen() - 0.8, right.getGreen() - 0.8, 0);
+			assertEquals(new RGBColor(red, green, blue), myTree.evaluate(testVal, testVal));
+	    }
+
+	}
+	
 	private void assertEquals(RGBColor expected, RGBColor actual) {
 		double delta = 0.000001;
 		if (expected == null || actual == null) {
