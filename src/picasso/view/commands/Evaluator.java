@@ -80,20 +80,16 @@ public class Evaluator implements Command<Pixmap> {
 						target.setColor(imageX, imageY, pixelColor);
 						}
 				}
-			}
-		} 
+			} 
 		}catch (ParseException e) {
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, e.getMessage(),"Error",0, null);
-
+			String j = e.getMessage();
+			String x = j.replaceAll("ParseException:", "");
+			JOptionPane.showMessageDialog(null, x,"Error",0, null);}
 			expressionList.add(input.getText());
 			propertyChangeSupport.firePropertyChange("expressionList", null, expressionList);
-		}catch (Exception e) {
-      e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "The expression you entered is currently unsupported. Please enter a new expression.", "Parse Exception Error",0, null);
 
 		}
-	}
 	
 	// overload execute (bc of duplicate code) (look at randomevaluator too)
 
