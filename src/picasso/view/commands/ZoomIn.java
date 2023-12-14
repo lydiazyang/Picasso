@@ -16,8 +16,10 @@ import picasso.util.Command;
  */
 public class ZoomIn implements Command<Pixmap> {
 	private Evaluator evaluator;
-	public ZoomIn(Evaluator evaluator) {
+	private StringEvaluator sEvaluator;
+	public ZoomIn(Evaluator evaluator, StringEvaluator sEvaluator) {
 		this.evaluator = evaluator;
+		this. sEvaluator = sEvaluator;
 	}
 
 	/**
@@ -25,10 +27,18 @@ public class ZoomIn implements Command<Pixmap> {
 	 */
 	public void execute(Pixmap target) {	
 		evaluator.scaleDown();
+		String input;
+		System.out.print(evaluator.isString());
+		if (evaluator.isString()) {
+				input = sEvaluator.generateExpressionFromString(evaluator.getInput());
+				System.out.print(input);
+		}else {
+			input = evaluator.getInput();
+		}
+
 		try {
 			// create the expression to evaluate just once
 				// evaluate it for each pixel
-			String input = evaluator.getInput();
 				if (!input.startsWith("//"))  {
 					ExpressionTreeNode expr = createExpression(input);
 					Dimension size = target.getSize();
@@ -45,7 +55,8 @@ public class ZoomIn implements Command<Pixmap> {
 				e.printStackTrace();
 				JOptionPane.showMessageDialog(null, "The expression you entered is currently unsupported. Please enter a new expression.", "Parse Exception Error",0, null);
 			}
-	}
+		}
+	
 	
 	/**
 	 * Convert from image space to domain space.
