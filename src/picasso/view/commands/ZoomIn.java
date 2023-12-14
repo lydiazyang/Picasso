@@ -28,10 +28,8 @@ public class ZoomIn implements Command<Pixmap> {
 	public void execute(Pixmap target) {	
 		evaluator.scaleDown();
 		String input;
-		System.out.print(evaluator.isString());
 		if (evaluator.isString()) {
 				input = sEvaluator.generateExpressionFromString(evaluator.getInput());
-				System.out.print(input);
 		}else {
 			input = evaluator.getInput();
 		}
