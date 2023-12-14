@@ -2,6 +2,8 @@ package picasso.view.commands;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.Stack;
+
 import javax.swing.JTextField;
 import picasso.model.Pixmap;
 import picasso.parser.ExpressionTreeGenerator;
@@ -20,7 +22,7 @@ import picasso.util.Command;
 public class StringEvaluator implements Command<Pixmap> {
     private JTextField input;
     private static final String[] VARIABLES = {"x", "y"};
-    private static final String[] UNARYOPERATORS = {"sin", "cos", "tan", "atan", "exp", "ceil", "floor", "wrap", "abs", "clamp"};
+    private static final String[] UNARY_FUNCTIONS = {"sin", "cos", "tan", "atan", "exp", "ceil", "floor", "wrap", "abs", "clamp"};
 
     /**
      * Constructor for the StringEvaluator class
@@ -65,9 +67,10 @@ public class StringEvaluator implements Command<Pixmap> {
                     operands.push(buildUnaryFunction(c));
                 } else if (isOperatorChar(c)) {
                     operators.push(buildOperator(c));
-                } else {
+                } else if (Character.isLowerCase(c)) {
                     operands.push(buildVariable(c));
                 }
+                // Ignore characters that do not match any of the above categories
 
                 if (operands.size() > 1 && !operators.isEmpty()) {
                     String combinedExpr = combineExpression(operators, operands);
@@ -132,9 +135,13 @@ public class StringEvaluator implements Command<Pixmap> {
     }
 
     private String buildVariable(char c) {
-        int index = (c - 'a') % VARIABLES.length;
-        return VARIABLES[index];
+        if (Character.isLowerCase(c)) {
+            int index = Math.abs(c - 'a') % VARIABLES.length;
+            return VARIABLES[index];
+        }
+        return "x"; // Default variable if not a lowercase letter
     }
+
 
 
     /**
