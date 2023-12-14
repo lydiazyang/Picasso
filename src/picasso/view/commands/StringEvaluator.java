@@ -25,19 +25,25 @@ public class StringEvaluator implements Command<Pixmap> {
      * Constructor for the StringEvaluator class
      *
      * @param input  JTextField from which the input string is obtained.
+     * @param evaluator The evaluator used to process the generated expression.
      */
     public StringEvaluator(JTextField input, Evaluator evaluator) {
         this.input = input;
         this.evaluator = evaluator; 
     }
 
-
+    /**
+     * Executes the string evaluation process for a given Pixmap target.
+     * Generates an expression from the input string and uses the evaluator to apply
+     * this expression to each pixel in the image.
+     * 
+     * @param target The Pixmap object representing image to be processed.
+     */
     @Override
     public void execute(Pixmap target) {
         String inputString = input.getText();
         String generatedExpression = generateExpressionFromString(inputString);
-        evaluator.setInputText(generatedExpression);
-        evaluator.execute(target);
+        evaluator.execute(target, generatedExpression);
     }
 
 
@@ -118,11 +124,23 @@ public class StringEvaluator implements Command<Pixmap> {
         }
     }
 
+
+    /**
+     * Builds unary function expression based on uppercase character. 
+     * Each letter corresponds to a unary function.
+     * @param c The uppercase character
+     * @return Unary function as a string.
+     */
     private String buildUnaryFunction(char c) {
         int index = (c - 'A') % UNARY_FUNCTIONS.length;
         return UNARY_FUNCTIONS[index] + "(x)";
     }
 
+    /**
+     * Builds variable based on lowercase character. Each letter corresponds to a variable.
+     * @param c Lowercase character
+     * @return Corresponding variable as string
+     */
     private String buildVariable(char c) {
         if (Character.isLowerCase(c)) {
             int index = Math.abs(c - 'a') % VARIABLES.length;
