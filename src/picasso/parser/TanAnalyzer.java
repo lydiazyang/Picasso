@@ -3,6 +3,7 @@ package picasso.parser;
 import java.util.Stack;
 
 import picasso.parser.language.ExpressionTreeNode;
+import picasso.parser.language.expressions.Constant;
 import picasso.parser.language.expressions.Tan;
 import picasso.parser.tokens.Token;
 /**
@@ -18,8 +19,7 @@ public class TanAnalyzer extends UnaryFunctionAnalyzer {
 		// the parameter is the next token(s) on the stack.
 		// But, it needs to be processed
 		ExpressionTreeNode paramETN = SemanticAnalyzer.getInstance().generateExpressionTree(tokens);
-
 		return new Tan(paramETN);
 	}
-
+	
 }

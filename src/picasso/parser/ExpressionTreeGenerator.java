@@ -105,7 +105,7 @@ public class ExpressionTreeGenerator {
 				 * 
 				 * pop o2 off the stack, onto the output queue;
 				 */
-				if ((prevToken == null) || (prevToken instanceof CommaToken) || (token instanceof  LeftParenToken)) {
+				if (!(token instanceof NegateToken) && ((prevToken == null) || (prevToken instanceof CommaToken) || (token instanceof  LeftParenToken))) {
 					throw new ParseException("Invalid format for binary operator: " + token);
 			    }
 				else {
