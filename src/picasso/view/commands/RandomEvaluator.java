@@ -2,6 +2,8 @@ package picasso.view.commands;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import javax.swing.JTextField;
@@ -16,7 +18,9 @@ public class RandomEvaluator implements Command<Pixmap> {
     public static final double DOMAIN_MAX = 1;
     private static final String[] VARIABLES = {"x", "y", "Color", "Constant"};
     private static final String[] BINARYOPERATORS = {"+", "*", "%", "/", "-", "^"};
-    private static final String[] UNARYOPERATORS = {"sin", "log", "cos", "tan", "atan", "exp", "ceil", "floor", "wrap", "abs", "clamp"};
+    private static final String[] UNARYOPERATORS = {"sin", "log", "cos", "tan", "atan", "exp", "ceil", "floor", 
+    		"wrap", "abs", "clamp"};
+    private static final String[] MULTIARGUMENTFUNCTIONS = {"perlinBW", "perlinColor", "rgbToYCrCb", "yCrCbToRGB"};
 	private int depth;
 	private JTextField functionTextField;
 	
@@ -83,8 +87,13 @@ public class RandomEvaluator implements Command<Pixmap> {
                 numOperands = 1;
                 expression.append(operator).append("(");
             } else {
-                operator = BINARYOPERATORS[new Random().nextInt(BINARYOPERATORS.length)];
-                numOperands = 2;
+            	if (new Random().nextBoolean()) {
+            	    operator = BINARYOPERATORS[new Random().nextInt(BINARYOPERATORS.length)];
+            	} else {
+            	    operator = MULTIARGUMENTFUNCTIONS[new Random().nextInt(MULTIARGUMENTFUNCTIONS.length)];
+            	    expression.append(operator);
+            	}
+            	numOperands = 2;
                 expression.append("(");
             }
 
@@ -92,7 +101,13 @@ public class RandomEvaluator implements Command<Pixmap> {
                 expression.append(buildRandomExpression(depth - 1, !topLevel));
                 if (i < numOperands - 1) {
                 	if (numOperands == 2) {
-                		expression.append(operator);
+                		List<String> binaryOperatorsList = Arrays.asList(BINARYOPERATORS);
+                		if (binaryOperatorsList.contains(operator)) {
+                			expression.append(operator);
+                		}
+                		else {
+                    		expression.append(",");
+                    	}
                 	} else {
                 		expression.append(",");
                 	}
