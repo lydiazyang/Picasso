@@ -16,8 +16,10 @@ import picasso.util.Command;
  */
 public class ZoomOut implements Command<Pixmap> {
 	private Evaluator evaluator;
-	public ZoomOut(Evaluator evaluator) {
+	private StringEvaluator sEvaluator;
+	public ZoomOut(Evaluator evaluator, StringEvaluator sEvaluator) {
 		this.evaluator = evaluator;
+		this. sEvaluator = sEvaluator;
 	}
 
 	/**
@@ -25,10 +27,16 @@ public class ZoomOut implements Command<Pixmap> {
 	 */
 	public void execute(Pixmap target) {	
 		evaluator.scaleUp();
+		String input;
+		if (evaluator.isString()) {
+				input = sEvaluator.generateExpressionFromString(evaluator.getInput());
+		}else {
+			input = evaluator.getInput();
+		}
+
 		try {
 			// create the expression to evaluate just once
 				// evaluate it for each pixel
-			String input = evaluator.getInput();
 				if (!input.startsWith("//"))  {
 					ExpressionTreeNode expr = createExpression(input);
 					Dimension size = target.getSize();
