@@ -37,7 +37,24 @@ public class Evaluator implements Command<Pixmap> {
 		this.propertyChangeSupport = new PropertyChangeSupport(this);
 		expressionList.add(input.getText());
 	}
-
+	
+	public void execute(Pixmap target, String expression) {
+        try {
+            ExpressionTreeNode expr = createExpression(expression);
+            Dimension size = target.getSize();
+            for (int imageY = 0; imageY < size.height; imageY++) {
+                double evalY = imageToDomainScale(imageY, size.height);
+                for (int imageX = 0; imageX < size.width; imageX++) {
+                    double evalX = imageToDomainScale(imageX, size.width);
+                    Color pixelColor = expr.evaluate(evalX, evalY).toJavaColor();
+                    target.setColor(imageX, imageY, pixelColor);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "The expression you entered is currently unsupported. Please enter a new expression.", "Parse Exception Error", 0, null);
+        }
+    }
 	/**
 	 * Evaluate an expression for each point in the image.
 	 */
@@ -64,6 +81,8 @@ public class Evaluator implements Command<Pixmap> {
 			JOptionPane.showMessageDialog(null, "The expression you entered is currently unsupported. Please enter a new expression.", "Parse Exception Error",0, null);
 		}
 	}
+	
+	// overload execute (bc of duplicate code) (look at randomevaluator too)
 
 	/**
 	 * Convert from image space to domain space.
