@@ -20,6 +20,7 @@ public class StringEvaluator implements Command<Pixmap> {
     private Evaluator evaluator;
     private static final String[] VARIABLES = {"x", "y"};
     private static final String[] UNARY_FUNCTIONS = {"rgbToYCrCb", "yCrCbToRGB","sin", "cos", "tan", "atan", "exp", "ceil", "floor", "wrap", "abs", "clamp"};
+    private static final String[] MULTIARGUMENT_FUNCTIONS = {"perlinBW", "perlinColor"};
 
     /**
      * Constructor for the StringEvaluator class
@@ -43,6 +44,7 @@ public class StringEvaluator implements Command<Pixmap> {
     public void execute(Pixmap target) {
         String inputString = input.getText();
         String generatedExpression = generateExpressionFromString(inputString);
+//        evaluator.setInputText(generatedExpression); // to check generated expression
         evaluator.execute(target, generatedExpression);
     }
 
@@ -59,8 +61,8 @@ public class StringEvaluator implements Command<Pixmap> {
 
             for (char c : input.toCharArray()) {
                 if (Character.isUpperCase(c)) {
-                    operands.push(buildUnaryFunction(c));
-                } else if (isOperatorChar(c)) {
+                    operands.push(buildFunction(c));
+                } else if (isOperatorChar(c, input)) {
                     operators.push(buildOperator(c));
                 } else if (Character.isLowerCase(c)) {
                     operands.push(buildVariable(c));
@@ -98,8 +100,8 @@ public class StringEvaluator implements Command<Pixmap> {
      * @param c The character to check.
      * @return True if the character is an operator, false otherwise.
      */
-    private boolean isOperatorChar(char c) {
-        return "aeiou".indexOf(Character.toLowerCase(c)) >= 0;
+    private boolean isOperatorChar(char c, String input) {
+        return "aeiou".indexOf(Character.toLowerCase(c)) >= 0 && input.length()!=1;
     }
 
 
@@ -126,15 +128,24 @@ public class StringEvaluator implements Command<Pixmap> {
 
 
     /**
-     * Builds unary function expression based on uppercase character. 
+     * Builds unary function expression or multiargument based on uppercase character. 
      * Each letter corresponds to a unary function.
      * @param c The uppercase character
      * @return Unary function as a string.
      */
-    private String buildUnaryFunction(char c) {
-        int index = (c - 'A') % UNARY_FUNCTIONS.length;
-        return UNARY_FUNCTIONS[index] + "(x)";
+    private String buildFunction(char c) {
+        int index = (c - 'A');
+        if (index%2 == 0) {
+        	index = index % UNARY_FUNCTIONS.length;
+        	return UNARY_FUNCTIONS[index] + "(x)";
+        }
+        else {
+        	index = index % MULTIARGUMENT_FUNCTIONS.length;
+        	return MULTIARGUMENT_FUNCTIONS[index] + "(x, y)";
+        }
+        		   
     }
+   
 
     /**
      * Builds variable based on lowercase character. Each letter corresponds to a variable.
