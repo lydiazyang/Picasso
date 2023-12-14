@@ -15,11 +15,17 @@ import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.*;
 import picasso.parser.language.operators.Addition;
 import picasso.parser.language.operators.Assignment;
+import picasso.parser.language.operators.Division;
+import picasso.parser.language.operators.Exponentiate;
+import picasso.parser.language.operators.Mod;
+import picasso.parser.language.operators.Subtraction;
 import picasso.parser.tokens.ColorToken;
 import picasso.parser.tokens.IdentifierToken;
 import picasso.parser.tokens.Token;
 import picasso.parser.tokens.operations.AdditionToken;
 import picasso.parser.tokens.operations.AssignmentToken;
+import picasso.parser.tokens.operations.DivisionToken;
+import picasso.parser.tokens.operations.ExponentiateToken;
 import picasso.parser.tokens.operations.MultiplyToken;
 
 /**
@@ -65,7 +71,71 @@ public class ExpressionTreeGeneratorTests {
 		e = parser.makeExpression("x + y + [ -.51, 0, 1]");
 		assertEquals(new Addition(new Addition(new X(), new Y()), new RGBColor(-.51, 0, 1)), e);
 	}
+	
+	@Test
+	public void DvisionExpressionTests() {
+		ExpressionTreeNode e = parser.makeExpression("x / y");
+		assertEquals(new Division(new X(), new Y()), e);
 
+		// no spaces!
+		e = parser.makeExpression("x/y");
+		assertEquals(new Division(new X(), new Y()), e);
+
+		e = parser.makeExpression("[1,.3,-1] / y");
+		assertEquals(new Division(new RGBColor(1, .3, -1), new Y()), e);
+
+		e = parser.makeExpression("x / y / [ -.51, 0, 1]");
+		assertEquals(new Division(new Division(new X(), new Y()), new RGBColor(-.51, 0, 1)), e);
+	}
+	
+	@Test
+	public void ModExpressionTests() {
+		ExpressionTreeNode e = parser.makeExpression("x % y");
+		assertEquals(new Mod(new X(), new Y()), e);
+
+		// no spaces!
+		e = parser.makeExpression("x%y");
+		assertEquals(new Mod(new X(), new Y()), e);
+
+		e = parser.makeExpression("[1,.3,-1] % y");
+		assertEquals(new Mod(new RGBColor(1, .3, -1), new Y()), e);
+
+		e = parser.makeExpression("x % y % [ -.51, 0, 1]");
+		assertEquals(new Mod(new Mod(new X(), new Y()), new RGBColor(-.51, 0, 1)), e);
+	}
+	
+	@Test
+	public void ExponentiateExpressionTests() {
+		ExpressionTreeNode e = parser.makeExpression("x ^ y");
+		assertEquals(new Exponentiate(new X(), new Y()), e);
+
+		// no spaces!
+		e = parser.makeExpression("x^y");
+		assertEquals(new Exponentiate(new X(), new Y()), e);
+
+		e = parser.makeExpression("[1,.3,-1] ^ y");
+		assertEquals(new Exponentiate(new RGBColor(1, .3, -1), new Y()), e);
+
+		e = parser.makeExpression("x ^ y ^ [ -.51, 0, 1]");
+		assertEquals(new Exponentiate(new Exponentiate(new X(), new Y()), new RGBColor(-.51, 0, 1)), e);
+	}
+	
+	@Test
+	public void SubtractionExpressionTests() {
+		ExpressionTreeNode e = parser.makeExpression("x - y");
+		assertEquals(new Subtraction(new X(), new Y()), e);
+
+		// no spaces!
+		e = parser.makeExpression("x-y");
+		assertEquals(new Subtraction(new X(), new Y()), e);
+
+		e = parser.makeExpression("[1,.3,-1] - y");
+		assertEquals(new Subtraction(new RGBColor(1, .3, -1), new Y()), e);
+
+		e = parser.makeExpression("x - y - [ -.51, 0, 1]");
+		assertEquals(new Subtraction(new Addition(new X(), new Y()), new RGBColor(-.51, 0, 1)), e);
+	}
+	
 	@Test
 	public void parenthesesExpressionTests() {
 		ExpressionTreeNode e = parser.makeExpression("( x + y )");
@@ -77,16 +147,59 @@ public class ExpressionTreeGeneratorTests {
 
 	@Test
 	public void arithmeticStackTests() {
-		Stack<Token> stack = parser.infixToPostfix("x + y * x");
+		Stack<Token> stack1 = parser.infixToPostfix("x + y * x");
 
-		Stack<Token> expected = new Stack<>();
-		expected.push(new IdentifierToken("x"));
-		expected.push(new IdentifierToken("y"));
-		expected.push(new IdentifierToken("x"));
-		expected.push(new MultiplyToken());
-		expected.push(new AdditionToken());
+		Stack<Token> expected1 = new Stack<>();
+		expected1.push(new IdentifierToken("x"));
+		expected1.push(new IdentifierToken("y"));
+		expected1.push(new IdentifierToken("x"));
+		expected1.push(new MultiplyToken());
+		expected1.push(new AdditionToken());
 
-		assertEquals(expected, stack);
+		System.out.println(expected1);
+		System.out.println(stack1);
+		assertEquals(expected1, stack1);
+		
+		Stack<Token> stack2 = parser.infixToPostfix("x + y * x ^ y");
+
+		Stack<Token> expected2 = new Stack<>();
+		expected2.push(new IdentifierToken("x"));
+		expected2.push(new IdentifierToken("y"));
+		expected2.push(new IdentifierToken("x"));
+		expected2.push(new IdentifierToken("y"));
+		expected2.push(new ExponentiateToken());
+		expected2.push(new MultiplyToken());
+		expected2.push(new AdditionToken());
+
+		System.out.println(expected2);
+		System.out.println(stack2);
+		assertEquals(expected2, stack2);
+		
+		Stack<Token> stack3 = parser.infixToPostfix("y ^ x / x");
+
+		Stack<Token> expected3 = new Stack<>();
+		expected3.push(new IdentifierToken("y"));
+		expected3.push(new IdentifierToken("x"));
+		expected3.push(new ExponentiateToken());
+		expected3.push(new IdentifierToken("x"));
+		expected3.push(new DivisionToken());
+
+		System.out.println(expected3);
+		System.out.println(stack3);
+		assertEquals(expected3, stack3);
+		
+		Stack<Token> stack4 = parser.infixToPostfix("y + x ^ x");
+
+		Stack<Token> expected4 = new Stack<>();
+		expected4.push(new IdentifierToken("y"));
+		expected4.push(new IdentifierToken("x"));
+		expected4.push(new IdentifierToken("x"));
+		expected4.push(new ExponentiateToken());
+		expected4.push(new AdditionToken());
+
+		System.out.println(expected4);
+		System.out.println(stack4);
+		assertEquals(expected4, stack4);
 	}
 
 	@Test

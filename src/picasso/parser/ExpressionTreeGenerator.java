@@ -111,8 +111,6 @@ public class ExpressionTreeGenerator {
 				else {
 				while (!operators.isEmpty() && !(operators.peek() instanceof LeftParenToken)
 						&& orderOfOperation(token) >= orderOfOperation(operators.peek())) {
-					System.out.println(prevToken);
-					System.out.println(token);
 					postfixResult.push(operators.pop());
 				}
 				}
@@ -187,7 +185,6 @@ public class ExpressionTreeGenerator {
 	 */
 	private int orderOfOperation(Token token) {
 	    if (token instanceof OperationInterface) {
-	    	System.out.println(token.getOrder());
 	    	return token.getOrder();
 	    } else {
 	        return CONSTANT;

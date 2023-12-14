@@ -42,6 +42,7 @@ public class CharTokenFactory {
 		tokenList[CharConstants.MINUS] = new SubtractionToken();
 		tokenList[CharConstants.SLASH] = new DivisionToken();
 		tokenList[CharConstants.MOD] = new ModToken();
+		tokenList[CharConstants.CARET] = new ExponentiateToken();
 		
 
 		// TODO: What other tokens should be in here?
