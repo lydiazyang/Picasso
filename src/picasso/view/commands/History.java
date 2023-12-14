@@ -18,6 +18,7 @@ public class History implements Command<Pixmap> {
 	public History(JComboBox<String> hDropdown, Evaluator evaluator) {
 		this.hDropdown = hDropdown;
 		this.evaluator = evaluator;
+		hDropdown.addActionListener(e -> selection());
 	}
 	
 	@Override
@@ -43,5 +44,11 @@ public class History implements Command<Pixmap> {
             	hDropdown.setSelectedItem(selectedExpression);
             }
         }
-	}	
+	}
+	private void selection() {
+		String selectedExpression = (String) hDropdown.getSelectedItem();
+		if (selectedExpression != null) {
+			evaluator.setInputText(selectedExpression);
+		}
+	}
 }
