@@ -28,7 +28,7 @@ public  class ImageWrapAnalyzer  implements SemanticAnalyzerInterface {
 				tokens);
 		
 		// pop off filename
-		ImageToken file = (ImageToken) tokens.pop();
+		ImageToken file = (ImageToken) tokens.pop(); // if not an image token, throw an error
 		
 		// get fileName and use to create Pixmap object
 		Pixmap image = new Pixmap(file.getFilePath());

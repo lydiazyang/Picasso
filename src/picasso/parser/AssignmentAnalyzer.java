@@ -27,11 +27,15 @@ public class AssignmentAnalyzer implements SemanticAnalyzerInterface {
 		ExpressionTreeNode rhsExpression = SemanticAnalyzer.getInstance().generateExpressionTree(tokens);
 		// Check that LHS is an identifier token
 		if (tokens.peek() instanceof IdentifierToken) {
+			IdentifierToken t = (IdentifierToken) tokens.peek();
+			if (t.getName().equals("x") || t.getName().equals("y")){
+				throw new ParseException("Variable cannot be x or y");
+			}
 			IdentifierToken token = (IdentifierToken) tokens.pop();
 			Variable variable = new Variable(token.getName());
 			return new Assignment(variable, rhsExpression);
 		}		
-		return null;		
+		return null;	// Throw an error here if not an identifier token
 	}
 
 }

@@ -13,6 +13,7 @@ import java.beans.PropertyChangeSupport;
 
 import picasso.model.Pixmap;
 import picasso.parser.ExpressionTreeGenerator;
+import picasso.parser.ParseException;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.util.Command;
 
@@ -26,6 +27,8 @@ import picasso.util.Command;
 public class Evaluator implements Command<Pixmap> {
 	public static final double DOMAIN_MIN = -1;
 	public static final double DOMAIN_MAX = 1;
+	public double scaledMin;
+	public double scaledMax;
 	private JTextField input;
 	// Stores the current expression being evaluated
 	private List<String> expressionList;
@@ -33,15 +36,36 @@ public class Evaluator implements Command<Pixmap> {
 	
 	public Evaluator(JTextField input) {
 		this.input = input;
+		this.scaledMin = -1;
+		this.scaledMax = 1;
 		this.expressionList = new ArrayList<>();
 		this.propertyChangeSupport = new PropertyChangeSupport(this);
 		expressionList.add(input.getText());
 	}
-
+	
+	public void execute(Pixmap target, String expression) {
+        try {
+            ExpressionTreeNode expr = createExpression(expression);
+            Dimension size = target.getSize();
+            for (int imageY = 0; imageY < size.height; imageY++) {
+                double evalY = imageToDomainScale(imageY, size.height);
+                for (int imageX = 0; imageX < size.width; imageX++) {
+                    double evalX = imageToDomainScale(imageX, size.width);
+                    Color pixelColor = expr.evaluate(evalX, evalY).toJavaColor();
+                    target.setColor(imageX, imageY, pixelColor);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "The expression you entered is currently unsupported. Please enter a new expression.", "Parse Exception Error", 0, null);
+        }
+    }
 	/**
 	 * Evaluate an expression for each point in the image.
 	 */
 	public void execute(Pixmap target) {
+		this.scaledMin = -1;
+		this.scaledMax = 1;
 		try {
 		// create the expression to evaluate just once
 			// evaluate it for each pixel
@@ -57,22 +81,64 @@ public class Evaluator implements Command<Pixmap> {
 						}
 				}
 			}
+	
+		}catch (ParseException e) {
+			e.printStackTrace();
+			String j = e.getMessage();
+			String x = j.replaceAll("ParseException:", "");
+			JOptionPane.showMessageDialog(null, x,"Error",0, null);}
 			expressionList.add(input.getText());
 			propertyChangeSupport.firePropertyChange("expressionList", null, expressionList);
-		}catch (Exception e) {
-      e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "The expression you entered is currently unsupported. Please enter a new expression.", "Parse Exception Error",0, null);
 		}
-	}
+	
+	// overload execute (bc of duplicate code) (look at randomevaluator too)
 
+	
+	/**
+	 * Decrease domain min and max to zoom in
+	 */
+	public void scaleDown() {
+		this.scaledMin /= 1.1;
+		this.scaledMax /= 1.1;
+	}
+	
+	/**
+	 * Increase domain min and max to zoom in
+	 */
+	public void scaleUp() {
+		this.scaledMin = Math.max(DOMAIN_MIN, Math.min(DOMAIN_MAX, scaledMin *=1.1));
+		this.scaledMax = Math.max(DOMAIN_MIN, Math.min(DOMAIN_MAX, scaledMax *=1.1));
+	}
+	
+	/**
+	 * Return scaled min
+	 */
+	public double getScaledMin() {
+		return this.scaledMin;
+	}
+	
+	/**
+	 * Return scaled max
+	 */
+	public double getScaledMax() {
+		return this.scaledMax;
+	}
+	
+	/**
+	 * Return string version of input
+	 */
+	public String getInput() {
+		return this.input.getText();
+	}
+	
 	/**
 	 * Convert from image space to domain space.
 	 */
-
 	protected double imageToDomainScale(int value, int bounds) {
 		double range = DOMAIN_MAX - DOMAIN_MIN;
 		return ((double) value / bounds) * range + DOMAIN_MIN;
 	}
+	
 
 	/**
 	 * 
