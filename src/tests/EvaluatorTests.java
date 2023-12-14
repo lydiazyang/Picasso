@@ -18,6 +18,7 @@ import picasso.model.Pixmap;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.*;
 import picasso.view.commands.Evaluator;
+import picasso.view.commands.StringEvaluator;
 import picasso.parser.language.operators.Addition;
 import picasso.parser.language.operators.Assignment;
 import picasso.parser.language.operators.Multiply;
@@ -952,6 +953,35 @@ public class EvaluatorTests {
 	    }
 		
 	}
+
+	@Test
+    public void testGenerateExpressionFromString() {
+        JTextField input = new JTextField();
+        Evaluator evaluator = new Evaluator(input);
+        StringEvaluator stringEvaluator = new StringEvaluator(input, evaluator);
+
+        // Basic input
+        Assert.assertEquals("(y + x)", stringEvaluator.generateExpressionFromString("x + y"));
+
+        // Unary function
+        Assert.assertEquals("rgbToYCrCb(x)", stringEvaluator.generateExpressionFromString("A"));
+
+        // Multi-argument function
+        Assert.assertEquals("perlinColor(x, y)", stringEvaluator.generateExpressionFromString("B"));
+
+        // Variable
+        Assert.assertEquals("x", stringEvaluator.generateExpressionFromString("a"));
+
+        // Complex expression
+        Assert.assertEquals("(rgbToYCrCb(x) - sin(x))", stringEvaluator.generateExpressionFromString("iaAeO"));
+
+        // Test with empty input
+        Assert.assertEquals("0", stringEvaluator.generateExpressionFromString(""));
+       
+
+        // Test with favorite input
+        Assert.assertEquals("(((perlinColor(x, y) - y) / y) + (perlinColor(x, y) + (y + (exp(x) + ((y - y) + (y + (((((x - y) / perlinColor(x, y)) + x) - y) / x)))))))", stringEvaluator.generateExpressionFromString("Hello Dr. Sprenkle! How are you??"));
+    }
 	
 	private void assertEquals(RGBColor expected, RGBColor actual) {
 		double delta = 0.000001;

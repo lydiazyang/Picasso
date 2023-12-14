@@ -44,7 +44,7 @@ public class StringEvaluator implements Command<Pixmap> {
     public void execute(Pixmap target) {
         String inputString = input.getText();
         String generatedExpression = generateExpressionFromString(inputString);
-//        evaluator.setInputText(generatedExpression); // to check generated expression
+        evaluator.setInputText(generatedExpression); // to check generated expression
         evaluator.execute(target, generatedExpression);
     }
 
