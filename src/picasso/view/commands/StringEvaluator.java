@@ -2,6 +2,7 @@ package picasso.view.commands;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.List;
 import java.util.Stack;
 
 import javax.swing.JTextField;
@@ -46,6 +47,8 @@ public class StringEvaluator implements Command<Pixmap> {
         String generatedExpression = generateExpressionFromString(inputString);
 //        evaluator.setInputText(generatedExpression); // to check generated expression
         evaluator.execute(target, generatedExpression);
+        List<String> expressionList = evaluator.getExpressionList();
+        expressionList.add(inputString);
     }
 
 
