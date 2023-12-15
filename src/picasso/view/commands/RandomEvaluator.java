@@ -14,7 +14,7 @@ import picasso.parser.language.ExpressionTreeNode;
 import picasso.util.Command;
 
 /**
- * Evaluate a random expression for each pixel in a image.
+ * Evaluate a random expression for an image.
  * 
  * @author Jenna Bernstein
  */
@@ -29,32 +29,54 @@ public class RandomEvaluator implements Command<Pixmap> {
 	private int depth;
 	private JTextField functionTextField;
 	private Evaluator evaluator;
-	
-	public RandomEvaluator(JTextField functionTextField, Evaluator evaluator) {
-		this.functionTextField = functionTextField;
-		this.evaluator = evaluator;
-	}
-	
+	/**
+     * Constructs a RandomEvaluator with the specified text field and evaluator.
+     * 
+     * @param functionTextField the text field to display the generated expression
+     * @param evaluator         the evaluator to execute the generated expression
+     */
+    public RandomEvaluator(JTextField functionTextField, Evaluator evaluator) {
+        this.functionTextField = functionTextField;
+        this.evaluator = evaluator;
+    }
+
+    /**
+     * Executes the random expression generation and evaluation for the given target pixmap.
+     * The generated expression is displayed in the text field.
+     * 
+     * @param target the pixmap to apply the generated expression
+     */
     @Override
     public void execute(Pixmap target) {
-        // Generate a new random function each time execute is called
-		Random randomNum = new Random();
-		this.depth = randomNum.nextInt(20);
+        Random randomNum = new Random();
+        this.depth = randomNum.nextInt(20);
         String randomFunction = generateRandomExpression(depth, true);
         functionTextField.setText(randomFunction);
         evaluator.execute(target, randomFunction);
-    	List<String> expressionList = evaluator.getExpressionList();
+        List<String> expressionList = evaluator.getExpressionList();
         expressionList.add(randomFunction);
-        
-    } 
-        
-    
+    }
+
+    /**
+     * Generates a random mathematical expression.
+     * 
+     * @param depth     the depth of the expression tree
+     * @param topLevel  flag indicating whether the expression is at the top level
+     * @return the generated random expression
+     */
     public static String generateRandomExpression(int depth, boolean topLevel) {
         String expression = buildRandomExpression(depth, topLevel);
         System.out.println("Random Expression: " + expression); // Print the generated expression before returning
         return expression;
     }
 
+    /**
+     * Builds a random mathematical expression recursively based on the given depth.
+     * 
+     * @param depth    the depth of the expression tree
+     * @param topLevel flag indicating whether the expression is at the top level
+     * @return the generated random expression
+     */
     private static String buildRandomExpression(int depth, boolean topLevel) {
         StringBuilder expression = new StringBuilder();
 
