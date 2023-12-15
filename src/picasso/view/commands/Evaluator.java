@@ -41,7 +41,6 @@ public class Evaluator implements Command<Pixmap> {
 		this.scaledMax = 1;
 		this.expressionList = new ArrayList<>();
 		this.propertyChangeSupport = new PropertyChangeSupport(this);
-		expressionList.add(input.getText());
 	}
 	
 	public void execute(Pixmap target, String expression) {
