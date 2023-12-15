@@ -33,7 +33,7 @@ This code base originated as a project in a course at Duke University.  The prof
 
 Generating Random Expressions
 
-- To generate a random expression utilizing a combination of the functions and operators that have been implemented, simply click the random button in the Graphical User Interface in the top button panel. Continue generating new and fun images by clicking as many times as you want (Some look more fun than others).
+- To generate a random expression utilizing a combination of the functions and operators that have been implemented, simply click the "Random" button in the Graphical User Interface in the top button panel. Continue generating new and fun images by clicking this button as many times as you would like (some look more fun than others).
 
 Generating Expressions from a String
 

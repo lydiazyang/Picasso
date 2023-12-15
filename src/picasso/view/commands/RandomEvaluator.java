@@ -28,33 +28,22 @@ public class RandomEvaluator implements Command<Pixmap> {
     private static final String[] MULTIARGUMENTFUNCTIONS = {"perlinBW", "perlinColor", "rgbToYCrCb", "yCrCbToRGB"};
 	private int depth;
 	private JTextField functionTextField;
+	private Evaluator evaluator;
 	
-	public RandomEvaluator(JTextField functionTextField) {
+	public RandomEvaluator(JTextField functionTextField, Evaluator evaluator) {
 		this.functionTextField = functionTextField;
+		this.evaluator = evaluator;
 	}
 	
     @Override
     public void execute(Pixmap target) {
-            // Generate a new random function each time execute is called
-    		Random randomNum = new Random();
-    		this.depth = randomNum.nextInt(20);
-            String randomFunction = generateRandomExpression(depth, true);
-            functionTextField.setText(randomFunction);
-            if (!randomFunction.startsWith("//")) {
-                ExpressionTreeNode expr = createExpression(randomFunction.replaceAll("\"", ""));
-                
-                // Evaluate it for each pixel
-                Dimension size = target.getSize();
-                for (int imageY = 0; imageY < size.height; imageY++) {
-                    double evalY = imageToDomainScale(imageY, size.height);
-                    for (int imageX = 0; imageX < size.width; imageX++) {
-                        double evalX = imageToDomainScale(imageX, size.width);
-                        Color pixelColor = expr.evaluate(evalX, evalY).toJavaColor();
-                        target.setColor(imageX, imageY, pixelColor);
-                    }
-                }
-            }
-            } 
+        // Generate a new random function each time execute is called
+		Random randomNum = new Random();
+		this.depth = randomNum.nextInt(20);
+        String randomFunction = generateRandomExpression(depth, true);
+        functionTextField.setText(randomFunction);
+        evaluator.execute(target, randomFunction);
+    } 
         
     
     public static String generateRandomExpression(int depth, boolean topLevel) {
@@ -139,11 +128,4 @@ public class RandomEvaluator implements Command<Pixmap> {
         return ((double) value / bounds) * range + DOMAIN_MIN;
     }
     
-    /**
-     * A place holder for a more interesting way to build the expression.
-     */
-    ExpressionTreeNode createExpression(String function) {
-        ExpressionTreeGenerator expTreeGen = new ExpressionTreeGenerator();
-        return expTreeGen.makeExpression(function);
-    }
 }

@@ -1,7 +1,9 @@
 package picasso.parser.language;
 
 import java.io.File;
+
 import java.io.FileNotFoundException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -40,8 +42,6 @@ public class BuiltinFunctionsReader {
 			reader = new Scanner(new File(FUNCTIONS_CONF_FILE));
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
-			// TODO: should pass the error up so that the user knows what the
-			// problem is.
 			return;
 		}
 		while (reader.hasNextLine()) {
