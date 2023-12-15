@@ -10,6 +10,11 @@ import picasso.parser.language.ExpressionTreeNode;
  */
 public class PerlinColor extends MultiArgumentFunction {
 
+    /**
+	 * Create a perlinColor expression that takes as a parameter the given expression
+	 * 
+	 * @param param the expression to floor
+	 */
     public PerlinColor(ExpressionTreeNode xParam, ExpressionTreeNode yParam) {
         super(xParam, yParam);
     }
