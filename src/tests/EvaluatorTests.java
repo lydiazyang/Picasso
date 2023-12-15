@@ -1019,6 +1019,23 @@ public class EvaluatorTests {
 		assertEquals(1/1.1, evaluator.getScaledMax());
 	}
 	
+	@Test
+	public void testHistoryDropdown() {
+		JTextField input = new JTextField("x+y");
+		Evaluator evaluator = new Evaluator(input);
+		Pixmap target = new Pixmap();
+		evaluator.execute(target);
+		System.out.println(evaluator.getExpressionList());
+		assertEquals(new , evaluator.getExpressionList());
+		
+		JTextField input2 = new JTextField("abc");
+		Evaluator evaluator2 = new Evaluator(input);
+		Pixmap target2 = new Pixmap();
+		evaluator.execute(target2);
+		System.out.println(evaluator2.getExpressionList());
+		assertEquals(null, evaluator2.getExpressionList());
+	}
+	
 	private void assertEquals(RGBColor expected, RGBColor actual) {
 		double delta = 0.000001;
 		if (expected == null || actual == null) {
