@@ -13,7 +13,7 @@ import picasso.parser.tokens.operations.AdditionToken;
 public class Addition extends BinaryOperator {
 
 	/**
-	 * Creates a wrap expression that takes as a parameter the given expression
+	 * Creates an addition expression that takes as a parameter the given expression
 	 * 
 	 * @param param the expressions to add
 	 */

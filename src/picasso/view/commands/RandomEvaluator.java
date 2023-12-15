@@ -13,6 +13,11 @@ import picasso.parser.ExpressionTreeGenerator;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.util.Command;
 
+/**
+ * Evaluate a random expression for each pixel in a image.
+ * 
+ * @author Jenna Bernstein
+ */
 public class RandomEvaluator implements Command<Pixmap> {
     public static final double DOMAIN_MIN = -1;
     public static final double DOMAIN_MAX = 1;

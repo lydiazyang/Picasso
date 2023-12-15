@@ -44,4 +44,4 @@ Expression History
 - History keeps track of previously evaluated expressions in a dropdown from the "History" tab, and allows the user to select an expression from this dropdown to evaluate again. It does so by utilizing the history view command and pulling from the expression list that is saved as the evaluator runs
 
 Zoom
-- To zoom into the middle of the displayed image, press the "Zoom in" button. To zoom back outwards, press the "Zoom out" button. The farthest you can zoom out is what is initially first displayed when the expression is evaluated.
+- To zoom into the middle of the displayed image, press the "Zoom in" button after you evaluate an expression. To zoom back outwards, press the "Zoom out" button. The farthest you can zoom out is what is initially first displayed when the expression is evaluated. You cannot zoom on the starting image that is displayed when you first start the application.

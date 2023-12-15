@@ -162,6 +162,7 @@ public class Pixmap {
 				myImage = copyImage(mySize, newSize, myImage);
 			} else {
 				// TODO: BUGBUG: scale image down instead?
+				//ANSWER: We did not have time to implement the scaling down of the Pixmap image.
 				myImage = myImage.getSubimage(0, 0, width, height);
 			}
 			mySize = newSize;

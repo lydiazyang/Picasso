@@ -21,10 +21,10 @@ public class Exp extends UnaryFunction {
 	}
 
 	/**
-	 * Evaluates this expression at the given x,y point by evaluating the floor of
+	 * Evaluates this expression at the given x,y point by evaluating the exp of
 	 * the function's parameter.
 	 * 
-	 * @return the color from evaluating the floor of the expression's parameter
+	 * @return the color from evaluating the exp of the expression's parameter
 	 */
 	@Override
 	public RGBColor evaluate(double x, double y) {

@@ -33,6 +33,14 @@ public abstract class UnaryFunction extends ExpressionTreeNode {
 		return classname.substring(classname.lastIndexOf(".") + 1) + "(" + param + ")";
 	}
 
+	/**
+	* Compares this UnaryFunction with the specified object for equality.
+	* 
+	* The comparison is based on the type and the parameter of the UnaryFunction.
+	* 
+	* @param o the object to be compared for equality with this UnaryFunction
+	* @return true if the specified object is equal to this UnaryFunction; false otherwise
+	*/
 	@Override
 	public boolean equals(Object o) {
 		if (o == this) {
