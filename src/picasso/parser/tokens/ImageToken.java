@@ -76,7 +76,7 @@ public class ImageToken extends Token {
 	}
 
 	/**
-	 * 
+	 * Returns if the file is found in the images folder.
 	 * @return true if file is found in the images folder
 	 */
 	public static boolean isValidFile(String fileName) {
