@@ -38,6 +38,7 @@ public class BuiltinFunctionsReader {
 	private static void readFunctionsFromFile() {
 		functionsList = new ArrayList<String>();
 		Scanner reader;
+		// TODO: propogate to user
 		try {
 			reader = new Scanner(new File(FUNCTIONS_CONF_FILE));
 		} catch (FileNotFoundException e1) {
