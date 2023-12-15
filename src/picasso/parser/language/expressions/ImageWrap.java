@@ -19,7 +19,9 @@ public class ImageWrap extends MultiArgumentFunction {
 	/**
 	 * Create an image wrap  expression that takes as a parameter the given expressions
 	 * 
-	 * @param param the expression to floor
+	 * @param image, the image file
+	 * @param xParam, the expression to evaluate the x coord
+	 * @param yParam, the expression to evaluate the y coord
 	 */
 	public ImageWrap(Pixmap image, ExpressionTreeNode xParam, ExpressionTreeNode yParam) {
 		super(xParam, yParam);
@@ -81,7 +83,7 @@ public class ImageWrap extends MultiArgumentFunction {
 	
 	/**
 	 * Helper function to convert given values (in domain space, [-1, 1]) to image space 
-	 * 
+	 * @return the scaled value of the given double and bounds
 	 */
 	private int domainToImageScale(double value, double bounds) {
 		int range = domainMax - domainMin;
