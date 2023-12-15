@@ -41,7 +41,7 @@ Generating Expressions from a String
 
 Expression History
 
-- History keeps track of previously evaluated expressions in a dropdown from the "History" tab, and allows the user to select an expression from this dropdown to evaluate again. It does so by utilizing the history view command and pulling from the expression list that is saved as the evaluator runs. If a user selects a previous expression from the dropdown, it inputs the expression into the text box, allowing the user to make changes if desired, before properly evaluating the expression again based on its type (Random, String, or regular expression
+- History keeps track of previously evaluated expressions in a dropdown from the "History" tab, and allows the user to select an expression from this dropdown to evaluate again. It does so by utilizing the history view command and pulling from the expression list that is saved as the evaluator runs. If a user selects a previous expression from the dropdown, it inputs the expression into the text box, allowing the user to make changes if desired, before properly evaluating the expression again based on its type (string or expression)
 
 Zoom
 - To zoom into the middle of the displayed image, press the "Zoom in" button after you evaluate an expression. To zoom back outwards, press the "Zoom out" button. The farthest you can zoom out is what is initially first displayed when the expression is evaluated. You cannot zoom on the starting image that is displayed when you first start the application.
