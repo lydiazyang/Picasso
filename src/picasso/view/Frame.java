@@ -38,7 +38,7 @@ public class Frame extends JFrame {
 		ButtonPanel commands = new ButtonPanel(canvas);
 		functionTextField = new JTextField(20);
 		Evaluator evaluator = new Evaluator(functionTextField);
-		RandomEvaluator rEvaluator = new RandomEvaluator(functionTextField);
+		RandomEvaluator rEvaluator = new RandomEvaluator(functionTextField, evaluator);
 		hDropdown = new JComboBox<String>();
 		History history = new History(hDropdown, evaluator);
 		evaluator.addPropertyChangeListener(evt-> history.execute(canvas.getPixmap()));
