@@ -18,9 +18,11 @@ import picasso.model.Pixmap;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.*;
 import picasso.view.commands.Evaluator;
+import picasso.view.commands.StringEvaluator;
 import picasso.parser.language.operators.Addition;
 import picasso.parser.language.operators.Assignment;
 import picasso.parser.language.operators.Multiply;
+import picasso.parser.language.operators.Negate;
 import picasso.parser.tokens.IdentifierToken;
 import picasso.parser.tokens.Token;
 import picasso.parser.tokens.operations.AdditionToken;
@@ -370,6 +372,68 @@ public class EvaluatorTests {
 			
 		}
 	}
+	
+	@Test
+	public void testNegateEvaluation() {
+	    Negate myTree = new Negate(new X());
+
+	    // some straightforward tests
+	    assertEquals(new RGBColor(0, 0, 0), myTree.evaluate(0, 0));
+	    assertEquals(new RGBColor(-1, -1, -1), myTree.evaluate(1, -1));
+	    assertEquals(new RGBColor(1, 1, 1), myTree.evaluate(-1, 1));
+
+	    // test various double values
+	    double[] tests = { -0.7, -.2, 1, 0, 0.2, -0.7 };
+
+	    for (double testVal : tests) {
+	        assertEquals(new RGBColor(-testVal, -testVal, -testVal), myTree.evaluate(testVal, testVal));
+	    }
+
+	    Negate myOtherTree = new Negate(new Y());
+
+	    // some straightforward tests
+	    assertEquals(new RGBColor(0, 0, 0), myOtherTree.evaluate(-1, 0));
+	    assertEquals(new RGBColor(-1, -1, -1), myOtherTree.evaluate(-1, 1));
+	    assertEquals(new RGBColor(1, 1, 1), myOtherTree.evaluate(1, -1));
+
+	    // test various double values
+	    double[] tests2 = { -0.7, -.2, 1, 0, 0.2, -0.7 };
+
+	    for (double testVal : tests2) {
+	        assertEquals(new RGBColor(-testVal, -testVal, -testVal), myOtherTree.evaluate(-1, testVal));
+	    }
+	}
+	
+	@Test
+	public void testLogEvaluation() {
+	    Log myTree = new Log(new X());
+
+	    // some straightforward tests
+	    assertEquals(new RGBColor(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY), myTree.evaluate(0, 0));
+	    assertEquals(new RGBColor(Double.NaN, Double.NaN, Double.NaN), myTree.evaluate(-1, 2));
+
+	    // test various double values
+	    double[] tests = { 0.5, 2, 1, 1.5, 3, 0.2, 0.7 };
+
+	    for (double testVal : tests) {
+	        assertEquals(new RGBColor(Math.log(testVal), Math.log(testVal), Math.log(testVal)), myTree.evaluate(testVal, testVal));
+	    }
+
+	    Log myOtherTree = new Log(new Y());
+
+	    // some straightforward tests
+	    assertEquals(new RGBColor(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY), myOtherTree.evaluate(0, 0));
+	    assertEquals(new RGBColor(Double.NaN, Double.NaN, Double.NaN), myOtherTree.evaluate(2, -1));
+
+	    // test various double values
+	    double[] tests2 = { 0.5, 2, 1, 1.5, 3, 0.2, 0.7 };
+
+	    for (double testVal : tests2) {
+	        assertEquals(new RGBColor(Math.log(testVal), Math.log(testVal), Math.log(testVal)), myOtherTree.evaluate(testVal, testVal));
+	    }
+	}
+
+
 	
 	@Test
 	public void testEvaluatorException() {
@@ -889,6 +953,35 @@ public class EvaluatorTests {
 	    }
 		
 	}
+
+	@Test
+    public void testGenerateExpressionFromString() {
+        JTextField input = new JTextField();
+        Evaluator evaluator = new Evaluator(input);
+        StringEvaluator stringEvaluator = new StringEvaluator(input, evaluator);
+
+        // Basic input
+        Assert.assertEquals("(y + x)", stringEvaluator.generateExpressionFromString("x + y"));
+
+        // Unary function
+        Assert.assertEquals("rgbToYCrCb(x)", stringEvaluator.generateExpressionFromString("A"));
+
+        // Multi-argument function
+        Assert.assertEquals("perlinColor(x, y)", stringEvaluator.generateExpressionFromString("B"));
+
+        // Variable
+        Assert.assertEquals("x", stringEvaluator.generateExpressionFromString("a"));
+
+        // Complex expression
+        Assert.assertEquals("(rgbToYCrCb(x) - sin(x))", stringEvaluator.generateExpressionFromString("iaAeO"));
+
+        // Test with empty input
+        Assert.assertEquals("0", stringEvaluator.generateExpressionFromString(""));
+       
+
+        // Test with favorite input
+        Assert.assertEquals("(((perlinColor(x, y) - y) / y) + (perlinColor(x, y) + (y + (exp(x) + ((y - y) + (y + (((((x - y) / perlinColor(x, y)) + x) - y) / x)))))))", stringEvaluator.generateExpressionFromString("Hello Dr. Sprenkle! How are you??"));
+    }
 	
 	@Test
 	public void testZoomHelper() {

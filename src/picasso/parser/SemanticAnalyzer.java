@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
+import javax.swing.JOptionPane;
+
 import picasso.parser.language.BuiltinFunctionsReader;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.tokens.Token;
@@ -121,24 +123,26 @@ public class SemanticAnalyzer implements SemanticAnalyzerInterface {
 	 */
 	private void createOperationMappings() {
 
-		// TODO: The following exceptions should probably be propagated up to
-		// the user.
 		Properties opProps = new Properties();
 		try {
 			opProps.load(new FileReader(OPS_FILE));
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
+			throw new ParseException("The operation mapping file was not found: " + OPS_FILE);
 		} catch (IOException e1) {
-			e1.printStackTrace();
+		    e1.printStackTrace();
+		    throw new ParseException("An error occurred while reading the operation mapping file: " + e1.getMessage());
 		}
-
+		
 		for (Object op : opProps.keySet()) {
 			String opName = (String) opProps.get(op);
 			String tokenName = OPERATIONS_TOKENS_PACKAGE + opName + "Token";
 			String parserName = PARSER_PACKAGE + opName + "Analyzer";
 			addSemanticAnalyzerMapping(tokenName, parserName);
 		}
+
 	}
+
 
 	/**
 	 * From a stack of tokens in postfix order, creates an expression tree
@@ -149,7 +153,6 @@ public class SemanticAnalyzer implements SemanticAnalyzerInterface {
 	public ExpressionTreeNode generateExpressionTree(Stack<Token> tokens) {
 
 		if (tokens.isEmpty()) {
-			// XXX: Is this the only reason that the token stack is empty?
 			throw new ParseException("Expected another argument.");
 		}
 
