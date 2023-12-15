@@ -9,7 +9,11 @@ import picasso.parser.language.ExpressionTreeNode;
  * @author Lydia Yang
  */
 public class PerlinBW extends MultiArgumentFunction {
-
+    /**
+	 * Create a perlinBW expression that takes as a parameter the given expression
+	 * 
+	 * @param param the expression to floor
+	 */
     public PerlinBW(ExpressionTreeNode xParam, ExpressionTreeNode yParam) {
         super(xParam, yParam);
     }

@@ -6,7 +6,7 @@ import picasso.parser.tokens.chars.CharToken;
 import picasso.parser.tokens.*;
 
 /**
- * Represents the multiplication sign token
+ * Represents the mod sign token
  * 
  */
 public class ModToken extends CharToken implements OperationInterface {

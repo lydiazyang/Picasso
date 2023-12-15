@@ -5,7 +5,7 @@ import picasso.parser.tokens.Token;
 import picasso.parser.tokens.chars.CharToken;
 
 /**
- * Represents the plus sign token
+ * Represents the Assignment token
  * 
  */
 public class AssignmentToken extends CharToken implements OperationInterface {

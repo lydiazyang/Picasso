@@ -33,6 +33,14 @@ public abstract class MultiArgumentFunction extends ExpressionTreeNode {
 		return classname.substring(classname.lastIndexOf(".") + 1) + "(" + xParam + ")" + "(" + yParam + ")";
 	}
 
+	/**
+	* Compares this MultiArgumentFunction with another object for equality.
+	* Two MultiArgumentFunctions are considered equal if they are of the same class
+	* and their xParam and yParam are equal.
+	* 
+	* @param o the object to compare with
+	* @return true if the specified object is equal to this MultiArgumentFunction
+	*/
 	@Override
 	public boolean equals(Object o) {
 		if (o == this) {
