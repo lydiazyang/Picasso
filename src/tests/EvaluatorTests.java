@@ -7,6 +7,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import javax.swing.JTextField;
 import java.io.File;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Stack;
 
 import org.junit.Assert;
@@ -1025,16 +1028,31 @@ public class EvaluatorTests {
 		Evaluator evaluator = new Evaluator(input);
 		Pixmap target = new Pixmap();
 		evaluator.execute(target);
+		List<String> expectedExpressionList = Arrays.asList("x+y");
 		System.out.println(evaluator.getExpressionList());
-		assertEquals(new , evaluator.getExpressionList());
-		
-		JTextField input2 = new JTextField("abc");
-		Evaluator evaluator2 = new Evaluator(input);
+		assertIterableEquals(expectedExpressionList, evaluator.getExpressionList());
+
+
+		String[] testExpressions = {"x*y", "sin(x)", "0+1", "floor(x)"};
+		JTextField input2 = new JTextField(testExpressions[0]);
+		Evaluator evaluator2 = new Evaluator(input2);
+		List<String> expressionsList2 = new ArrayList<>();
+		expressionsList2.add(testExpressions[0]);
 		Pixmap target2 = new Pixmap();
-		evaluator.execute(target2);
-		System.out.println(evaluator2.getExpressionList());
-		assertEquals(null, evaluator2.getExpressionList());
+		evaluator2.execute(target2);
+
+		for (int i = 1; i < testExpressions.length; i++) {
+		    String expression = testExpressions[i];
+		    JTextField x = new JTextField(expression);
+		    evaluator2.setInputText(expression); // Set the new expression in evaluator3
+		    evaluator2.execute(target2);
+		    expressionsList2.add(expression);
+		}
+
+		assertIterableEquals(expressionsList2, evaluator2.getExpressionList());
+
 	}
+	
 	
 	private void assertEquals(RGBColor expected, RGBColor actual) {
 		double delta = 0.000001;

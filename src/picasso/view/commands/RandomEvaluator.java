@@ -53,8 +53,6 @@ public class RandomEvaluator implements Command<Pixmap> {
         String randomFunction = generateRandomExpression(depth, true);
         functionTextField.setText(randomFunction);
         evaluator.execute(target, randomFunction);
-        List<String> expressionList = evaluator.getExpressionList();
-        expressionList.add(randomFunction);
     }
 
     /**

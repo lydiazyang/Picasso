@@ -84,6 +84,7 @@ public class Evaluator implements Command<Pixmap> {
 						target.setColor(imageX, imageY, pixelColor);
 						}
 				}
+				
 			}
 	
 		}catch (ParseException e) {
