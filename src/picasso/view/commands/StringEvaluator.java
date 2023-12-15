@@ -134,7 +134,7 @@ public class StringEvaluator implements Command<Pixmap> {
      * Builds unary function expression or multiargument based on uppercase character. 
      * Each letter corresponds to a unary function.
      * @param c The uppercase character
-     * @return Unary function as a string.
+     * @return Unary function or multiargument function as a string.
      */
     private String buildFunction(char c) {
         int index = (c - 'A');
