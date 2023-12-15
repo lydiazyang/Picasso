@@ -226,6 +226,81 @@ public class ExpressionTreeGeneratorTests {
 	}
 	
 	@Test
+	public void cosFunctionTests() {
+		ExpressionTreeNode e = parser.makeExpression("cos( x )");
+		assertEquals(new Cos(new X()), e);
+
+		e = parser.makeExpression("cos( x + y )");
+		assertEquals(new Cos(new Addition(new X(), new Y())), e);
+	}
+	
+	@Test
+	public void tanFunctionTests() {
+		ExpressionTreeNode e = parser.makeExpression("tan( x )");
+		assertEquals(new Tan(new X()), e);
+
+		e = parser.makeExpression("tan( x + y )");
+		assertEquals(new Tan(new Addition(new X(), new Y())), e);
+	}
+	
+	@Test
+	public void atanFunctionTests() {
+		ExpressionTreeNode e = parser.makeExpression("atan( x )");
+		assertEquals(new Atan(new X()), e);
+
+		e = parser.makeExpression("atan( x + y )");
+		assertEquals(new Atan(new Addition(new X(), new Y())), e);
+	}
+	
+	@Test
+	public void expFunctionTests() {
+		ExpressionTreeNode e = parser.makeExpression("exp( x )");
+		assertEquals(new Exp(new X()), e);
+
+		e = parser.makeExpression("exp( x + y )");
+		assertEquals(new Exp(new Addition(new X(), new Y())), e);
+	}
+	
+	@Test
+	public void logFunctionTests() {
+		ExpressionTreeNode e = parser.makeExpression("log( x )");
+		assertEquals(new Log(new X()), e);
+
+		e = parser.makeExpression("log( x + y )");
+		assertEquals(new Log(new Addition(new X(), new Y())), e);
+	}
+	
+	@Test
+	public void perlinBWFunctionTests() {
+		ExpressionTreeNode e = parser.makeExpression("perlinBW( x, y )");
+		assertEquals(new PerlinBW(new X(), new Y()), e);
+	}
+	
+	@Test
+	public void perlinColorFunctionTests() {
+		ExpressionTreeNode e = parser.makeExpression("perlinColor( x, y )");
+		assertEquals(new PerlinColor(new X(), new Y()), e);
+	}
+	
+	@Test
+	public void rgbToYCrCbFunctionTests() {
+		ExpressionTreeNode e = parser.makeExpression("rgbToYCrCb( x )");
+		assertEquals(new RgbToYCrCb(new X()), e);
+
+		e = parser.makeExpression("rgbToYCrCb( x + y )");
+		assertEquals(new RgbToYCrCb(new Addition(new X(), new Y())), e);
+	}
+	
+	@Test
+	public void yCrCbToRGBFunctionTests() {
+		ExpressionTreeNode e = parser.makeExpression("yCrCbToRGB( x )");
+		assertEquals(new YCrCbToRGB(new X()), e);
+
+		e = parser.makeExpression("yCrCbToRGB( x + y )");
+		assertEquals(new YCrCbToRGB(new Addition(new X(), new Y())), e);
+	}
+	
+	@Test
 	public void ceilFunctionTests() {
 		ExpressionTreeNode e = parser.makeExpression("ceil( x )");
 		assertEquals(new Ceil(new X()), e);
