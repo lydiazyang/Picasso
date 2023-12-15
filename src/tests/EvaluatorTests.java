@@ -890,6 +890,42 @@ public class EvaluatorTests {
 		
 	}
 	
+	@Test
+	public void testZoomHelper() {
+		JTextField input = new JTextField("x*y");
+		Evaluator evaluator = new Evaluator(input);
+		Pixmap target = new Pixmap();
+		
+		double currentMax = 1;
+		// zooming in
+		for (int i = 0; i >= 10; i++) {
+			evaluator.scaleDown();
+			assertEquals(i/1.1, evaluator.getScaledMin());
+			assertEquals(i/1.1, evaluator.getScaledMax());
+			currentMax /= 1.1;
+		}
+		
+		// zooming out without resetting
+		for (int i = 0; i >= 10; i++) {
+			evaluator.scaleUp();
+			assertEquals(Math.max(-1, Math.min(1, currentMax *=1.1)), evaluator.getScaledMin());
+			assertEquals(Math.max(-1, Math.min(1, currentMax *=1.1)), evaluator.getScaledMax());
+			currentMax = Math.max(-1, Math.min(1, currentMax *=1.1));
+		}
+		
+		evaluator.execute(target);
+		
+		// zoom out, should reset and remain the same
+		evaluator.scaleUp();
+		assertEquals(-1, evaluator.getScaledMin());
+		assertEquals(1, evaluator.getScaledMax());
+		
+		// should be able to zoom in from reset
+		evaluator.scaleDown();
+		assertEquals(-1/1.1, evaluator.getScaledMin());
+		assertEquals(1/1.1, evaluator.getScaledMax());
+	}
+	
 	private void assertEquals(RGBColor expected, RGBColor actual) {
 		double delta = 0.000001;
 		if (expected == null || actual == null) {
@@ -899,6 +935,14 @@ public class EvaluatorTests {
 	               Math.abs(expected.getRed() - actual.getRed()) > delta ||
 	               Math.abs(expected.getGreen() - actual.getGreen()) > delta) {
 			throw new AssertionError("RGB values are not equal");
+		}
+	}
+	
+	
+	private void assertEquals(double expected, double actual) {
+		double delta = 0.000001;
+		if  (Math.abs(expected - actual) > delta){
+			throw new AssertionError("Values are not equall");
 		}
 	}
 	
